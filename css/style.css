@@ -9,6 +9,11 @@ html {
 }
 
 body {
+ font-family: Arial
+}
+
+
+body {
     margin: 0;
 }
 
@@ -148,8 +153,9 @@ td {
 
 .top  li {
     float: right;
+    float: left;
 }
-  
+
 .top  li a {
     display: block;
     color: white;
