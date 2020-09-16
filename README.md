@@ -17,28 +17,25 @@ Ce site doit permettre de faciliter l'établissement du document officiel permet
 ## Installation
  * Telecharger le dossier depuis github 
  * Placer le dossier dans le serveur web
- * Utiliser le script de création de base de données contenu dans le dossier /db ([m2l.sql](./db/m2l.sql))
+ * Utiliser le script de création de base de données contenu dans le dossier /db ([PPE3-script.sql](./db/PPE3-script.sql))
 
 ## Documentation
 La documentation est contenu dans le dossier [/doc](./doc)
 
 ## Finalités
 * connexion/déconnexion
-* questions/réponses
-* enregistrement dans la base de données de toutes les étapes précédentes
 
 
 ## Comptes
 
-#### Utilisateur : 
-* ID :jeff  mdp : jeff1
-* accès à la FAQ, peut poser des questions 
+#### Adhérent : 
+* ID :  mdp : 
+* rôle
 
-#### Admin Ligue de Foot :
-* ID : dylan  mdp : dylan1
-* peut modifier / supprimer les questions de la ligue de football, et y répondre
+#### Conrtôleur :
+* ID :   mdp : 
+* rôle
 
-#### Admin du site (toutes les ligues) :
-* ID : georges  mdp : georges1
-* peut modifier / supprimer les questions de toutes les ligues, et y répondre
-* a accès au back office
+#### Administrateur :
+* ID :   mdp : 
+* rôle
