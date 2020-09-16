@@ -1,19 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <link rel="stylesheet" href="css/style.css">
-<div class="top">
-<h1><font size:"+2"><span style="font-family:Calibri"><strong>M2L FREDI</strong></span></font></h1>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fredi</title>
+</head>
+<body>
+
+<br><br><br>
+<h1><font size:"+5"><span style="font-family:Calibri"><strong><center>M2L FREDI</center></strong></span></font></h1>
+<br><br>
+
+<!-- Code php de verification si l'utilisateur est connecté --> 
 <?php 
 session_start();
 if(isset($_SESSION['session_username'])) {
   echo '<p>Bienvenue, ' . $_SESSION['session_username'] . '</p>';
 }
 ?>
-<ul>
-<?php if(isset($_SESSION['session_username'])) { ?>
-  <li style="float:right"><a class="active" href="logout.php">Déconnexion</a></li>  
-  <?php } else { ?>
-  <li style="float:left"><a class="active" href="top.php">Accueil</a></li>  
-  <li style="float:right"><a class="active" href="login.php">Connexion</a></li>
-  <li style="float:right"><a class="active" href="register.php">Inscription</a></li>
-  <?php } ?>
-</ul>
+
+<!-- Menu --> 
+<hr color="black">
+<nav>
+  <ul>
+    <li><a href="#">Accueil &ensp;</a></li>
+
+    <li class="deroulant"><a href="#">Ligue &ensp;</a>
+      <ul class="sous">
+        <li><a href="#">Ligue de football</a></li>
+        <li><a href="#">Ligue de IDK</a></li>
+      </ul>
+    </li>
+    <li><a href="login.php">Se connecter</a></li>
+  </ul>
+</nav>
+<hr color="black">
+<!-- Paragraphe --> 
+
+<br>
+<div class="outer-div">
+        <div class="inner-div">
+
+<h2>BIENVENUE SUR LE SITE DE LA M2L FREDI </h2>
+<br>
 </div>
+
+</body>
+</html>
