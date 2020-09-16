@@ -14,28 +14,31 @@ Le site nous permet d'accéder à plusieurs onglets disponibles sur celui-ci et 
 Ce site doit permettre de faciliter l'établissement du document officiel permettant la remise d'impôts et remplir en ligne les frais des adhérents de clubs.
 
 
-## Installation
+### Installation
  * Telecharger le dossier depuis github 
  * Placer le dossier dans le serveur web
  * Utiliser le script de création de base de données contenu dans le dossier /db ([PPE3-script.sql](./db/PPE3-script.sql))
 
-## Documentation
+### Documentation
 La documentation est contenu dans le dossier [/doc](./doc)
 
-## Finalités
+### Finalités
 * connexion/déconnexion
 
 
-## Comptes
+### Comptes
 
-#### Adhérent : 
-* ID :  mdp : 
-* rôle
+##### Adhérent : 
+* ID :user  mdp :user 
+* L'adhérent se sert du site pour remplir les frais du club.
+* Il peut donc créer/modifier/supprimer ses lignes de frais
 
-#### Conrtôleur :
-* ID :   mdp : 
-* rôle
+##### Conrtôleur :
+* ID :Controleur   mdp :controleur 
+* Le contrôleur s'occupe de gérer les ligues et les clubs.
+* Il peut donc créer/modifier/supprimer des ligues et des clubs.
 
-#### Administrateur :
-* ID :   mdp : 
-* rôle
+##### Administrateur :
+* ID :admin   mdp :adminweb2020
+* L'administrateur s'occupe de gérer les frais et les périodes.
+* Il peut donc créer/modifier/supprimer des périodes comptables, des motifs de frais et des utilisateurs.
