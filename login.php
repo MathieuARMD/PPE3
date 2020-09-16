@@ -47,7 +47,7 @@
             <input type="text" name="username" <?php if(isset($_POST['submit'])) { if (isset($_POST['username'])) { echo ' value='.$_POST['username']; } } ?> required><br>
             Mot de passe :<br>
             <input type="password" name="password" <?php if(isset($_POST['submit'])) { if (isset($_POST['password'])) { echo ' value='.$_POST['password']; } } ?> ><br><br>
-            <input type="submit" name="submit" value="Connexion">
+            <input type="submit" name="submit" value="Connexion"><br><br><br>
         </form>
         </div>
 </body>

@@ -71,3 +71,14 @@
 ?>
 </body>
 </html>
+
+--
+<?php
+        $newmail = "";
+        $_POST['newemail'] = $newmail;
+        ?>
+        <form class="mdp", action="<?php echo $_SERVER['PHP_SELF']; ?>", method="post">
+            Mail utilisateur :<br>
+            <input type="email" name="newmail"><br>
+            <input type="submit" name="submit" value="Send">            
+        </form>
