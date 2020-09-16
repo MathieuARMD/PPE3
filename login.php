@@ -48,6 +48,7 @@
             Mot de passe :<br>
             <input type="password" name="password" <?php if(isset($_POST['submit'])) { if (isset($_POST['password'])) { echo ' value='.$_POST['password']; } } ?> ><br><br>
             <input type="submit" name="submit" value="Connexion"><br><br><br>
+            <a href="motdepasse.php">Mot de passe oublier!</a>
         </form>
         </div>
 </body>
