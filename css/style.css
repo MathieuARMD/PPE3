@@ -1,8 +1,17 @@
-/*Reset CSS*/
+/*Main CSS*/
 *{
     margin: 0px;
     padding: 0px;
     font-family: Avenir, sans-serif;
+}
+
+IMG.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto 
+}  
+img {
+    width:200px;
 }
 
 nav{

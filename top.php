@@ -8,8 +8,8 @@
 </head>
 <body>
 
-<br><br><br>
-<h1><font size:"+5"><span style="font-family:Calibri"><strong><center>M2L FREDI</center></strong></span></font></h1>
+<br>
+<img class="displayed" alt="FREDI" src="img\fredi.png" title="FREDI">  
 <br><br>
 
 <!-- Code php de verification si l'utilisateur est connecté --> 
@@ -25,7 +25,6 @@ if(isset($_SESSION['session_username'])) {
 <nav>
   <ul>
     <li><a href="#">Accueil &ensp;</a></li>
-
     <li class="deroulant"><a href="#">Ligue &ensp;</a>
       <ul class="sous">
         <li><a href="#">Ligue de football</a></li>
