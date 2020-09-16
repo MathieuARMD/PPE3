@@ -16,11 +16,11 @@
         try {
             $bdd = new PDO ('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $username = $_POST['nom_util'];
-            $mdp = password_hash($_POST['password_util'], PASSWORD_DEFAULT);
-            $mail = $_POST['email_util'];
-            $prenomuser = $_POST['prenom_util'];
-            $matricule = $_POST['matricule_cont'];
+            $username = $_POST['username'];
+            $mdp = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $mail = $_POST['email'];
+            $prenomuser = $_POST['prenom'];
+            $matricule = $_POST['matricule'];
             $sql = "insert into utilisateur (email_util, password_util, nom_util, prenom_util, matricule_cont, id_type_util) values ('".$mail."','".$mdp."','".$username."','".$prenomuser."', '".$matricule."',3)";
             $req = $bdd->prepare($sql);
             $req->execute();
@@ -45,17 +45,17 @@
     } else { ?>
     <form class="register", action="<?php echo $_SERVER['PHP_SELF']; ?>", method="post">
         Nom d'utilisateur :<br>
-        <input type="text" name="nom_util" required><br>
+        <input type="text" name="username" required><br>
         Prenom d'utilisateur :<br>
-        <input type="text" name="prenom_util" required><br>
+        <input type="text" name="prenom" required><br>
         Mot de passe :<br>
-        <input type="password" name="password_util" required><br>
+        <input type="password" name="password" required><br>
         Confirmer :<br>
-        <input type="password" name="password_util" required><br>
+        <input type="password" name="password" required><br>
         Mail :<br>
-        <input type="email" name="email_util" required><br>
+        <input type="email" name="email" required><br>
         Matricule :<br>
-        <input type="number" name="matricule_cont" required><br>        
+        <input type="number" name="matricule" required><br>        
         </select>
             <input type="submit" name="submit" value="submit">
     </form>
