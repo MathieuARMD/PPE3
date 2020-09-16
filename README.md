@@ -29,16 +29,16 @@ La documentation est contenu dans le dossier [/doc](./doc)
 ### Comptes
 
 ##### Adhérent : 
-* ID :  mdp : 
+* ID :user  mdp :user 
 * L'adhérent se sert du site pour remplir les frais du club.
 * Il peut donc créer/modifier/supprimer ses lignes de frais
 
 ##### Conrtôleur :
-* ID :   mdp : 
+* ID :Controleur   mdp :controleur 
 * Le contrôleur s'occupe de gérer les ligues et les clubs.
 * Il peut donc créer/modifier/supprimer des ligues et des clubs.
 
 ##### Administrateur :
-* ID :   mdp : 
+* ID :admin   mdp :adminweb2020
 * L'administrateur s'occupe de gérer les frais et les périodes.
 * Il peut donc créer/modifier/supprimer des périodes comptables, des motifs de frais et des utilisateurs.

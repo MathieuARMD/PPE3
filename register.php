@@ -21,7 +21,7 @@
             $mail = $_POST['email'];
             $prenomuser = $_POST['prenom'];
             $matricule = $_POST['matricule'];
-            $sql = "insert into utilisateur (email_util, password_util, nom_util, prenom_util, matricule_cont, id_type_util) values ('".$mail."','".$mdp."','".$username."','".$prenomuser."', '".$matricule."',3)";
+            $sql = "insert into utilisateur (email_util, password_util, nom_util, prenom_util, matricule_cont, id_type_util) values ('".$mail."','".$mdp."','".$username."','".$prenomuser."', '".$matricule."',1)";
             $req = $bdd->prepare($sql);
             $req->execute();
             echo '<p>Inscription réussie !</p>';
