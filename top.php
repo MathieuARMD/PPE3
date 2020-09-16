@@ -15,9 +15,6 @@
 <!-- Code php de verification si l'utilisateur est connecté --> 
 <?php 
 session_start();
-if(isset($_SESSION['session_username'])) {
-  echo '<p>Bienvenue, ' . $_SESSION['session_username'] . '</p>';
-}
 ?>
 
 <!-- Menu --> 
@@ -25,14 +22,18 @@ if(isset($_SESSION['session_username'])) {
 <nav>
   <ul>
     <li><a href="#">Accueil &ensp;</a></li>
-
     <li class="deroulant"><a href="#">Ligue &ensp;</a>
       <ul class="sous">
         <li><a href="#">Ligue de football</a></li>
         <li><a href="#">Ligue de IDK</a></li>
       </ul>
     </li>
+    <?php if(isset($_SESSION['session_username'])) {?>
+      <li><a href="logout.php">Déconnexion</a></li>
+    <?php } else {?>
     <li><a href="login.php">Se connecter</a></li>
+    <?php }?>
+    
   </ul>
 </nav>
 <hr color="black">
