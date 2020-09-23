@@ -38,16 +38,16 @@
                 $sth->execute(array());
                 $ligues = $sth->fetchAll(PDO::FETCH_ASSOC);
                 if ($username == $row['nom_util']) {
-                    if (password_verify($_POST['password'], $row['password_util'])) {
+                    //if (password_verify($_POST['password'], $row['password_util'])) {                  PASSWORD HASH A RE-METTRE QUAND TEO AURA PEUPLÉ BDD
                         echo '<p>Connexion réussie !</p>';
                         $_SESSION['session_username'] = $username;
                         $_SESSION['session_password'] = $password;
                         $_SESSION['session_libtype'] = $row['lib_type_util'];                        
                         header('Location: index.php');
                         exit();
-                        } else {
-                        echo '<p>Mauvais mot de passe</p>';
-                    }
+                        /*} else {
+                        echo '<p>Mauvais mot de passe</p>';                                               IDEM
+                    }*/
                 } else {
                     echo '<p>Cet utilisateur n\'existe pas</p>';
                 }

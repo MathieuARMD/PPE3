@@ -14,7 +14,7 @@ Vous voila ensuite connecté.
 ### 1.2 Mot de passe oublié
 Si vous avez oublié le mot de passe de votre compte, veuillez cliquer sur "Mot de passe oublié ?"
 
-![image info](./img/notice/mdp_oubliés.png)
+![image info](./img/notice/mdp_oublié.png)
 
 Il vous sera ensuite demandé d'entrer l'adresse e-mail liée à votre compte pour que votre mot de passe vous soit envoyé par mail.
 
