@@ -13,71 +13,38 @@
     <h2>Mot de Passe oublié</h2><br>
 
     <?php
-        $newmail = "";
-        $_POST['newemail'] = $newmail;
-        ?>
-        <form class="mdp", action="<?php echo $_SERVER['PHP_SELF']; ?>", method="post">
-            Mail utilisateur :<br>
-            <input type="email" name="newmail"><br>
-            <input type="submit" name="submit" value="Send">            
-        </form>
-<?php  
-    if(!empty($_POST)){
-        extract($_POST);
-        $valid = true;
- 
-        if (isset($_POST['newemail'])){
-            $mail = htmlentities(strtolower(trim($mail))); // On récupère le mail afin d envoyer le mail pour la récupèration du mot de passe 
- 
-            // Si le mail est vide alors on ne traite pas
-            if(empty($mail)){
-                $valid = false;
-                $er_mail = "Votre identifiant est inconnu.";
-            }
- 
-            if($valid){
-                $verification_mail = $DB->query("SELECT nom_util, prenom_util, email_util, n_mdp 
-                    FROM utilisateur WHERE email_util = ?",
-                    array($mail));
-                $verification_mail = $verification_mail->fetch();
- 
-                if(isset($verification_mail['email_util'])){
-                        // On génère un mot de passe à l'aide de la fonction RAND de PHP
-                        $new_pass = rand();
- 
-                        // Le mieux serait de générer un nombre aléatoire entre 7 et 10 caractères (Lettres et chiffres)
-                        password_hash($new_pass, PASSWORD_DEFAULT);
+    if(isset($_POST['submit'])) {
+        if (isset($_POST['mail'])) {
+            $mail = $_POST['mail'];
+            try {
+                $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+                $sql = "select password_util,email_util from utilisateur where email_util = '".$mail."'";
+                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sth = $dbh->prepare($sql);
+                $sth->execute(array());
+                $row = $sth->fetch(PDO::FETCH_ASSOC);
+                if ($mail == $row['email_util']) {
+                        echo '<p>Mot de passe envoyé</p>';
+                        exit();
+                } else {
+                        echo '<p>E-mail inconnu</p>';
+                    }
+                }
+            catch (PDOException $ex) {
+                die("Erreur lors de la connexion SQL : " . $ex->getMessage());
+            }
+        }
+    } ?>
 
-                        $objet = 'Nouveau mot de passe';
-                        $to = $verification_mail['email_util'];
- 
-                        //===== Création du header du mail.
-                        $header = "From: NOM_DE_LA_PERSONNE <no-reply@test.com> \n";
-                        $header .= "Reply-To: ".$to."\n";
-                        $header .= "MIME-version: 1.0\n";
-                        $header .= "Content-type: text/html; charset=utf-8\n";
-                        $header .= "Content-Transfer-Encoding: 8bit";
- 
-                        //===== Contenu de votre message
-                        $contenu =  "<html>".
-                            "<body>".
-                            "<p style='text-align: center; font-size: 18px'><b>Bonjour Mr, Mme".$verification_mail['nom_util']."</b>,</p><br/>".
-                            "<p style='text-align: justify'><i><b>Votre nouveau mot de passe : </b></i>".$new_pass."</p><br/>".
-                            "</body>".
-                            "</html>";
-                        //===== Envoi du mail
-                        mail($to, $objet, $contenu, $header);
-                        $DB->insert("UPDATE utilisateur SET password_util = ? WHERE email_util = ?", 
-                            array($new_pass, $verification_mail['email_util']));
-                       
-                }       
-                header('Location: login.php');
-                exit; 
-            }
-        }
-    }
-?>
+        <div class="login">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>", method="post" >
+            Adresse mail :<br>
+            <input type="email" name="mail" <?php if(isset($_POST['submit'])) { if (isset($_POST['mail'])) { echo ' value='.$_POST['mail']; } } ?> required><br>
+
+            <input type="submit" name="submit" value="Envoyer"><br><br><br>
+        </form>
+        </div>
+
+
 </body>
 </html>
-
---
