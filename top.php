@@ -8,8 +8,8 @@
 </head>
 <body>
 
-<br><br><br>
-<h1><font size:"+5"><span style="font-family:Calibri"><strong><center>M2L FREDI</center></strong></span></font></h1>
+<br>
+<img class="displayed" alt="FREDI" src="img\fredi.png" title="FREDI">  
 <br><br>
 
 <!-- Code php de verification si l'utilisateur est connecté --> 
@@ -42,10 +42,12 @@ session_start();
 <br>
 <div class="outer-div">
         <div class="inner-div">
-
-<h2>BIENVENUE SUR LE SITE DE LA M2L FREDI </h2>
+<?php if(isset($_SESSION['session_username'])) {
+  echo '<h2>BIENVENUE '.$_SESSION['session_libtype'].' SUR LE SITE DE LA M2L FREDI </h2>'; 
+  }else {
+    echo'<h2>BIENVENUE SUR LE SITE DE LA M2L FREDI </h2>';
+  }?>
 <br>
 </div>
-
 </body>
 </html>

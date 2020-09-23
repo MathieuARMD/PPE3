@@ -17,16 +17,21 @@
             $username = $_POST['username'];
             try {
                 $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-                $sql = "select password_util, nom_util from utilisateur where nom_util = '".$username."'";
+                $sql = "select password_util, nom_util, type_utilisateur.lib_type_util  from utilisateur, type_utilisateur where nom_util = '".$username."'AND utilisateur.id_type_util = type_utilisateur.id_type_util";
                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sth = $dbh->prepare($sql);
                 $sth->execute(array());
                 $row = $sth->fetch(PDO::FETCH_ASSOC);
+                $sql = "select * from type_utilisateur";
+                $sth = $dbh->prepare($sql);
+                $sth->execute(array());
+                $ligues = $sth->fetchAll(PDO::FETCH_ASSOC);
                 if ($username == $row['nom_util']) {
                     if (password_verify($_POST['password'], $row['password_util'])) {
                         echo '<p>Connexion réussie !</p>';
                         $_SESSION['session_username'] = $username;
                         $_SESSION['session_password'] = $password;
+                        $_SESSION['session_libtype'] = $row['lib_type_util'];                        
                         header('Location: index.php');
                         exit();
                         } else {
