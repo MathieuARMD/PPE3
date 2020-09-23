@@ -40,8 +40,8 @@
 // $hashed_password ---> Is The Hashed Password You Have Fetched From DataBase
 
 
-            $sql = "insert into utilisateur(nom_util, password_util, email_util) ";  
-            $sql .= "values (:pseudo, :mdp, :mail)"; 
+            $sql = "insert into utilisateur(nom_util, password_util, email_util, prenom_util, statut_util, matricule_cont, id_type_util) ";  
+            $sql .= "values (:pseudo, :mdp, :mail, user, u, 1, 1)"; 
             try { 
                     $sth = $dbh->prepare($sql); 
                     $sth->execute(array( 
