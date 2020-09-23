@@ -49,9 +49,9 @@
         <div class="login">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>", method="post" >
             Nom d'utilisateur :<br>
-            <input type="text" name="username" <?php if(isset($_POST['submit'])) { if (isset($_POST['username'])) { echo ' value='.$_POST['username']; } } ?> required><br>
+            <input type="text" name="username" <?php if(isset($_POST['submit'])) { if (isset($_POST['username'])) { echo ' value='.$_POST['username']; } } ?>placeholder="Votre nom d'utilisateur" required><br>
             Mot de passe :<br>
-            <input type="password" name="password" <?php if(isset($_POST['submit'])) { if (isset($_POST['password'])) { echo ' value='.$_POST['password']; } } ?> ><br><br>
+            <input type="password" name="password" <?php if(isset($_POST['submit'])) { if (isset($_POST['password'])) { echo ' value='.$_POST['password']; } } ?>placeholder="Votre mot de passe" ><br><br>
             <input type="submit" name="submit" value="Connexion"><br><br><br>
             <a href="motdepasse.php">Mot de passe oublié !</a>
         </form>
