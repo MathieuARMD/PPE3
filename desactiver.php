@@ -22,23 +22,16 @@
 
 <br><br><br>
 
-<center><button class="bouton" type="button" onclick="window.location.href = 'modifier.php'">
-    Modifier
-</button></center>
-
-<br><br>
-
-<center><button class="bouton" type="button" onclick="window.location.href = 'supprimer.php'">
-    Supprimer
-</button></center>
-
-    <br><br>
-
-<center><button class="bouton" type="button" onclick="window.location.href = 'desactiver.php'">
-    Desactiver
-
-</button></center>
-
+<hr color="black">
+<nav>
+  <ul>
+      <li><a href="modifier.php">Modifier</a></li>
+      <li><a href="desactiver.php">Desactiver</a></li>
+      <li><a href="supprimer.php">Supprimer</a></li>
+      <li><a href="javascript:history.go(-1)">Retour</a></li>
+  </ul>
+</nav>
+<hr color="black">
 
 </body>
 </html>
