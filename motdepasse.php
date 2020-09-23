@@ -11,14 +11,22 @@
     <?php include 'top.php';?>
     <?php include 'menu.php'; ?> 
     <h2>Mot de Passe oublié</h2><br>
-<?php
-    
 
+    <?php
+        $newmail = "";
+        $_POST['newemail'] = $newmail;
+        ?>
+        <form class="mdp", action="<?php echo $_SERVER['PHP_SELF']; ?>", method="post">
+            Mail utilisateur :<br>
+            <input type="email" name="newmail"><br>
+            <input type="submit" name="submit" value="Send">            
+        </form>
+<?php  
     if(!empty($_POST)){
         extract($_POST);
         $valid = true;
  
-        if (isset($_POST['oublie'])){
+        if (isset($_POST['newemail'])){
             $mail = htmlentities(strtolower(trim($mail))); // On récupère le mail afin d envoyer le mail pour la récupèration du mot de passe 
  
             // Si le mail est vide alors on ne traite pas
@@ -39,7 +47,7 @@
  
                         // Le mieux serait de générer un nombre aléatoire entre 7 et 10 caractères (Lettres et chiffres)
                         password_hash($new_pass, PASSWORD_DEFAULT);
-                        
+
                         $objet = 'Nouveau mot de passe';
                         $to = $verification_mail['email_util'];
  
@@ -64,7 +72,7 @@
                        
                 }       
                 header('Location: login.php');
-                exit;
+                exit; 
             }
         }
     }
@@ -73,12 +81,3 @@
 </html>
 
 --
-<?php
-        $newmail = "";
-        $_POST['newemail'] = $newmail;
-        ?>
-        <form class="mdp", action="<?php echo $_SERVER['PHP_SELF']; ?>", method="post">
-            Mail utilisateur :<br>
-            <input type="email" name="newmail"><br>
-            <input type="submit" name="submit" value="Send">            
-        </form>
