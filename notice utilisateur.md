@@ -1,35 +1,23 @@
 # Notice Utilisateur
 
 ## 1. Connexion au compte
+Pour vous connecter à votre compte, cliquez sur "Se connecter" dans le menu.
 
 ![image info](./img/notice/Se_connecter.png)
 
+Ensuite vous devrez rentrer les Identifiants qui vous ont été distribué au préalable.
 
-### Installation
- * Telecharger le dossier depuis github 
- * Placer le dossier dans le serveur web
- * Utiliser le script de création de base de données contenu dans le dossier /db ([PPE3-script.sql](./db/PPE3-script.sql))
+![image info](./img/notice/Identifiants.png)
 
-### Documentation
-La documentation est contenu dans le dossier [/doc](./doc)
+Vous voila ensuite connecté.
 
-### Finalités
-* connexion/déconnexion
+### 1.2 Mot de passe oublié
+Si vous avez oublié le mot de passe de votre compte, veuillez cliquer sur "Mot de passe oublié ?"
 
+![image info](./img/notice/mdp_oublié.png)
 
-### Comptes
+Il vous sera ensuite demandé d'entrer l'adresse e-mail liée à votre compte pour que votre mot de passe vous soit envoyé par mail.
 
-##### Adhérent : 
-* ID :user  mdp :user 
-* L'adhérent se sert du site pour remplir les frais du club.
-* Il peut donc créer/modifier/supprimer ses lignes de frais
+![image info](./img/notice/mail.png)
 
-##### Conrtôleur :
-* ID :Controleur   mdp :controleur 
-* Le contrôleur s'occupe de gérer les ligues et les clubs.
-* Il peut donc créer/modifier/supprimer des ligues et des clubs.
-
-##### Administrateur :
-* ID :admin   mdp :adminweb2020
-* L'administrateur s'occupe de gérer les frais et les périodes.
-* Il peut donc créer/modifier/supprimer des périodes comptables, des motifs de frais et des utilisateurs.
+## 2.
