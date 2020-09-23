@@ -19,19 +19,25 @@
   }else {
     echo'<center><h3 style="color:red"> Il semblerai qu&apos;il y ai une erreur, veuillez r&eacute;essayer.</h3></center>';
   }?>
-<br><br><br>
-<center><button class="bouton" type="button"><a href:'modifier.php'>
-    Modifier
-</a></button></center>
-<br><br>
-<center><button class="bouton" type="button"><a href:'supprimer.php'>
-    Supprimer
-    </a></button></center>
-    <br><br>
-<center><button class="bouton" type="button"><a href:'desactiver.php'>
-    Desactiver
-    </a></button></center>
 
+<br><br><br>
+
+<center><button class="bouton" type="button" onclick="window.location.href = 'modifier.php'">
+    Modifier
+</button></center>
+
+<br><br>
+
+<center><button class="bouton" type="button" onclick="window.location.href = 'supprimer.php'">
+    Supprimer
+</button></center>
+
+    <br><br>
+
+<center><button class="bouton" type="button" onclick="window.location.href = 'desactiver.php'">
+    Desactiver
+
+</button></center>
 
 </body>
 </html>
