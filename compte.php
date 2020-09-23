@@ -15,20 +15,22 @@
 <div class="outer-div">
         <div class="inner-div">
 <?php if(isset($_SESSION['session_username'])) {
-  echo '<h2>BIENVENUE '.$_SESSION['session_libtype'].'</h2>'; 
+  echo '<h2>'.$_SESSION['session_libtype'].'</h2>'; 
   }else {
-    echo'<h2> Il semblerai qu il y ai une erreur, veuillez reessayer. </h2>';
+    echo'<center><h3 style="color:red"> Il semblerai qu&apos;il y ai une erreur, veuillez r&eacute;essayer.</h3></center>';
   }?>
 <br><br><br>
-<button class="bouton" type="button"><a href:''>
+<center><button class="bouton" type="button"><a href:'modifier.php'>
     Modifier
-</button>
-<button class="bouton" type="button">
+</a></button></center>
+<br><br>
+<center><button class="bouton" type="button"><a href:'supprimer.php'>
     Supprimer
-</button>
-<button class="bouton" type="button">
+    </a></button></center>
+    <br><br>
+<center><button class="bouton" type="button"><a href:'desactiver.php'>
     Desactiver
-</button>
+    </a></button></center>
 
 
 </body>
