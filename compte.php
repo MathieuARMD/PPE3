@@ -39,5 +39,11 @@
 
 </button></center>
 
+<br><br>
+
+<center><button class="bouton" type="button" onclick="history.back()">
+    Retour
+</button></center>
+
 </body>
 </html>

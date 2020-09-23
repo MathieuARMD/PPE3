@@ -8,7 +8,7 @@
     color: #fff;
     border-radius: 10px;
     background-color: rgb(0, 71, 112);
-
+    margin : auto;
 }
 
 .bouton:hover {
