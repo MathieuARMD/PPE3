@@ -15,12 +15,12 @@
     <div class="login">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>", method="post" >
             Adresse mail :<br>
-            <input type="email" name="mail" <?php if(isset($_POST['submit'])) { if (isset($_POST['mail'])) { echo ' value='.$_POST['mail']; } } ?> required><br>
+            <input type="email" name="mail" <?php if(isset($_POST['submit'])) { if (isset($_POST['mail'])) { echo ' value='.$_POST['mail']; } } ?> required><br><br>
 
             <input type="submit" name="submit" value="Envoyer"><br><br><br>
         </form>
         </div>
-        
+
     <?php
     if(isset($_POST['submit'])) {
         if (isset($_POST['mail'])) {
