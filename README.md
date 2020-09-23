@@ -34,7 +34,7 @@ La documentation est contenu dans le dossier [/doc](./doc)
 * Il peut donc créer/modifier/supprimer ses lignes de frais
 
 ##### Conrtôleur :
-* ID :Controleur   mdp :controleur 
+* ID :controleur   mdp :controleur 
 * Le contrôleur s'occupe de gérer les ligues et les clubs.
 * Il peut donc créer/modifier/supprimer des ligues et des clubs.
 
