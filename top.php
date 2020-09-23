@@ -30,6 +30,7 @@ session_start();
     </li>
     <?php if(isset($_SESSION['session_username'])) {?>
       <li><a href="logout.php">Déconnexion</a></li>
+      <li><a href="compte.php">Mon compte</a></li>
     <?php } else {?>
     <li><a href="login.php">Se connecter</a></li>
     <?php }?>
