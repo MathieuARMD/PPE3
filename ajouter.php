@@ -35,16 +35,16 @@
 <hr color="black">
 <br><br><br>
 <form action="/action_page.php">
-  <label for="fname">E-Mail :</label><br>
+  <label for="email">E-Mail :</label><br>
   <input type="email" id="email" name="email" required><br><br>
-  <label for="lname">Mot de passe :</label><br>
+  <label for="mdp">Mot de passe :</label><br>
   <input type="text" id="mdp" name="mdp" required><br><br>
-  <label for="lname">Nom :</label><br>
+  <label for="nom">Nom :</label><br>
   <input type="text" id="nom" name="nom" required><br><br>
-  <label for="lname">Prenom :</label><br>
+  <label for="prenom">Prenom :</label><br>
   <input type="text" id="prenom" name="prenom" required><br><br>
 
-  <label for="lname">Matricule</label><br>
+  <label for="matricule">Matricule</label><br>
   <input type="text" id="matricule" name="matricule"><br><br>
 
 <select name="typeutil" id="typeutil" required>
