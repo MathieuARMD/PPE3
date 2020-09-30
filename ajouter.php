@@ -47,12 +47,22 @@
   <label for="lname">Matricule</label><br>
   <input type="text" id="lname" name="lname"><br><br>
 
+<<<<<<< HEAD
 <select name="typeutil" id="type-util">
     <option value="">Type Utilisateur</option><br>
     <option value="admin">Administrateur</option>
     <option value="cont">Contrôleur</option>
     <option value="user">Adhérant</option>
 </select>
+=======
+  <label for="pet-select">Choose a pet:</label>
+
+  <p><SELECT name="type" size="1" required></p>
+            <OPTION value="1">Adhérent 
+            <OPTION value="2">Contrôleur
+            <OPTION value="3">Administrateur
+        </SELECT>
+>>>>>>> f2b01d9127521c80e62356fe6991194d5971999a
 
   <input type="submit" value=" &nbsp;Envoyer ">
 </form>
