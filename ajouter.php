@@ -47,10 +47,8 @@
   <label for="lname">Matricule</label><br>
   <input type="text" id="lname" name="lname"><br><br>
 
-  <label for="pet-select">Choose a pet:</label>
-
 <select name="typeutil" id="type-util">
-    <option value="">-- Type Utilisateur --</option>
+    <option value="">Type Utilisateur</option><br>
     <option value="admin">Administrateur</option>
     <option value="cont">Contrôleur</option>
     <option value="user">Adhérant</option>
