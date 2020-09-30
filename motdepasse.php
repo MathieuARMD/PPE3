@@ -33,10 +33,10 @@
                 $sth->execute(array());
                 $row = $sth->fetch(PDO::FETCH_ASSOC);
                 if ($mail == $row['email_util']) {
-                        echo '<p>Mot de passe envoyé</p>';
+                        echo '<p>Votre mot de passe vient de vous être renvoyé à l’adresse mail suivante : '.$mail.'</p>';
                         exit();
                 } else {
-                        echo '<p>E-mail inconnu</p>';
+                        echo '<p>Votre identifiant est inconnu</p>';
                     }
                 }
             catch (PDOException $ex) {

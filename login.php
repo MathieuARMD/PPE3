@@ -47,12 +47,12 @@
                             header('Location: index.php');
                             exit();
                             } else {
-                            echo '<p>Mauvais mot de passe</p>';
+                            echo '<p>Votre identifiant et / ou votre mot de passe est erroné</p>';
                         }
                     } else { echo'<p>Cet utilisateur est désactivé</p>';
                 }
                 } else {
-                    echo '<p>Cet utilisateur n\'existe pas</p>';
+                    echo '<p>Votre identifiant et / ou votre mot de passe est erroné</p>';
                 }
             } 
             catch (PDOException $ex) {
