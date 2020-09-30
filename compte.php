@@ -21,7 +21,12 @@
   }?>
 
 <br><br><br>
-<!-- 
+<center><button class="bouton" type="button" onclick="window.location.href = 'ajouter.php'">
+    Ajouter
+</button></center>
+
+<br><br>
+
 <center><button class="bouton" type="button" onclick="window.location.href = 'modifier.php'">
     Modifier
 </button></center>
@@ -44,13 +49,13 @@
 <center><button class="bouton" type="button" onclick="history.back()">
     Retour
 </button></center>
---> 
+ 
 
-<div class="box">
-
+<!--<div class="box">-->
 <!--tableau-->
 <div class="centre">
 <?php
+/*
 $order ='';
   $tri = isset($_GET['tri']) ? $_GET['tri']: 0; // recupere le tri, envoyé avec les icones du tableau
   switch ($tri){ // switch, completera le order by de la requete sql
@@ -168,8 +173,9 @@ switch ($modif) { //si pas de session -> echo erreur
   echo "</tr>"; 
 } 
 echo "</table>";
+*/
 ?>
-</div>
+<!--</div>-->
 <!--Fin tableau-->
 
 

@@ -25,6 +25,7 @@
 <hr color="black">
 <nav>
   <ul>
+      <li><a href="ajouter.php">Ajouter</a></li>
       <li><a href="modifier.php">Modifier</a></li>
       <li><a href="desactiver.php">Desactiver</a></li>
       <li><a href="supprimer.php">Supprimer</a></li>
