@@ -48,10 +48,9 @@
   <input type="text" id="lname" name="lname"><br><br>
 
 <select name="typeutil" id="type-util">
-    <option value="">Type Utilisateur</option><br>
-    <option value="admin">Administrateur</option>
-    <option value="cont">Contrôleur</option>
-    <option value="user">Adhérant</option>
+     <option value="user">Adhérent</option>
+     <option value="cont">Contrôleur</option>
+     <option value="admin">Administrateur</option>
 </select>
 
   <input type="submit" value=" &nbsp;Envoyer ">
