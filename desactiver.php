@@ -33,20 +33,15 @@
   </ul>
 </nav>
 <hr color="black">
-
 <br><br>
 
-<center><h2 style="color:red"> Voulez-vous vraiment d&eacute;sactiver le compte ? </h2></center>
+<form action="/action_page.php">
+  <label for="email">E-Mail :</label><br>
+  <input type="email" id="email" name="email" required><br><br>
+  <input type="submit" value="&nbsp;Desactiver&nbsp;">
+</form>
 <br>
 
-<center><button class="bouton" type="button" onclick="window.location.href = 'modifier.php'">
-    Oui
-</button></center>
-<br>
-<center><button class="bouton" type="button" onclick="history.back()">
-    Non
-</button></center>
-
-
+<!-- UPDATE utilisateur SET is_disabled = 1 WHERE email_util= :email -->
 </body>
 </html>
