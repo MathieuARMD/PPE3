@@ -47,6 +47,6 @@
     Non
 </button></center>
 
-
+<!-- DELETE FROM utilisateur WHERE email_util = :email -->
 </body>
 </html>
