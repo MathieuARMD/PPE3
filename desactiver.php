@@ -33,5 +33,19 @@
 </nav>
 <hr color="black">
 
+<br><br>
+
+<center><h2 style="color:red"> Voulez-vous vraiment d&eacute;sactiver le compte ? </h2></center>
+<br>
+
+<center><button class="bouton" type="button" onclick="window.location.href = 'modifier.php'">
+    Oui
+</button></center>
+<br>
+<center><button class="bouton" type="button" onclick="history.back()">
+    Non
+</button></center>
+
+
 </body>
 </html>

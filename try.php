@@ -3,49 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Compte</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/compte.css">
+    <link rel="stylesheet" href="css/try.css">
+    <title>Compte</title>
 </head>
 <body>
-<?php include 'top.php';?>
-<?php include 'menu.php'; ?> 
-
-<br>
-<div class="outer-div">
-        <div class="inner-div">
-<?php if(isset($_SESSION['session_username'])) {
-  echo '<h2>'.$_SESSION['session_libtype'].'</h2>'; 
-  }else {
-    echo'<center><h3 style="color:red"> Il semblerai qu&apos;il y ai une erreur, veuillez r&eacute;essayer.</h3></center>';
-  }?>
-
-<br><br><br>
-<!-- 
-<center><button class="bouton" type="button" onclick="window.location.href = 'modifier.php'">
-    Modifier
-</button></center>
-
-<br><br>
-
-<center><button class="bouton" type="button" onclick="window.location.href = 'supprimer.php'">
-    Supprimer
-</button></center>
-
-    <br><br>
-
-<center><button class="bouton" type="button" onclick="window.location.href = 'desactiver.php'">
-    Desactiver
-
-</button></center>
-
-<br><br>
-
-<center><button class="bouton" type="button" onclick="history.back()">
-    Retour
-</button></center>
---> 
-
 <div class="box">
 
 <!--tableau-->
@@ -144,8 +105,8 @@ switch ($modif) { //si pas de session -> echo erreur
   echo "<th>Statut</th>";
   echo "<th>Matricule</th>";
   echo "<th>Type utilisateur</th>";
-  if (isset($_SESSION['session_libtype'])) { // si connecté
-      if ($_SESSION['id_type_util']==2 || $_SESSION['id_type_util']==3) {// possibilité de réponse ou supression seulement si admin
+  if (isset($_SESSION['session_username'])) { // si connecté
+      if ($_SESSION['droit']==2 || $_SESSION['droit']==3) {// possibilité de réponse ou supression seulement si admin
         echo "<th>Action</th>"; 
       }
   }
@@ -160,9 +121,9 @@ switch ($modif) { //si pas de session -> echo erreur
   echo "<td>".$row['statut_util']."</td>"; 
   echo "<td>".$row['matricule_cont']."</td>"; 
   echo "<td>".$row['id_type_util']."</td>"; 
-  if (isset($_SESSION['session_libtype'])) { // si connecté
-  if ($_SESSION['id_type_util']==2 || $_SESSION['id_type_util']==3) {// possibilité de réponse ou supression seulement si admin
-      echo "<td><a href='modifier.php?num=".$row['id_faq']."'><img src='img/edit.png'></a><a href='supprimer.php?num=".$row['id_faq']."'><img src='img/delete.png'></a></td>"; 
+  if (isset($_SESSION['session_username'])) { // si connecté
+  if ($_SESSION['droit']==2 || $_SESSION['droit']==3) {// possibilité de réponse ou supression seulement si admin
+      echo "<td><a href='edit.php?num=".$row['id_faq']."'><img src='img/edit.png'></a><a href='delete.php?num=".$row['id_faq']."'><img src='img/delete.png'></a></td>"; 
   }
   }
   echo "</tr>"; 
@@ -171,7 +132,6 @@ echo "</table>";
 ?>
 </div>
 <!--Fin tableau-->
-
 
 </body>
 </html>
