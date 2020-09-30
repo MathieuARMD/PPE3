@@ -33,6 +33,32 @@
   </ul>
 </nav>
 <hr color="black">
+<br><br><br>
+<form action="/action_page.php">
+  <label for="fname">E-Mail :</label><br>
+  <input type="text" id="fname" name="fname"><br><br>
+  <label for="lname">Mot de passe :</label><br>
+  <input type="text" id="lname" name="lname"><br><br>
+  <label for="lname">Nom :</label><br>
+  <input type="text" id="lname" name="lname"><br><br>
+  <label for="lname">Prenom :</label><br>
+  <input type="text" id="lname" name="lname"><br><br>
+
+  <label for="lname">Matricule</label><br>
+  <input type="text" id="lname" name="lname"><br><br>
+
+  <label for="pet-select">Choose a pet:</label>
+
+<select name="typeutil" id="type-util">
+    <option value="">-- Type Utilisateur --</option>
+    <option value="admin">Administrateur</option>
+    <option value="cont">Contrôleur</option>
+    <option value="user">Adhérant</option>
+</select>
+
+  <input type="submit" value=" &nbsp;Envoyer ">
+</form>
+
 
 </body>
 </html>
