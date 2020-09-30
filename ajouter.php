@@ -49,12 +49,11 @@
 
   <label for="pet-select">Choose a pet:</label>
 
-<select name="typeutil" id="type-util">
-    <option value="">-- Type Utilisateur --</option>
-    <option value="admin">Administrateur</option>
-    <option value="cont">Contrôleur</option>
-    <option value="user">Adhérant</option>
-</select>
+  <p><SELECT name="type" size="1" required></p>
+            <OPTION value="1">Adhérent 
+            <OPTION value="2">Contrôleur
+            <OPTION value="3">Administrateur
+        </SELECT>
 
   <input type="submit" value=" &nbsp;Envoyer ">
 </form>
