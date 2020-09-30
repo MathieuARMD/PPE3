@@ -43,7 +43,8 @@
                             echo '<p>Connexion réussie !</p>';
                             $_SESSION['session_username'] = $username;
                             $_SESSION['session_password'] = $password;
-                            $_SESSION['session_libtype'] = $row['lib_type_util'];
+                            $lib_util_type = $row['lib_type_util'];
+                            $_SESSION['session_libtype'] = $lib_util_type;
                             header('Location: index.php');
                             exit();
                             } else {
@@ -59,7 +60,8 @@
                 die("Erreur lors de la connexion SQL : " . $ex->getMessage());
             }
         }
-    } ?>
+    } 
+    ?>
         
 </body>
 </html>
