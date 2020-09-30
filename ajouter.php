@@ -34,7 +34,7 @@
 </nav>
 <hr color="black">
 <br><br><br>
-<form action="/action_page.php">
+<form action="ajouter.php" method="post">
   <label for="email">E-Mail :</label><br>
   <input type="email" id="email" name="email" required><br><br>
   <label for="mdp">Mot de passe :</label><br>
@@ -48,13 +48,47 @@
   <input type="text" id="matricule" name="matricule"><br><br>
 
 <select name="typeutil" id="typeutil" required>
-     <option value="user">Adhérent</option>
-     <option value="cont">Contrôleur</option>
-     <option value="admin">Administrateur</option>
+     <option value="1">Adhérent</option>
+     <option value="2">Contrôleur</option>
+     <option value="3">Administrateur</option>
 </select>
 
 <!-- INSERT INTO utilisateur (`email_util`, `password_util`, `nom_util`, `prenom_util`, `statut_util`, `matricule_cont`, `id_type_util`, `is_disabled`) VALUES (:email, :mdp, :nom, :prenom, :statut, :matricule, :typeutil, 0);  -->
-  <input type="submit" value=" &nbsp;Envoyer ">
+  <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
+<?php
+     
+    $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        if(isset($_POST['enregistrement'])){
+          $email = $_POST['email'];
+          $mdp = $_POST['mdp'];
+          $nom = $_POST['nom'];
+          $prenom = $_POST['prenom'];
+          $matricule = $_POST['matricule'];
+          $typeutil = $_POST['typeutil'];
+          $hashed_password = password_hash($_POST["mdp"],PASSWORD_DEFAULT);          
+          $sql = "insert into utilisateur (`email_util`, `password_util`, `nom_util`, `prenom_util`, `matricule_cont`, `id_type_util`, `is_disabled`)";
+          $sql .=" VALUES (:email, :mdp, :nom, :prenom, :matricule, :typeutil, 0);  ";   
+          try { 
+            $sth = $dbh->prepare($sql);
+            $sth->execute(array( 
+              ':email' => $email, 
+              ':mdp' => $hashed_password, 
+              ':nom' => $nom,
+              ':prenom' => $prenom,
+              ':matricule' => $matricule,
+              ':typeutil' => $typeutil,
+              )); 
+            }catch (PDOException $ex) { 
+            die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
+
+            }   
+            echo "<br><br>"; 
+            echo "<p>Utilisateur bien ajouté</p>"; 
+        }
+        
+
+?>
+  
 </form>
 
 
