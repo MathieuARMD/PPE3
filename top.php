@@ -50,7 +50,7 @@ session_start();
 <div class="outer-div">
         <div class="inner-div">
 <?php if(isset($_SESSION['session_username'])) {
-  echo '<h2>BIENVENUE '.$_SESSION['session_libtype'].' SUR LE SITE DE LA M2L FREDI </h2>'; 
+  echo '<h2>Bienvenue '.$_SESSION['session_libtype'].' sur le site de la M2L FREDI </h2>'; 
   }else {
     echo'<h2>BIENVENUE SUR LE SITE DE LA M2L FREDI </h2>';
   }?>
