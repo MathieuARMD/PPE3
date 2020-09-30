@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 16 sep. 2020 à 08:32
+-- Généré le :  mer. 30 sep. 2020 à 08:25
 -- Version du serveur :  10.4.6-MariaDB
 -- Version de PHP :  7.3.9
 
@@ -126,6 +126,15 @@ CREATE TABLE `type_utilisateur` (
   `lib_type_util` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Déchargement des données de la table `type_utilisateur`
+--
+
+INSERT INTO `type_utilisateur` (`id_type_util`, `lib_type_util`) VALUES
+(1, 'adhérent'),
+(2, 'Contrôleur'),
+(3, 'Administrateur');
+
 -- --------------------------------------------------------
 
 --
@@ -139,8 +148,19 @@ CREATE TABLE `utilisateur` (
   `prenom_util` varchar(50) NOT NULL,
   `statut_util` varchar(1) NOT NULL,
   `matricule_cont` varchar(10) NOT NULL,
-  `id_type_util` int(11) NOT NULL
+  `id_type_util` int(11) NOT NULL,
+  `is_disabled` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`email_util`, `password_util`, `nom_util`, `prenom_util`, `statut_util`, `matricule_cont`, `id_type_util`, `is_disabled`) VALUES
+('admin@admin', '$2y$10$6scB8nwKtUFt7ft5NPgGo.gVvyR8GCsaK2RXHFOHJmnpemU49GVLG', 'admin', 'admin', '', '', 3, 0),
+('controleur@controleur', '$2y$10$fjFg.Q0FH.yRWWkfkoj/LOtQ783CwL0wjB3QtCqMwfsOTiJQYAUuu', 'controleur', 'controleur', '', '0001', 2, 0),
+('user2@user', '$2y$10$vO0xK/iykI8AdE8BWDFsY.i5ekwHuxtJv3RMxBDDdKFkmHnmcf6mm', 'user2', 'user2', '', '', 1, 1),
+('user@user', '$2y$10$vO0xK/iykI8AdE8BWDFsY.i5ekwHuxtJv3RMxBDDdKFkmHnmcf6mm', 'user', 'user', '', '', 1, 0);
 
 --
 -- Index pour les tables déchargées
@@ -227,7 +247,7 @@ ALTER TABLE `motif_de_frais`
 -- AUTO_INCREMENT pour la table `type_utilisateur`
 --
 ALTER TABLE `type_utilisateur`
-  MODIFY `id_type_util` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_type_util` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Contraintes pour les tables déchargées
