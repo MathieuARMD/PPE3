@@ -36,23 +36,24 @@
 <br><br><br>
 <form action="/action_page.php">
   <label for="fname">E-Mail :</label><br>
-  <input type="text" id="fname" name="fname"><br><br>
+  <input type="email" id="email" name="email" required><br><br>
   <label for="lname">Mot de passe :</label><br>
-  <input type="text" id="lname" name="lname"><br><br>
+  <input type="text" id="mdp" name="mdp" required><br><br>
   <label for="lname">Nom :</label><br>
-  <input type="text" id="lname" name="lname"><br><br>
+  <input type="text" id="nom" name="nom" required><br><br>
   <label for="lname">Prenom :</label><br>
-  <input type="text" id="lname" name="lname"><br><br>
+  <input type="text" id="prenom" name="prenom" required><br><br>
 
   <label for="lname">Matricule</label><br>
-  <input type="text" id="lname" name="lname"><br><br>
+  <input type="text" id="matricule" name="matricule"><br><br>
 
-<select name="typeutil" id="type-util">
+<select name="typeutil" id="typeutil" required>
      <option value="user">Adhérent</option>
      <option value="cont">Contrôleur</option>
      <option value="admin">Administrateur</option>
 </select>
 
+<!-- INSERT INTO utilisateur (`email_util`, `password_util`, `nom_util`, `prenom_util`, `statut_util`, `matricule_cont`, `id_type_util`, `is_disabled`) VALUES (:email, :mdp, :nom, :prenom, :statut, :matricule, :typeutil, 0);  -->
   <input type="submit" value=" &nbsp;Envoyer ">
 </form>
 
