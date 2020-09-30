@@ -36,13 +36,27 @@
 
 <br><br>
 
-<form action="/action_page.php">
+<form action="supprimer.php" method="post">
   <label for="email">E-Mail :</label><br>
   <input type="email" id="email" name="email" required><br><br>
-  <input type="submit" value="&nbsp;Supprimer&nbsp;">
+  <input type="submit" name="Supprimer" value="&nbsp;Supprimer&nbsp;">
 </form>
 <br>
-
+<?php
+$dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        if(isset($_POST['Supprimer'])){
+          $email = $_POST['email'];       
+          $sql = "DELETE FROM utilisateur WHERE email_util = :email"; 
+          try { 
+            $sth = $dbh->prepare($sql);
+            $sth->execute(array(':email' => $email));
+            }catch (PDOException $ex) { 
+            die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
+            }   
+            echo "<br><br>"; 
+            echo "<p>L'utilisateur a bien été Supprimer</p>"; 
+        }
+?>
 <!-- DELETE FROM utilisateur WHERE email_util = :email -->
 </body>
 </html>
