@@ -154,7 +154,7 @@ switch ($modif) { //si pas de session -> echo erreur
 { 
   echo "<tr>"; 
   echo "<td>".$row['email_util']."</td>"; 
-  echo "<td>".$row['password_util']."</td>"; 
+  echo "<td><p>Confidentiel</p></td>"; 
   echo "<td>".$row['nom_util']."</td>"; 
   echo "<td>".$row['prenom_util']."</td>"; 
   echo "<td>".$row['statut_util']."</td>"; 
