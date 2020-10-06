@@ -88,7 +88,7 @@ $order ='';
       $utilisateur=""; // sinon requete inchangée
   }
 
-  $sql = "select email_util, password_util, nom_util, prenom_util,statut_util,matricule_cont,id_type_util from utilisateur"; // requete sql
+  $sql = "select email_util, password_util, nom_util, prenom_util,statut_util,matricule_cont,id_type_util from utilisateur WHERE is_disabled = '0'"; // requete sql
   $dsn = 'mysql:host=localhost;dbname=fredi;charset=UTF8'; 
   $user = 'root';
   $password = '';

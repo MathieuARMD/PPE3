@@ -83,7 +83,7 @@
 
             }   
             echo "<br><br>"; 
-            echo "<p>Utilisateur bien ajouté</p>"; 
+            echo "<p>L'utilisateur $nom a été créé dans la FREDI</p>"; 
         }
         
 
