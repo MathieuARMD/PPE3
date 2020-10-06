@@ -67,7 +67,7 @@
           $typeutil = $_POST['typeutil'];
           $hashed_password = password_hash($_POST["mdp"],PASSWORD_DEFAULT);          
           $sql = "insert into utilisateur (`email_util`, `password_util`, `nom_util`, `prenom_util`, `matricule_cont`, `id_type_util`, `is_disabled`)";
-          $sql .=" VALUES (:email, :mdp, :nom, :prenom, :matricule, :typeutil, 0);  ";   
+          $sql .=" VALUES (:email, :mdp, :nom, :prenom, :matricule, :typeutil, 0);  "; 
           try { 
             $sth = $dbh->prepare($sql);
             $sth->execute(array( 
@@ -80,10 +80,22 @@
               )); 
             }catch (PDOException $ex) { 
             die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-
-            }   
-            echo "<br><br>"; 
-            echo "<p>L'utilisateur $nom a été créé dans la FREDI</p>"; 
+            }  
+            $mailtest="SELECT email_util FROM utilisateur WHERE email_util='".$_POST['email']."'";
+            try{
+              $sth=$dbh->prepare($mailtest);
+              $sth->execute();
+              $rows=$sth->fetchall(PDO::FETCH_ASSOC);
+            }catch (PDOException $ex) { 
+              die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
+            }
+            if(isset($_POST['email']) == $mailtest){
+              echo "<br><br>"; 
+              die('Email déjà utilisé');
+            }else{
+              echo "<p>L'utilisateur $nom a été créé dans la FREDI</p>";
+            } 
+//erreur
         }
         
 
