@@ -89,29 +89,16 @@ $order ='';
   $sth = $dbh->prepare($sql);
               $sth->execute(array( 
                 ':email_util' => $mail , ));
-              $row = $sth->fetch(PDO::FETCH_ASSOC);
+                $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
   } catch (PDOException $ex) {
   die("Erreur lors de la requête SQL : ".$ex->getMessage());
   }
 
-
-  $modif = isset($_GET['modif']) ? $_GET['modif']: 0;  //Reception  numero erreur
-switch ($modif) { //si pas de session -> echo erreur
-  case 1 :
-  echo"<p class='centre'>1 enregistrement ajouté.</p>";
-  break;
-  case 2:
-  echo"<p class='centre'>1 enregistrement modifié.</p>"; 
-  break;
-  case 3:
-  echo"<p class='centre'>1 enregistrement supprimé.</p>"; 
-  break;
-  default:
-  break;
- }
 ?>
  <form  method='post'>
- <textarea name="nom" rows="1" cols="25"><?php echo $row['mail'];?></textarea> <!-- mettre la question dans le champ par défaut ---> 
+
+ <textarea name='nom' rows='1' cols='25'><?php echo $_GET['mail'];?></textarea>
+ <textarea name='nom' rows='1' cols='25'><?php echo $rows['nom_util'];?></textarea>
 
 </body>
 </html>
