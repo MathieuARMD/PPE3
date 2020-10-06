@@ -22,17 +22,7 @@
   
 <br><br><br>
 
-<hr color="black">
-<nav>
-  <ul>
-      <li><a href="ajouter.php">Ajouter</a></li>
-      <li><a href="modifier.php">Modifier</a></li>
-      <li><a href="desactiver.php">Desactiver</a></li>
-      <li><a href="supprimer.php">Supprimer</a></li>
-      <li><a href="javascript:history.go(-1)">Retour</a></li>
-  </ul>
-</nav>
-<hr color="black">  
+
 <?php
 
 $order ='';
@@ -88,7 +78,8 @@ $order ='';
       $utilisateur=""; // sinon requete inchangée
   }
 
-  $sql = "select email_util, password_util, nom_util, prenom_util,statut_util,matricule_cont,id_type_util from utilisateur WHERE is_disabled = '0'"; // requete sql
+  $mail=isset($_GET['mail']) ? $_GET['mail']: '';
+  $sql = "select * utilisateur WHERE email_util = :email_util"; // requete sql
   $dsn = 'mysql:host=localhost;dbname=fredi;charset=UTF8'; 
   $user = 'root';
   $password = '';
@@ -96,59 +87,18 @@ $order ='';
   $dbh = new PDO($dsn, $user, $password);
   //$sql = "select id_faq, pseudo, question, reponse from faq F, user U where F.id_user=U.id_user ORDER BY pseudo";
   $sth = $dbh->prepare($sql);
-  $sth->execute(); 
-  $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+              $sth->execute(array( 
+                ':email_util' => $mail , ));
+                $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
   } catch (PDOException $ex) {
   die("Erreur lors de la requête SQL : ".$ex->getMessage());
   }
 
-
-  $modif = isset($_GET['modif']) ? $_GET['modif']: 0;  //Reception  numero erreur
-switch ($modif) { //si pas de session -> echo erreur
-  case 1 :
-  echo"<p class='centre'>1 enregistrement ajouté.</p>";
-  break;
-  case 2:
-  echo"<p class='centre'>1 enregistrement modifié.</p>"; 
-  break;
-  case 3:
-  echo"<p class='centre'>1 enregistrement supprimé.</p>"; 
-  break;
-  default:
-  break;
- }
-
-
-  // Affichage de la liste des colonnes
-  echo "<table>";  //liens qui envoie le mode de tri pour chaque th
-  echo "<tr><th>E-mail</th>";
-  echo "<th>Mot de passe</th>";
-  echo "<th>Nom</th>";
-  echo "<th>Prenom</th>";
-  echo "<th>Statut</th>";
-  echo "<th>Matricule</th>";
-  echo "<th>Type utilisateur</th>";
-  if (isset($_SESSION['session_libtype'])) { // si connecté
-        echo "<th>Action</th>"; 
-      }
-  echo "</tr>";
-  foreach ($rows as $row) //affichage en tableau
-{ 
-  echo "<tr>"; 
-  echo "<td>".$row['email_util']."</td>"; 
-  echo "<td><p>Confidentiel</p></td>"; 
-  echo "<td>".$row['nom_util']."</td>"; 
-  echo "<td>".$row['prenom_util']."</td>"; 
-  echo "<td>".$row['statut_util']."</td>"; 
-  echo "<td>".$row['matricule_cont']."</td>"; 
-  echo "<td>".$row['id_type_util']."</td>"; 
-  if (isset($_SESSION['session_libtype'])) { // si connecté 
-      echo "<td><a href='modifier_user.php?mail=".$row['email_util']."'><img src='img/tableau/edit.png' width='50' height='50'></a></td>"; 
-  }
-  }
-  echo "</tr>"; 
-echo "</table>";
-
 ?>
+ <form  method='post'>
+
+ <textarea name='nom' rows='1' cols='25'><?php echo $_GET['mail'];?></textarea>
+ <textarea name='nom' rows='1' cols='25'><?php echo $rows['nom_util'];?></textarea>
+
 </body>
 </html>
