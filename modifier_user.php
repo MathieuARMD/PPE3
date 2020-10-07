@@ -97,8 +97,8 @@ $order ='';
 ?>
  <form  method='post'>
 
- <textarea name='nom' rows='1' cols='25'><?php echo $_GET['mail'];?></textarea>
- <textarea name='nom' rows='1' cols='25'><?php echo $rows['nom_util'];?></textarea>
+ <?php echo $_GET['mail'];?>
+ <?php echo $rows['nom_util'];?>
 
 </body>
 </html>
