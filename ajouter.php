@@ -89,13 +89,15 @@
             }catch (PDOException $ex) { 
               die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
             }
-            if(isset($_POST['email']) == $mailtest){
-              echo "<br><br>"; 
-              die('Email déjà utilisé');
-            }else{
-              echo "<p>L'utilisateur $nom a été créé dans la FREDI</p>";
-            } 
-//erreur
+            foreach ($rows as $row)
+            {
+              if(isset($_POST['email']) == $row['email_util']){
+                echo "<br><br>"; 
+                die('Cette adresse mail est déjà utilisé');
+              }else{
+                echo "<p>L'utilisateur $nom a été créé dans la FREDI</p>";
+              }
+            }            
         }
         
 
