@@ -89,13 +89,8 @@
               echo "<br><br>"; 
               echo "<p>Cette adresse mail est déjà utilisé>/p>";
             }          
-        }
-        
-
+        }       
 ?>
-  
 </form>
-
-
 </body>
 </html>
