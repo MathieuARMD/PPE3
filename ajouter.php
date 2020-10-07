@@ -80,24 +80,15 @@
               )); 
             }catch (PDOException $ex) { 
             die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-            }  
-            $mailtest="SELECT email_util FROM utilisateur WHERE email_util='".$_POST['email']."'";
-            try{
-              $sth=$dbh->prepare($mailtest);
-              $sth->execute();
-              $rows=$sth->fetchall(PDO::FETCH_ASSOC);
-            }catch (PDOException $ex) { 
-              die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
             }
-            foreach ($rows as $row)
-            {
-              if(isset($_POST['email']) == $row['email_util']){
-                echo "<br><br>"; 
-                die('Cette adresse mail est déjà utilisé');
-              }else{
-                echo "<p>L'utilisateur $nom a été créé dans la FREDI</p>";
-              }
-            }            
+            $count = $sth->rowCount();
+            if( $count == 1){
+              echo "<br><br>"; 
+              echo "<p>L'utilisateur $nom a été créé dans la FREDI</p>";
+            }else{
+              echo "<br><br>"; 
+              echo "<p>Cette adresse mail est déjà utilisé>/p>";
+            }          
         }
         
 
