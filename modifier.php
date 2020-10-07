@@ -150,7 +150,8 @@ echo "</table>";
   <input type="text" id="nom" name="nom" required><br><br>
   <label for="prenom">Prenom :</label><br>
   <input type="text" id="prenom" name="prenom" required><br><br>
-
+  <label for="statut">Statut :</label><br>
+  <input type="text" id="statut" name="statut" required><br><br>
   <label for="matricule">Matricule</label><br>
   <input type="text" id="matricule" name="matricule"><br><br>
 
@@ -168,8 +169,9 @@ echo "</table>";
           $nom = $_POST['nom'];
           $prenom = $_POST['prenom'];
           $matricule = $_POST['matricule'];
-          $typeutil = $_POST['typeutil'];        
-          $sql = "UPDATE utilisateur SET nom_util=:nom, prenom_util=:prenom, matricule_cont=:matricule, id_type_util=:typeutil WHERE email_util=:email"; 
+          $typeutil = $_POST['typeutil'];
+          $Statut = $_POST['statut'];        
+          $sql = "UPDATE utilisateur SET nom_util=:nom, prenom_util=:prenom, matricule_cont=:matricule,statut_util=:statut, id_type_util=:typeutil WHERE email_util=:email"; 
           try { 
             $sth = $dbh->prepare($sql);
             $sth->execute(array( 
@@ -178,6 +180,7 @@ echo "</table>";
               ':prenom' => $prenom,
               ':matricule' => $matricule,
               ':typeutil' => $typeutil,
+              ':statut' => $Statut,
               )); 
             }catch (PDOException $ex) { 
             die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
