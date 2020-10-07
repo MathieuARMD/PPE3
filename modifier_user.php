@@ -77,7 +77,7 @@ $order ='';
   else {
       $utilisateur=""; // sinon requete inchangée
   }
-
+  $nom = "testnomlim";
   $mail=isset($_GET['mail']) ? $_GET['mail']: '';
   $sql = "select * utilisateur WHERE email_util = :email_util"; // requete sql
   $dsn = 'mysql:host=localhost;dbname=fredi;charset=UTF8'; 
@@ -85,7 +85,6 @@ $order ='';
   $password = '';
   try {
   $dbh = new PDO($dsn, $user, $password);
-  //$sql = "select id_faq, pseudo, question, reponse from faq F, user U where F.id_user=U.id_user ORDER BY pseudo";
   $sth = $dbh->prepare($sql);
               $sth->execute(array( 
                 ':email_util' => $mail , ));
@@ -93,12 +92,16 @@ $order ='';
   } catch (PDOException $ex) {
   die("Erreur lors de la requête SQL : ".$ex->getMessage());
   }
-
+  foreach($rows as $row){
+    $nom= $row['nom_util'];
+    $prenom= $row['prenom_util'];
+    $statut= $row['statut_util'];
+    $matricule= $row['matricule_cont'];
+  }
 ?>
  <form  method='post'>
-
  <?php echo $_GET['mail'];?>
- <textarea name='nom' rows='1' cols='25'><?php echo $rows['nom_util'];?></textarea>
+ <textarea name='nom' rows='1' cols='25'><?php echo $nom ?> </textarea>
 
 </body>
 </html>
