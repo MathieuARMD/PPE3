@@ -21,7 +21,7 @@ session_start();
 <hr color="black">
 <nav>
   <ul>
-    <li><a href="#">Accueil &ensp;</a></li>
+    <li><a href="top.php">Accueil &ensp;</a></li>
     <li class="deroulant"><a href="#">Ligue &ensp;</a>
       <ul class="sous">
         <li><a href="#">Ligue de football</a></li>
