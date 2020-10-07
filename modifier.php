@@ -94,7 +94,6 @@ $order ='';
   $password = '';
   try {
   $dbh = new PDO($dsn, $user, $password);
-  //$sql = "select id_faq, pseudo, question, reponse from faq F, user U where F.id_user=U.id_user ORDER BY pseudo";
   $sth = $dbh->prepare($sql);
   $sth->execute(); 
   $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -128,9 +127,6 @@ switch ($modif) { //si pas de session -> echo erreur
   echo "<th>Statut</th>";
   echo "<th>Matricule</th>";
   echo "<th>Type utilisateur</th>";
-  if (isset($_SESSION['session_libtype'])) { // si connecté
-        echo "<th>Action</th>"; 
-      }
   echo "</tr>";
   foreach ($rows as $row) //affichage en tableau
 { 
@@ -142,13 +138,59 @@ switch ($modif) { //si pas de session -> echo erreur
   echo "<td>".$row['statut_util']."</td>"; 
   echo "<td>".$row['matricule_cont']."</td>"; 
   echo "<td>".$row['id_type_util']."</td>"; 
-  if (isset($_SESSION['session_libtype'])) { // si connecté 
-      echo "<td><a href='modifier_user.php?mail=".$row['email_util']."'><img src='img/tableau/edit.png' width='50' height='50'></a></td>"; 
-  }
   }
   echo "</tr>"; 
 echo "</table>";
+?><!--From pour modifier l'utilisateur en question -->
+<br>
+ <form action="modifier.php" method="post">
+  <label for="email">E-Mail :</label><br>
+  <input type="email" id="email" name="email" required><br><br>
+  <label for="nom">Nom :</label><br>
+  <input type="text" id="nom" name="nom" required><br><br>
+  <label for="prenom">Prenom :</label><br>
+  <input type="text" id="prenom" name="prenom" required><br><br>
 
-?>
+  <label for="matricule">Matricule</label><br>
+  <input type="text" id="matricule" name="matricule"><br><br>
+
+<select name="typeutil" id="typeutil" required>
+     <option value="1">Adhérent</option>
+     <option value="2">Contrôleur</option>
+     <option value="3">Administrateur</option>
+</select>
+  <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
+<?php
+     
+    $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        if(isset($_POST['enregistrement'])){
+          $email = $_POST['email'];
+          $nom = $_POST['nom'];
+          $prenom = $_POST['prenom'];
+          $matricule = $_POST['matricule'];
+          $typeutil = $_POST['typeutil'];        
+          $sql = "UPDATE utilisateur SET nom_util=:nom, prenom_util=:prenom, matricule_cont=:matricule, id_type_util=:typeutil WHERE email_util=:email"; 
+          try { 
+            $sth = $dbh->prepare($sql);
+            $sth->execute(array( 
+              ':email' => $email, 
+              ':nom' => $nom,
+              ':prenom' => $prenom,
+              ':matricule' => $matricule,
+              ':typeutil' => $typeutil,
+              )); 
+            }catch (PDOException $ex) { 
+            die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
+            }            
+        }
+        if(isset($_POST['enregistrement'])){
+          $delai=1; 
+          $url='modifier.php';
+          header("Refresh: $delai;url=$url");
+        }
+
+  ?>
+</form>
+
 </body>
 </html>
