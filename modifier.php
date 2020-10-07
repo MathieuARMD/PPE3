@@ -151,7 +151,7 @@ echo "</table>";
   <label for="prenom">Prenom :</label><br>
   <input type="text" id="prenom" name="prenom" required><br><br>
   <label for="statut">Statut :</label><br>
-  <input type="text" id="statut" name="statut" required><br><br>
+  <input type="text" id="statut" name="statut" ><br><br>
   <label for="matricule">Matricule</label><br>
   <input type="text" id="matricule" name="matricule"><br><br>
 
@@ -187,7 +187,8 @@ echo "</table>";
             }            
         }
         if(isset($_POST['enregistrement'])){
-          $delai=1; 
+          echo "<br>L’utilisateur ".$nom." a été modifié dans la FREDI";
+          $delai=10; 
           $url='modifier.php';
           header("Refresh: $delai;url=$url");
         }
