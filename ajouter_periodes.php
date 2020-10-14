@@ -28,68 +28,66 @@
       <li><a href="ajouter.php">Ajouter</a></li>
       <li><a href="modifier.php">Modifier</a></li>
       <li><a href="desactiver.php">Desactiver</a></li>
-      <li><a href="supprimer.php">Supprimer</a></li>
       <li><a href="javascript:history.go(-1)">Retour</a></li>
   </ul>
 </nav>
 <hr color="black">
 <br><br><br>
-<form action="ajouter.php" method="post">
-  <label for="email">E-Mail :</label><br>
-  <input type="email" id="email" name="email" required><br><br>
-  <label for="mdp">Mot de passe :</label><br>
-  <input type="text" id="mdp" name="mdp" required><br><br>
-  <label for="nom">Nom :</label><br>
-  <input type="text" id="nom" name="nom" required><br><br>
-  <label for="prenom">Prenom :</label><br>
-  <input type="text" id="prenom" name="prenom" required><br><br>
-
-  <label for="matricule">Matricule</label><br>
-  <input type="text" id="matricule" name="matricule"><br><br>
-
-<select name="typeutil" id="typeutil" required>
-     <option value="1">Adhérent</option>
-     <option value="2">Contrôleur</option>
-     <option value="3">Administrateur</option>
+<form action="ajouter_periodes.php" method="post">
+  <label for="date">Année :</label><br>
+  <input type="number" id="date" name="date" required><br><br>
+  <label for="forfait">Forfait Kilometrique :</label><br>
+  <input type="number" id="forfait" name="forfait" required><br><br>
+  <select name="Statut" id="Statut" required>
+     <option value="0">Activer</option>
+     <option value="1">Desactiver</option>
 </select>
-
-<!-- INSERT INTO utilisateur (`email_util`, `password_util`, `nom_util`, `prenom_util`, `statut_util`, `matricule_cont`, `id_type_util`, `is_disabled`) VALUES (:email, :mdp, :nom, :prenom, :statut, :matricule, :typeutil, 0);  -->
-  <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
+ <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
-     
+
     $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         if(isset($_POST['enregistrement'])){
-          $email = $_POST['email'];
-          $mdp = $_POST['mdp'];
-          $nom = $_POST['nom'];
-          $prenom = $_POST['prenom'];
-          $matricule = $_POST['matricule'];
-          $typeutil = $_POST['typeutil'];
-          $hashed_password = password_hash($_POST["mdp"],PASSWORD_DEFAULT);          
-          $sql = "insert into utilisateur (`email_util`, `password_util`, `nom_util`, `prenom_util`, `matricule_cont`, `id_type_util`, `is_disabled`)";
-          $sql .=" VALUES (:email, :mdp, :nom, :prenom, :matricule, :typeutil, 0);  "; 
-          try { 
-            $sth = $dbh->prepare($sql);
-            $sth->execute(array( 
-              ':email' => $email, 
-              ':mdp' => $hashed_password, 
-              ':nom' => $nom,
-              ':prenom' => $prenom,
-              ':matricule' => $matricule,
-              ':typeutil' => $typeutil,
-              )); 
-            }catch (PDOException $ex) { 
-            die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-            }
-            $count = $sth->rowCount();
-            if($count == 1){
-              echo "<br><br>"; 
-              echo "<p>L'utilisateur $nom a été créé dans la base FREDI</p>";
-            }else{
-              echo "<br><br>"; 
-              echo "<p>Cette adresse mail $email est déjà utilisée</p>";
-            }          
-        }       
+          $date = $_POST['date'];
+          $forfait = $_POST['forfait'];
+          $statut = $_POST['Statut'];
+          $sql2 = "SELECT annee_per, statut_per FROM periode WHERE statut_per = 0";
+            try { 
+              $sth = $dbh->prepare($sql2);
+              $sth->execute(); 
+              $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+              }catch (PDOException $ex) { 
+                die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
+              }
+              foreach($rows as $row){
+                $DByear = $row["annee_per"];
+                $DBstatut = $row["statut_per"];
+              } $res = $DByear - $date;
+              if($res >= 0){
+                echo "<br><br>"; 
+                echo "<p>Vous ne pouvez pas créer la période $date car l’année n’est pas valide</p>";                
+              }elseif($statut == $DBstatut){
+                echo "<br><br>"; 
+                echo "<p>Vous ne pouvez pas créer la période $date car une période active existe déjà</p>";  
+              }else{
+                  $sql = "INSERT INTO periode (annee_per, forfait_km_per, statut_per)";
+                  $sql .=" VALUES (:date, :forfait, :statut);  "; 
+                  try { 
+                    $sth = $dbh->prepare($sql);
+                    $sth->execute(array( 
+                      ':date' => $date, 
+                      ':forfait' => $forfait, 
+                      ':statut' => $statut,
+                      )); 
+                    }catch (PDOException $ex) { 
+                      die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
+                    }
+                    $count = $sth->rowCount();
+                    if($count == 1){
+                      echo "<br><br>"; 
+                      echo "<p>La periode de $date a été créé dans l’application FREDI</p>";
+                    }
+              }        
+        } //fin if isset      
 ?>
 </form>
 </body>
