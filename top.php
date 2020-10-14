@@ -33,8 +33,8 @@ session_start();
       <li class="deroulant"><a href="#">Mon compte &ensp;</a>
       <ul class="sous">
         <li><a href="compte.php">Gestion utilisateur</a></li>
-        <li><a href="#">Gestion periodes</a></li>
-        <li><a href="#">Gestion motifs de frais</a></li>
+        <li><a href="periodes.php">Gestion periodes</a></li>
+        <li><a href="motif_frais.php">Gestion motifs de frais</a></li>
       </ul>
     </li>
     <?php } else {?>
