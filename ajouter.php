@@ -82,12 +82,12 @@
             die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
             }
             $count = $sth->rowCount();
-            if( $count == 1){
+            if($count == 1){
               echo "<br><br>"; 
-              echo "<p>L'utilisateur $nom a été créé dans la FREDI</p>";
+              echo "<p>L'utilisateur $nom a été créé dans la base FREDI</p>";
             }else{
               echo "<br><br>"; 
-              echo "<p>Cette adresse mail est déjà utilisé>/p>";
+              echo "<p>Cette adresse mail $email est déjà utilisée</p>";
             }          
         }       
 ?>
