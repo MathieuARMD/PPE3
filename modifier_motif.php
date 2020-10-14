@@ -22,43 +22,27 @@
   
 <br><br><br>
 
-<hr color="green">
+<hr color="orange">
 <nav>
   <ul>
-      <li><a href="ajouter.php">Ajouter</a></li>
-      <li><a href="modifier.php">Modifier</a></li>
-      <li><a href="desactiver.php">Desactiver</a></li>
-      <li><a href="supprimer.php">Supprimer</a></li>
+      <li><a href="ajouter_motif.php">Ajouter</a></li>
+      <li><a href="modifier_motif.php">Modifier</a></li>
+      <li><a href="supprimer_motif.php">Supprimer</a></li>
       <li><a href="javascript:history.go(-1)">Retour</a></li>
   </ul>
 </nav>
-<hr color="green">  
+<hr color="orange">  
 <?php
 
 $order ='';
   $tri = isset($_GET['tri']) ? $_GET['tri']: 0; // recupere le tri, envoyé avec les icones du tableau
   switch ($tri){ // switch, completera le order by de la requete sql
     case 0:
-      $order = "email_util";
+      $order = "id_mdf";
     break;
     case 1:
-      $order = "password_util";
-    break;
-    case 2:
-      $order = "nom_util";
-    break;
-    case 3:
-      $order = "prenom_util";
-    break;
-    case 4:
-      $order = "statut_util";
-    break;
-    case 5:
-      $order = "matricule_cont";
-    break;
-    case 6:
-      $order = "id_type_util";
-    break;
+        $order = "lib_mdf";
+      break;
     default:
     break;
   }
@@ -88,7 +72,7 @@ $order ='';
       $utilisateur=""; // sinon requete inchangée
   }
 
-  $sql = "select email_util, password_util, nom_util, prenom_util,statut_util,matricule_cont,id_type_util from utilisateur WHERE is_disabled = '0'"; // requete sql
+  $sql = "select id_mdf ,lib_mdf from motif_de_frais"; // requete sql
   $dsn = 'mysql:host=localhost;dbname=fredi;charset=UTF8'; 
   $user = 'root';
   $password = '';
@@ -117,79 +101,49 @@ switch ($modif) { //si pas de session -> echo erreur
   break;
  }
 
- echo"<br><br>";
+echo"<br><br>";
   // Affichage de la liste des colonnes
   echo "<table>";  //liens qui envoie le mode de tri pour chaque th
-  echo "<tr><th>E-mail</th>";
-  echo "<th>Mot de passe</th>";
-  echo "<th>Nom</th>";
-  echo "<th>Prenom</th>";
-  echo "<th>Statut</th>";
-  echo "<th>Matricule</th>";
-  echo "<th>Type utilisateur</th>";
+  echo "<tr><th>ID</th>";
+  echo "<th>Libellé</th>";
   echo "</tr>";
   foreach ($rows as $row) //affichage en tableau
 { 
   echo "<tr>"; 
-  echo "<td>".$row['email_util']."</td>"; 
-  echo "<td><p>Confidentiel</p></td>"; 
-  echo "<td>".$row['nom_util']."</td>"; 
-  echo "<td>".$row['prenom_util']."</td>"; 
-  echo "<td>".$row['statut_util']."</td>"; 
-  echo "<td>".$row['matricule_cont']."</td>"; 
-  echo "<td>".$row['id_type_util']."</td>"; 
+  echo "<td>".$row['id_mdf']."</td>"; 
+  echo "<td>".$row['lib_mdf']."</td>"; 
   }
   echo "</tr>"; 
 echo "</table>";
 ?><!--From pour modifier l'utilisateur en question -->
 <br>
- <form action="modifier.php" method="post">
-  <label for="email">E-Mail :</label><br>
-  <input type="email" id="email" name="email" required><br><br>
-  <label for="nom">Nom :</label><br>
-  <input type="text" id="nom" name="nom" required><br><br>
-  <label for="prenom">Prenom :</label><br>
-  <input type="text" id="prenom" name="prenom" required><br><br>
-  <label for="statut">Statut :</label><br>
-  <input type="text" id="statut" name="statut" ><br><br>
-  <label for="matricule">Matricule</label><br>
-  <input type="text" id="matricule" name="matricule"><br><br>
-
-<select name="typeutil" id="typeutil" required>
-     <option value="1">Adhérent</option>
-     <option value="2">Contrôleur</option>
-     <option value="3">Administrateur</option>
-</select>
+<form action="modifier_motif.php" method="post">
+  <label for="idmotif">ID Motif</label><br>
+  <input type="idmotif" id="idmotif" name="idmotif" required><br><br>
+  <label for="libmotif">Libellé motif</label><br>
+  <input type="libmotif" id="libmotif" name="libmotif" required><br><br>
   <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
      
     $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         if(isset($_POST['enregistrement'])){
-          $email = $_POST['email'];
-          $nom = $_POST['nom'];
-          $prenom = $_POST['prenom'];
-          $matricule = $_POST['matricule'];
-          $typeutil = $_POST['typeutil'];
-          $Statut = $_POST['statut'];        
-          $sql = "UPDATE utilisateur SET nom_util=:nom, prenom_util=:prenom, matricule_cont=:matricule,statut_util=:statut, id_type_util=:typeutil WHERE email_util=:email"; 
+          $idmotif = $_POST['idmotif']; 
+          $libmotif = $_POST['libmotif']; 
+          $sql = "UPDATE motif_de_frais SET lib_mdf=:libmotif WHERE id_mdf=:idmotif"; 
           try { 
             $sth = $dbh->prepare($sql);
             $sth->execute(array( 
-              ':email' => $email, 
-              ':nom' => $nom,
-              ':prenom' => $prenom,
-              ':matricule' => $matricule,
-              ':typeutil' => $typeutil,
-              ':statut' => $Statut,
+              ':idmotif' => $idmotif, 
+              ':libmotif' => $libmotif,
               )); 
             }catch (PDOException $ex) { 
             die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
             }            
         }
         if(isset($_POST['enregistrement'])){
-          echo "<br>L’utilisateur ".$nom." a été modifié dans la FREDI";
-          $delai=10; 
-          $url='modifier.php';
+          echo "<br> Le motif ".$libmotif." a été modifié dans la FREDI";
+          $delai=2; 
+          $url='modifier_motif.php';
           header("Refresh: $delai;url=$url");
         }
 
