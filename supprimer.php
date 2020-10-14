@@ -22,7 +22,7 @@
   
 <br><br><br>
 
-<hr color="black">
+<hr color="green">
 <nav>
   <ul>
       <li><a href="ajouter.php">Ajouter</a></li>
@@ -32,7 +32,7 @@
       <li><a href="javascript:history.go(-1)">Retour</a></li>
   </ul>
 </nav>
-<hr color="black">
+<hr color="green">
 
 <br><br>
 
