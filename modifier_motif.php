@@ -101,11 +101,11 @@ $raws = $MotifDao->findID();
 
   ?>
 </form>
-<button onclick="myFunction()">Reload page</button>
+<!-- <button onclick="myFunction()">Reload page</button>
 <script>
 function myFunction() {
     location.reload();
 }
-</script>
+</script> -->
 </body>
 </html>

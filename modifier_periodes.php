@@ -87,21 +87,16 @@ $raws = $PeriodeDAO->findperiode();
   </select><br><br>
   <label for="forfait">Forfait Kilometrique :</label><br>
   <input type="number" id="forfait" name="forfait" required><br><br>
-  <select name="Statut" id="Statut" required>
-     <option value="0">Activer</option>
-     <option value="1">Desactiver</option>
-  </select>
+
   <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
         if(isset($_POST['enregistrement'])){
             $date = $_POST['Année'];
             $forfait = $_POST['forfait'];
-            $statut = $_POST['Statut'];
 
             $Periode = new Periode(array(
               'annee'=>$date,
               'forfait'=>$forfait,
-              'statut'=>$statut
             ));
             $nb = $PeriodeDAO->update($Periode);
             if($nb == 1){ 
@@ -112,6 +107,11 @@ $raws = $PeriodeDAO->findperiode();
         }
   ?>
 </form>
-
+<!-- <button onclick="myFunction()">Reload page</button>
+<script>
+function myFunction() {
+    location.reload();
+}
+</script> -->
 </body>
 </html>

@@ -39,17 +39,13 @@
   <input type="number" id="date" name="date" required><br><br>
   <label for="forfait">Forfait Kilometrique :</label><br>
   <input type="number" id="forfait" name="forfait" required><br><br>
-  <select name="Statut" id="Statut" required>
-     <option value="0">Activer</option>
-     <option value="1">Desactiver</option>
-</select>
 <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
   $PeriodeDAO = new PeriodeDAO();
   if(isset($_POST['enregistrement'])){
           $date = $_POST['date'];
           $forfait = $_POST['forfait'];
-          $statut = $_POST['Statut'];
+          $statut = 1;
           $rows = $PeriodeDAO->findDisabled();
               foreach($rows as $row){
                 $DByear = $row["annee_per"];

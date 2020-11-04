@@ -85,11 +85,10 @@ class PeriodeDAO extends DAO
   
     public function update($periode)
     {           
-        $sql = "UPDATE  periode SET forfait_km_per=:forfait, statut_per=:statut WHERE annee_per=:annee";
+        $sql = "UPDATE  periode SET forfait_km_per=:forfait WHERE annee_per=:annee";
         $params = array(
           ":annee" => $periode->get_annee(),
           ":forfait" => $periode->get_forfait(),
-          ":statut" => $periode->get_statut()
         );
         try {
             $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
@@ -142,4 +141,16 @@ class PeriodeDAO extends DAO
         }
         return $nb;// Retourne le nombre de mise à jour
     } // update()
+
+    public function statutest(){
+        $sql="SELECT annee_per,COUNT(statut_per) AS stat FROM periode WHERE statut_per=0";
+        try {
+            $sth=$this->executer($sql);
+            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        return $rows;
+    }
+    
 } // Class PeriodeDAO

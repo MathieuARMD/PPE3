@@ -51,18 +51,28 @@
 </form>
 <br>
 <?php
-        if(isset($_POST['Desactiver'])){
-          $datereg = $_POST['Année'];
+if(isset($_POST['Desactiver'])){
+       $PeriodeDAO = new PeriodeDAO();
+        $rows = $PeriodeDAO->statutest();
+        $datereg = $_POST['Année'];
+        foreach($rows as $row){
+          $nb2=$row['stat'];
+          $annee=$row['annee_per'];
+       }
+        if($nb2 == 1 && $annee != $datereg ){
+            echo"<br><p>La periode ".$annee. " est déjà activée veuillez la désactiver</p>";
+        }else{        
           $val =  $PeriodeDAO->disalbedornot($datereg);
           $nb = $PeriodeDAO->Disabled($datereg, $val);
           if($nb == 1){
-            echo "<br><p>La periode $datereg a bien ete desactivée</p>";
+            echo "<br><p>La periode $datereg a bien ete désactivée</p>";
           }elseif($nb == 2){
-            echo "<br><p>La periode $datereg a bien ete Activer</p>";
+            echo "<br><p>La periode $datereg a bien ete activée</p>";
           }else{
-            echo "<br><p>La periode $datereg n'a pas ete desactivée ou Activer</p>";
+            echo "<br><p>La periode $datereg n'a pas ete désactivée ou activée</p>";
           }
         }
+      }
 ?>
 </body>
 </html>
