@@ -24,6 +24,7 @@ session_start();
     <li><a href="top.php">Accueil &ensp;</a></li>
     <li class="deroulant"><a href="#">Ligue &ensp;</a>
       <ul class="sous">
+      <?php  ?>
         <li><a href="#">Ligue de football</a></li>
         <li><a href="#">Ligue de IDK</a></li>
       </ul>
@@ -32,9 +33,11 @@ session_start();
       <li><a href="logout.php">Déconnexion</a></li>
       <li class="deroulant"><a href="#">Mon compte &ensp;</a>
       <ul class="sous">
-        <li><a href="compte.php">Gestion utilisateur</a></li>
-        <li><a href="periodes.php">Gestion periodes</a></li>
-        <li><a href="motif_frais.php">Gestion motifs de frais</a></li>
+        <li><a href="compte.php">Gestion Utilisateur</a></li>
+        <li><a href="periodes.php">Gestion Periodes</a></li>
+        <li><a href="motif_frais.php">Gestion Motifs</a></li>
+        <li><a href="club.php">Gestion des Clubs</a></li>
+        <li><a href="#.php">Gestion des Ligues</a></li>
       </ul>
     </li>
     <?php } else {?>
