@@ -9,7 +9,8 @@
 </head>
 <body>
 <?php include 'top.php';?>
-<?php include 'menu.php'; ?> 
+<?php include 'menu.php'; ?>
+<?php require_once "init.php";?> 
 
 <br>
 <div class="outer-div">
@@ -33,31 +34,6 @@
 </nav>
 <hr color="orange">  
 <?php
-
-$order ='';
-  $tri = isset($_GET['tri']) ? $_GET['tri']: 0; // recupere le tri, envoyé avec les icones du tableau
-  switch ($tri){ // switch, completera le order by de la requete sql
-    case 0:
-      $order = "id_mdf";
-    break;
-    case 1:
-        $order = "lib_mdf";
-      break;
-    default:
-    break;
-  }
-
-  //pour filtrer les questions sans réponse
-  if (isset($_POST['vide'])){ // si $post[vide] existe
-    $is_vide = $_POST['vide'];
-  }
-  else {
-      $is_vide =0; // sinon booléen à 0
-  } 
-  if ($is_vide==1){ // regarde le booleen est vrai
-    $filtre_vide="AND reponse IS NULL"; //rajoute la condition en sql si vrai
-  }
-  else {$filtre_vide="";} //sinon ne rajoute rien dans la requete
   
   //pour filtrer par utilisateur
   if (isset($_POST['utilisateur'])){ // si $post[utilisateur] existe
@@ -72,34 +48,8 @@ $order ='';
       $utilisateur=""; // sinon requete inchangée
   }
 
-  $sql = "select id_mdf ,lib_mdf from motif_de_frais"; // requete sql
-  $dsn = 'mysql:host=localhost;dbname=fredi;charset=UTF8'; 
-  $user = 'root';
-  $password = '';
-  try {
-  $dbh = new PDO($dsn, $user, $password);
-  $sth = $dbh->prepare($sql);
-  $sth->execute(); 
-  $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
-  } catch (PDOException $ex) {
-  die("Erreur lors de la requête SQL : ".$ex->getMessage());
-  }
-
-
-  $modif = isset($_GET['modif']) ? $_GET['modif']: 0;  //Reception  numero erreur
-switch ($modif) { //si pas de session -> echo erreur
-  case 1 :
-  echo"<p class='centre'>1 enregistrement ajouté.</p>";
-  break;
-  case 2:
-  echo"<p class='centre'>1 enregistrement modifié.</p>"; 
-  break;
-  case 3:
-  echo"<p class='centre'>1 enregistrement supprimé.</p>"; 
-  break;
-  default:
-  break;
- }
+  $MotifDao = new MotifDao();
+  $rows = $MotifDao->findAll();
 
 echo"<br><br>";
   // Affichage de la liste des colonnes
@@ -115,40 +65,47 @@ echo"<br><br>";
   }
   echo "</tr>"; 
 echo "</table>";
-?><!--From pour modifier l'utilisateur en question -->
+?>
+<?php
+$raws = $MotifDao->findID();
+  ?>
 <br>
-<form action="modifier_motif.php" method="post">
-  <label for="idmotif">ID Motif</label><br>
-  <input type="idmotif" id="idmotif" name="idmotif" required><br><br>
+<form action="modifier_motif.php" method="post"> 
+  <select name="idmotif" id="idmotif" required>
+  <?php
+    foreach($raws as $raw){
+      foreach($raw as $value){
+        echo "<option value='" .$value. "'>" .$value. "</option>";
+      }
+    }    
+  ?>
+  </select><br><br>
   <label for="libmotif">Libellé motif</label><br>
   <input type="libmotif" id="libmotif" name="libmotif" required><br><br>
   <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
-<?php
-     
-    $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-        if(isset($_POST['enregistrement'])){
+<?php 
+      if(isset($_POST['enregistrement'])){
           $idmotif = $_POST['idmotif']; 
-          $libmotif = $_POST['libmotif']; 
-          $sql = "UPDATE motif_de_frais SET lib_mdf=:libmotif WHERE id_mdf=:idmotif"; 
-          try { 
-            $sth = $dbh->prepare($sql);
-            $sth->execute(array( 
-              ':idmotif' => $idmotif, 
-              ':libmotif' => $libmotif,
-              )); 
-            }catch (PDOException $ex) { 
-            die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-            }            
-        }
-        if(isset($_POST['enregistrement'])){
-          echo "<br> Le motif ".$libmotif." a été modifié dans la FREDI";
-          $delai=2; 
-          $url='modifier_motif.php';
-          header("Refresh: $delai;url=$url");
+          $libmotif = $_POST['libmotif'];             
+          $Motif = new Motif(array(
+            'id'=>$idmotif,
+            'lib'=>$libmotif
+          ));
+          $nb = $MotifDao->update($Motif);
+          if($nb == 1){ 
+            echo "<br>Le Motif $idmotif bien été modifiée";
+          }else{ 
+            echo "<br>Le Motif $idmotif n'a pas été modifiée";
+          }
         }
 
   ?>
 </form>
-
+<button onclick="myFunction()">Reload page</button>
+<script>
+function myFunction() {
+    location.reload();
+}
+</script>
 </body>
 </html>

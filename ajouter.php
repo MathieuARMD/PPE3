@@ -9,7 +9,8 @@
 </head>
 <body>
 <?php include 'top.php';?>
-<?php include 'menu.php'; ?> 
+<?php include 'menu.php';?> 
+<?php require_once "init.php";?>
 
 <br>
 <div class="outer-div">
@@ -56,40 +57,36 @@
 <!-- INSERT INTO utilisateur (`email_util`, `password_util`, `nom_util`, `prenom_util`, `statut_util`, `matricule_cont`, `id_type_util`, `is_disabled`) VALUES (:email, :mdp, :nom, :prenom, :statut, :matricule, :typeutil, 0);  -->
   <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
-     
-    $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-        if(isset($_POST['enregistrement'])){
+  $UserDAO = new UserDAO();
+  if(isset($_POST['enregistrement'])){
           $email = $_POST['email'];
           $mdp = $_POST['mdp'];
           $nom = $_POST['nom'];
           $prenom = $_POST['prenom'];
           $matricule = $_POST['matricule'];
           $typeutil = $_POST['typeutil'];
-          $hashed_password = password_hash($_POST["mdp"],PASSWORD_DEFAULT);          
-          $sql = "insert into utilisateur (`email_util`, `password_util`, `nom_util`, `prenom_util`, `matricule_cont`, `id_type_util`, `is_disabled`)";
-          $sql .=" VALUES (:email, :mdp, :nom, :prenom, :matricule, :typeutil, 0);  "; 
-          try { 
-            $sth = $dbh->prepare($sql);
-            $sth->execute(array( 
-              ':email' => $email, 
-              ':mdp' => $hashed_password, 
-              ':nom' => $nom,
-              ':prenom' => $prenom,
-              ':matricule' => $matricule,
-              ':typeutil' => $typeutil,
-              )); 
-            }catch (PDOException $ex) { 
-            die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-            }
-            $count = $sth->rowCount();
-            if($count == 1){
-              echo "<br><br>"; 
-              echo "<p>L'utilisateur $nom a été créé dans la base FREDI</p>";
-            }else{
-              echo "<br><br>"; 
-              echo "<p>Cette adresse mail $email est déjà utilisée</p>";
-            }          
-        }       
+          $hashed_password = password_hash($_POST["mdp"],PASSWORD_DEFAULT);
+          
+          $user = new user(array(
+            'email'=>$email,
+            'mdp'=>$hashed_password,
+            'nom'=>$nom,
+            'prenom'=>$prenom,
+            'matricule'=>$matricule,
+            'typeutil'=>$typeutil
+          ));  
+          echo "<br>";print_r($_POST);
+          echo "<br>";print_r($user);echo "<br>";  
+          // Ajoute l'enregistrement dans la BD
+          $count = $UserDAO->insert($user);
+          if($count == 1){
+            echo "<br><br>"; 
+            echo "<p>L'utilisateur $nom a été créé dans la base FREDI</p>";
+          }else{
+            echo "<br><br>"; 
+            echo "<p>Cette adresse mail $email est déjà utilisée</p>";
+          }        
+  }       
 ?>
 </form>
 </body>

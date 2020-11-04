@@ -9,7 +9,8 @@
 </head>
 <body>
 <?php include 'top.php';?>
-<?php include 'menu.php'; ?> 
+<?php include 'menu.php'; ?>
+<?php require_once "init.php";?>
 
 <br>
 <div class="outer-div">
@@ -47,18 +48,8 @@
       $utilisateur=""; // sinon requete inchangée
   }
 
-  $sql = "SELECT * FROM periode"; // requete sql
-  $dsn = 'mysql:host=localhost;dbname=fredi;charset=UTF8'; 
-  $user = 'root';
-  $password = '';
-  try {
-  $dbh = new PDO($dsn, $user, $password);
-  $sth = $dbh->prepare($sql);
-  $sth->execute(); 
-  $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
-  } catch (PDOException $ex) {
-  die("Erreur lors de la requête SQL : ".$ex->getMessage());
-  }
+  $PeriodeDAO = new PeriodeDAO();
+  $rows = $PeriodeDAO->findAll();
 
     // Affichage de la liste des colonnes
   echo "<br><br>";
@@ -79,21 +70,9 @@
   }
   echo "</tr>"; 
 echo "</table>";
-
-//autre requette sql pour liste deroulante dinamique
-
-$sql = "SELECT annee_per FROM periode"; // requete sql
-  $dsn = 'mysql:host=localhost;dbname=fredi;charset=UTF8'; 
-  $user = 'root';
-  $password = '';
-  try {
-  $dbh = new PDO($dsn, $user, $password);
-  $sth = $dbh->prepare($sql);
-  $sth->execute(); 
-  $raws = $sth->fetchALL(PDO::FETCH_ASSOC);
-  } catch (PDOException $ex) {
-  die("Erreur lors de la requête SQL : ".$ex->getMessage());
-  }
+?>
+<?php
+$raws = $PeriodeDAO->findperiode();
   ?>
 <br>
  <form action="modifier_periodes.php" method="post"> 
@@ -114,38 +93,23 @@ $sql = "SELECT annee_per FROM periode"; // requete sql
   </select>
   <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
-     
-    $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         if(isset($_POST['enregistrement'])){
             $date = $_POST['Année'];
             $forfait = $_POST['forfait'];
-            $statut = $_POST['Statut'];       
-          $sql = "UPDATE utilisateur SET annee_per = :datereg, forfait_km_per = :forfait, statut_per = :statut WHERE annee_per = :datereg"; 
-          try { 
-            $sth = $dbh->prepare($sql);
-            $sth->execute(array( 
-              ':datereg' => $date, 
-              ':forfait' => $forfait,
-              ':statut' => $statut,              
-              ));
-              print_r($sth);
-            }catch (PDOException $ex) { 
-            die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-            }
-            $count = $sth->rowCount();
-            if($count == 1){ 
-              echo "<p>test ok</p>";
+            $statut = $_POST['Statut'];
+
+            $Periode = new Periode(array(
+              'annee'=>$date,
+              'forfait'=>$forfait,
+              'statut'=>$statut
+            ));
+            $nb = $PeriodeDAO->update($Periode);
+            if($nb == 1){ 
+              echo "<br>La période $date a bien été modifiée";
             }else{ 
-              echo "<p>test non ok</p>";
+              echo "<br>La période $date n'a pas été modifiée";
             }           
         }
-        /*if(isset($_POST['enregistrement'])){
-          echo "<br>La période $date a été modifiée";
-          $delai=2; 
-          $url='modifier_periodes.php';
-          header("Refresh: $delai;url=$url");
-        }*/
-
   ?>
 </form>
 

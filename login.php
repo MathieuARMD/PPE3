@@ -27,7 +27,7 @@
         if (isset($_POST['username']) && isset($_POST['password'])) {
             $username = $_POST['username'];
             try {
-                $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+                $dbh = new PDO('mysql:host=localhost;dbname=fredi_dao', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
                 $sql = "select password_util, nom_util, type_utilisateur.lib_type_util, is_disabled  from utilisateur, type_utilisateur where nom_util = '".$username."'AND utilisateur.id_type_util = type_utilisateur.id_type_util";
                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sth = $dbh->prepare($sql);

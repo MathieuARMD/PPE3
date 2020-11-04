@@ -9,7 +9,8 @@
 </head>
 <body>
 <?php include 'top.php';?>
-<?php include 'menu.php'; ?> 
+<?php include 'menu.php'; ?>
+<?php require_once "init.php";?>  
 
 <br>
 <div class="outer-div">
@@ -34,45 +35,33 @@
 <hr color="orange">
 
 <br><br>
-
+<?php $MotifDao = new MotifDao();
+      $raws = $MotifDao->findlib();
+?>
 <form action="supprimer_motif.php" method="post">
-  <label for="idmotif">ID Motif :</label><br>
-  <input type="idmotif" id="idmotif" name="idmotif" required><br><br>
+  <select name="libmotif" id="libmotif" required>
+  <?php
+    foreach($raws as $raw){
+      foreach($raw as $value){
+        echo "<option value='" .$value. "'>" .$value. "</option>";
+      }
+    }    
+  ?>
+  </select><br><br>
   <input type="submit" name="Supprimer" value="&nbsp;Supprimer&nbsp;">
 </form>
 <br>
 <?php
-    //  $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-    // if(isset($_POST['Supprimer'])){
-    // $idmotif = $_POST['idmotif'];       
-    // $sql = "SELECT id_mdf FROM ligne_de_frais"; 
-    // try { 
-    // $sth = $dbh->prepare($sql);
-    // $sth->execute(array(':idmotif' => $idmotif));
-    // }catch (PDOException $ex) { 
-    // die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-    // }   
-    // $count = $sth->rowCount();
-    // if($count == 0 ){
-    //  echo "<br><br>"; 
-    // echo "<p>Le motif $idmotif est déjà utilisé dans une note de frais</p>";
-    // }          
-    // }  
-$dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         if(isset($_POST['Supprimer'])){
-          $idmotif = $_POST['idmotif'];       
-          $sql = "DELETE FROM motif_de_frais WHERE id_mdf = :idmotif"; 
-          try { 
-            $sth = $dbh->prepare($sql);
-            $sth->execute(array(':idmotif' => $idmotif));
-            }catch (PDOException $ex) { 
-            die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-            }   
-            echo "<br><br>"; 
-            echo "<p>Le motif $idmotif a bien été supprimé</p>"; 
-        }
-        
+          $libmotif = $_POST['libmotif'];
+          $id = $MotifDao->findtheID($libmotif);     
+          $nb = $MotifDao->delete($id);
+          if($nb == 1){
+            echo "<br>Le motif N°$id a bien été Supprimer dans la base FREDI";
+          }else{
+            echo "<br>Le motif N°$id n'a pas été Supprimer dans la base FREDI";
+          }
+        }        
 ?>
-<!-- DELETE FROM utilisateur WHERE email_util = :email -->
 </body>
 </html>

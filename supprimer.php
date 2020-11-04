@@ -10,6 +10,7 @@
 <body>
 <?php include 'top.php';?>
 <?php include 'menu.php'; ?> 
+<?php require_once "init.php";?> 
 
 <br>
 <div class="outer-div">
@@ -33,23 +34,10 @@
   </ul>
 </nav>
 <hr color="green">
-
 <br><br>
-<?php
-$sql = "SELECT email_util FROM utilisateur"; // requete sql
-$dsn = 'mysql:host=localhost;dbname=fredi;charset=UTF8'; 
-$user = 'root';
-$password = '';
-try {
-$dbh = new PDO($dsn, $user, $password);
-$sth = $dbh->prepare($sql);
-$sth->execute(); 
-$raws = $sth->fetchALL(PDO::FETCH_ASSOC);
-} catch (PDOException $ex) {
-die("Erreur lors de la requête SQL : ".$ex->getMessage());
-}
+<?php $UserDAO = new UserDAO();
+      $raws = $UserDAO->finduser();
 ?>
-
 <form action="supprimer.php" method="post">
 <select name="email" id="email" required>
     <?php
@@ -64,18 +52,14 @@ die("Erreur lors de la requête SQL : ".$ex->getMessage());
 </form>
 <br>
 <?php
-$dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         if(isset($_POST['Supprimer'])){
           $email = $_POST['email'];       
-          $sql = "DELETE FROM utilisateur WHERE email_util = :email"; 
-          try { 
-            $sth = $dbh->prepare($sql);
-            $sth->execute(array(':email' => $email));
-            }catch (PDOException $ex) { 
-            die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-            }   
-            echo "<br><br>"; 
-            echo "<p>L'utilisateur a bien été Supprimer</p>"; 
+          $nb = $UserDAO->delete($email);
+          if($nb == 1){
+            echo "<br>L’utilisateur a bien été Supprimer dans la base FREDI";
+          }else{
+            echo "<br>L’utilisateur n'a pas été Supprimer dans la base FREDI";
+          }
         }
 ?>
 <!-- DELETE FROM utilisateur WHERE email_util = :email -->

@@ -9,7 +9,8 @@
 </head>
 <body>
 <?php include 'top.php';?>
-<?php include 'menu.php'; ?> 
+<?php include 'menu.php'; ?>
+<?php require_once "init.php";?>
 
 <br>
 <div class="outer-div">
@@ -42,22 +43,14 @@
      <option value="0">Activer</option>
      <option value="1">Desactiver</option>
 </select>
- <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
+<input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
-
-    $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-        if(isset($_POST['enregistrement'])){
+  $PeriodeDAO = new PeriodeDAO();
+  if(isset($_POST['enregistrement'])){
           $date = $_POST['date'];
           $forfait = $_POST['forfait'];
           $statut = $_POST['Statut'];
-          $sql2 = "SELECT annee_per, statut_per FROM periode WHERE statut_per = 0";
-            try { 
-              $sth = $dbh->prepare($sql2);
-              $sth->execute(); 
-              $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
-              }catch (PDOException $ex) { 
-                die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-              }
+          $rows = $PeriodeDAO->findDisabled();
               foreach($rows as $row){
                 $DByear = $row["annee_per"];
                 $DBstatut = $row["statut_per"];
@@ -69,25 +62,21 @@
                 echo "<br><br>"; 
                 echo "<p>Vous ne pouvez pas créer la période $date car une période active existe déjà</p>";  
               }else{
-                  $sql = "INSERT INTO periode (annee_per, forfait_km_per, statut_per)";
-                  $sql .=" VALUES (:date, :forfait, :statut);  "; 
-                  try { 
-                    $sth = $dbh->prepare($sql);
-                    $sth->execute(array( 
-                      ':date' => $date, 
-                      ':forfait' => $forfait, 
-                      ':statut' => $statut,
-                      )); 
-                    }catch (PDOException $ex) { 
-                      die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-                    }
-                    $count = $sth->rowCount();
+                $periode = new Periode(array(
+                  'annee'=>$date,
+                  'forfait'=>$forfait,
+                  'statut'=>$statut
+                ));
+                $count = $PeriodeDAO->insert($periode);
                     if($count == 1){
                       echo "<br><br>"; 
                       echo "<p>La periode de $date a été créé dans l’application FREDI</p>";
+                    }else{
+                      echo "<br><br>"; 
+                      echo "<p>La periode de $date n'a pas été créé dans l’application FREDI</p>";                   
                     }
               }        
-        } //fin if isset      
+        }
 ?>
 </form>
 </body>

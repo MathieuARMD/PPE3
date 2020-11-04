@@ -9,7 +9,8 @@
 </head>
 <body>
 <?php include 'top.php';?>
-<?php include 'menu.php'; ?> 
+<?php include 'menu.php'; ?>
+<?php require_once "init.php";?> 
 
 <br>
 <div class="outer-div">
@@ -33,19 +34,8 @@
 </nav>
 <hr color="black">
 <br><br>
-<?php
-$sql = "SELECT annee_per FROM periode"; // requete sql
-$dsn = 'mysql:host=localhost;dbname=fredi;charset=UTF8'; 
-$user = 'root';
-$password = '';
-try {
-$dbh = new PDO($dsn, $user, $password);
-$sth = $dbh->prepare($sql);
-$sth->execute(); 
-$raws = $sth->fetchALL(PDO::FETCH_ASSOC);
-} catch (PDOException $ex) {
-die("Erreur lors de la requête SQL : ".$ex->getMessage());
-}
+<?php $PeriodeDAO = new PeriodeDAO();
+      $raws = $PeriodeDAO->findperiode();
 ?>
 <form action="desactiver_periodes.php" method="post">
     <select name="Année" id="annee" required>
@@ -57,24 +47,22 @@ die("Erreur lors de la requête SQL : ".$ex->getMessage());
         }    
     ?>
     </select><br><br>
-  <input type="submit" name="Desactiver" value="&nbsp;Desactiver&nbsp;">
+  <input type="submit" name="Desactiver" value="&nbsp;Desactiver OU Activer&nbsp;">
 </form>
 <br>
 <?php
-    $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         if(isset($_POST['Desactiver'])){
-          $datereg = $_POST['Année'];       
-          $sql = "UPDATE periode SET statut_per = 1 WHERE annee_per = :datereg"; 
-          try { 
-            $sth = $dbh->prepare($sql);
-            $sth->execute(array(':datereg' => $datereg));
-            }catch (PDOException $ex) { 
-            die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-            }   
-            echo "<br><br>"; 
-            echo "<p>La periode $datereg a bien ete desactivée</p>"; 
+          $datereg = $_POST['Année'];
+          $val =  $PeriodeDAO->disalbedornot($datereg);
+          $nb = $PeriodeDAO->Disabled($datereg, $val);
+          if($nb == 1){
+            echo "<br><p>La periode $datereg a bien ete desactivée</p>";
+          }elseif($nb == 2){
+            echo "<br><p>La periode $datereg a bien ete Activer</p>";
+          }else{
+            echo "<br><p>La periode $datereg n'a pas ete desactivée ou Activer</p>";
+          }
         }
 ?>
-<!-- UPDATE utilisateur SET is_disabled = 1 WHERE email_util= :email -->
 </body>
 </html>

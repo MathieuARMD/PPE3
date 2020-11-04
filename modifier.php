@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,9 @@
 </head>
 <body>
 <?php include 'top.php';?>
-<?php include 'menu.php'; ?> 
+<?php include 'menu.php';?>
+<?php require_once "init.php";?>
+
 
 <br>
 <div class="outer-div">
@@ -34,47 +36,6 @@
 </nav>
 <hr color="green">  
 <?php
-
-$order ='';
-  $tri = isset($_GET['tri']) ? $_GET['tri']: 0; // recupere le tri, envoyé avec les icones du tableau
-  switch ($tri){ // switch, completera le order by de la requete sql
-    case 0:
-      $order = "email_util";
-    break;
-    case 1:
-      $order = "password_util";
-    break;
-    case 2:
-      $order = "nom_util";
-    break;
-    case 3:
-      $order = "prenom_util";
-    break;
-    case 4:
-      $order = "statut_util";
-    break;
-    case 5:
-      $order = "matricule_cont";
-    break;
-    case 6:
-      $order = "id_type_util";
-    break;
-    default:
-    break;
-  }
-
-  //pour filtrer les questions sans réponse
-  if (isset($_POST['vide'])){ // si $post[vide] existe
-    $is_vide = $_POST['vide'];
-  }
-  else {
-      $is_vide =0; // sinon booléen à 0
-  } 
-  if ($is_vide==1){ // regarde le booleen est vrai
-    $filtre_vide="AND reponse IS NULL"; //rajoute la condition en sql si vrai
-  }
-  else {$filtre_vide="";} //sinon ne rajoute rien dans la requete
-  
   //pour filtrer par utilisateur
   if (isset($_POST['utilisateur'])){ // si $post[utilisateur] existe
     if ($_POST['utilisateur'] != '0') { // si ce n'est pas tous les utilisateurs
@@ -87,35 +48,8 @@ $order ='';
   else {
       $utilisateur=""; // sinon requete inchangée
   }
-
-  $sql = "select email_util, password_util, nom_util, prenom_util,statut_util,matricule_cont,id_type_util from utilisateur WHERE is_disabled = '0'"; // requete sql
-  $dsn = 'mysql:host=localhost;dbname=fredi;charset=UTF8'; 
-  $user = 'root';
-  $password = '';
-  try {
-  $dbh = new PDO($dsn, $user, $password);
-  $sth = $dbh->prepare($sql);
-  $sth->execute(); 
-  $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
-  } catch (PDOException $ex) {
-  die("Erreur lors de la requête SQL : ".$ex->getMessage());
-  }
-
-
-  $modif = isset($_GET['modif']) ? $_GET['modif']: 0;  //Reception  numero erreur
-switch ($modif) { //si pas de session -> echo erreur
-  case 1 :
-  echo"<p class='centre'>1 enregistrement ajouté.</p>";
-  break;
-  case 2:
-  echo"<p class='centre'>1 enregistrement modifié.</p>"; 
-  break;
-  case 3:
-  echo"<p class='centre'>1 enregistrement supprimé.</p>"; 
-  break;
-  default:
-  break;
- }
+  $UserDAO = new UserDAO();
+  $rows = $UserDAO->findDisabled();
 
  echo"<br><br>";
   // Affichage de la liste des colonnes
@@ -143,18 +77,7 @@ switch ($modif) { //si pas de session -> echo erreur
 echo "</table>";
 ?><!--From pour modifier l'utilisateur en question -->
 <?php
-$sql = "SELECT email_util FROM utilisateur"; // requete sql
-$dsn = 'mysql:host=localhost;dbname=fredi;charset=UTF8'; 
-$user = 'root';
-$password = '';
-try {
-$dbh = new PDO($dsn, $user, $password);
-$sth = $dbh->prepare($sql);
-$sth->execute(); 
-$raws = $sth->fetchALL(PDO::FETCH_ASSOC);
-} catch (PDOException $ex) {
-die("Erreur lors de la requête SQL : ".$ex->getMessage());
-}
+$raws = $UserDAO->finduser();
 ?>
 <br>
  <form action="modifier.php" method="post">
@@ -181,39 +104,32 @@ die("Erreur lors de la requête SQL : ".$ex->getMessage());
      <option value="2">Contrôleur</option>
      <option value="3">Administrateur</option>
 </select>
-  <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
+  <input type="submit" name='enregistrement' value=" &nbsp;Envoyer "><br><br>
 <?php
-     
-    $dbh = new PDO('mysql:host=localhost;dbname=fredi', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         if(isset($_POST['enregistrement'])){
           $email = $_POST['email'];
           $nom = $_POST['nom'];
           $prenom = $_POST['prenom'];
           $matricule = $_POST['matricule'];
           $typeutil = $_POST['typeutil'];
-          $Statut = $_POST['statut'];        
-          $sql = "UPDATE utilisateur SET nom_util=:nom, prenom_util=:prenom, matricule_cont=:matricule,statut_util=:statut, id_type_util=:typeutil WHERE email_util=:email"; 
-          try { 
-            $sth = $dbh->prepare($sql);
-            $sth->execute(array( 
-              ':email' => $email, 
-              ':nom' => $nom,
-              ':prenom' => $prenom,
-              ':matricule' => $matricule,
-              ':typeutil' => $typeutil,
-              ':statut' => $Statut,
-              )); 
-            }catch (PDOException $ex) { 
-            die("Erreur lors de la requête SQL : ".$ex->getMessage()); 
-            }            
-        }
-        if(isset($_POST['enregistrement'])){
-          echo "<br>L’utilisateur ".$nom." a été modifié dans la FREDI";
-          $delai=10; 
-          $url='modifier.php';
-          header("Refresh: $delai;url=$url");
-        }
+          $Statut = $_POST['statut'];
 
+          $UserDAO = new UserDAO();
+          $user = new user(array(
+            'email'=>$email,
+            'nom' => $nom,
+            'prenom' => $prenom,
+            'matricule' => $matricule,
+            'typeutil' => $typeutil,
+            'statut' => $Statut
+          ));
+          $nb = $UserDAO->update($user);
+          if($nb == 1){
+            echo "<br>L’utilisateur ".$nom." a été modifié dans la base FREDI";
+          }else{
+            echo "<br>L’utilisateur ".$nom." n'a pas été modifié dans la base FREDI";
+          }                    
+        }    
   ?>
 </form>
 
