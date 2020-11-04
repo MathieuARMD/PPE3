@@ -24,7 +24,7 @@ class clubDAO extends DAO {
         return $club;
     } // function find()
 
-    public function findperiode()
+    public function findclub()
     {
         $sql = "select id_club from club";
         try {
@@ -34,7 +34,7 @@ class clubDAO extends DAO {
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
         return $rows;
-    } // function findperiode()
+    } // function findclub()
 
     public function findDisabled()
     {
@@ -66,10 +66,10 @@ class clubDAO extends DAO {
         $sql = "INSERT INTO club(`lib_club`, `adr1_club`, `adr2_club`,`adr3_club`) 
         values (:libc, :adr1, :adr2, :adr3)";
         $params = array(
-          ":libc" => $ligue->get_libc(),
-          ":adr1" => $ligue->get_adr1(),
-          ":adr2" => $ligue->get_adr2()
-          ":adr3" => $ligue->get_adr3()
+          ":libc" => $club->get_libc(),
+          ":adr1" => $club->get_adr1(),
+          ":adr2" => $club->get_adr2(),
+          ":adr3" => $club->get_adr3(),
         );
         try {
             $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
@@ -85,11 +85,11 @@ public function update($club)
 {           
     $sql = "UPDATE  club SET lib_club=:libc, adr1_club=:adr1, adr2_club=:adr2, adr3_club=:adr3 WHERE id_club=:idc";
     $params = array(
-        ":idc" => $ligue->get_idc(),
-        ":lib" => $ligue->get_libc(),
-        ":urll" => $ligue->get_urll(),
-        ":contact" => $ligue->get_contact()
-        ":tel" => $ligue->get_tel()
+        ":idc" => $club->get_idc(),
+        ":lib" => $club->get_libc(),
+        ":urll" => $club->get_urll(),
+        ":contact" => $club->get_contact(),
+        ":tel" => $club->get_tel(),
     );
     try {
         $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
