@@ -35,10 +35,31 @@
 <hr color="green">
 
 <br><br>
+<?php
+$sql = "SELECT email_util FROM utilisateur"; // requete sql
+$dsn = 'mysql:host=localhost;dbname=fredi;charset=UTF8'; 
+$user = 'root';
+$password = '';
+try {
+$dbh = new PDO($dsn, $user, $password);
+$sth = $dbh->prepare($sql);
+$sth->execute(); 
+$raws = $sth->fetchALL(PDO::FETCH_ASSOC);
+} catch (PDOException $ex) {
+die("Erreur lors de la requête SQL : ".$ex->getMessage());
+}
+?>
 
 <form action="supprimer.php" method="post">
-  <label for="email">E-Mail :</label><br>
-  <input type="email" id="email" name="email" required><br><br>
+<select name="email" id="email" required>
+    <?php
+        foreach($raws as $raw){
+        foreach($raw as $value){
+            echo "<option value='" .$value. "'>" .$value. "</option>";
+        }
+        }    
+    ?>
+    </select><br><br>
   <input type="submit" name="Supprimer" value="&nbsp;Supprimer&nbsp;">
 </form>
 <br>

@@ -25,9 +25,9 @@
 <hr color="black">
 <nav>
   <ul>
-      <li><a href="ajouter.php">Ajouter</a></li>
-      <li><a href="modifier.php">Modifier</a></li>
-      <li><a href="desactiver.php">Desactiver</a></li>
+      <li><a href="ajouter_periodes.php">Ajouter</a></li>
+      <li><a href="modifier_periodes.php">Modifier</a></li>
+      <li><a href="desactiver_periodes.php">Desactiver</a></li>
       <li><a href="javascript:history.go(-1)">Retour</a></li>
   </ul>
 </nav>
