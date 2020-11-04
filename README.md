@@ -6,6 +6,7 @@ Mathieu ARMAND / Téo AUGRY / Clément BLUZAT
 
 [GitHub](https://github.com/MathieuARMD/PPE3.git)
 
+La notice utilisateur est disponible [ici](https://github.com/MathieuARMD/PPE3/blob/master/notice%20utilisateur.md)
 ## Description
 Il s'agit de la création d'un site fonctionnel et de sa base de données SQL.
  
