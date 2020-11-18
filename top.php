@@ -37,7 +37,7 @@ session_start();
         <li><a href="periodes.php">Gestion Periodes</a></li>
         <li><a href="motif_frais.php">Gestion Motifs</a></li>
         <li><a href="club.php">Gestion des Clubs</a></li>
-        <li><a href="#.php">Gestion des Ligues</a></li>
+        <li><a href="ligue.php">Gestion des Ligues</a></li>
       </ul>
     </li>
     <?php } else {?>
