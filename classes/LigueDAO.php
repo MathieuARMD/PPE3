@@ -30,15 +30,13 @@ class LigueDAO extends DAO {
         try {
             $params = array(":lib_ligue" => $lib);
             $sth=$this->executer($sql, $params);
-            $row = $sth->fetch(PDO::FETCH_ASSOC);
+            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
-        $ligue=null;
-        if ($row) {
-            $ligue = new Ligue($row);
-        }
-        return $Ligue;
+        foreach($rows as $row)
+            $ligue = $row['id_ligue'];
+        return $ligue;
     } // function findid()
 
     public function findlib()
