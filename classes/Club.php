@@ -49,6 +49,10 @@ class Club{
      $this->lib_club = $lib;
    }
 
+   function set_id_club($cld) {
+    $this->id_club = $cld;
+  }
+
    function set_adr1($adr1) {
      $this->adr1_club = $adr1;
    }

@@ -102,19 +102,20 @@ $raws = $ClubDAO->findclub();
             $adr1 = $_POST['adr1'];
             $adr2 = $_POST['adr2'];
             $adr3 = $_POST['adr3'];
-
+            $id_club = $ClubDAO->findtheID($lib);
             $club = new Club(array(
-              'lib'=>$lib,
+              'lib_club'=>$lib,
               'adr1'=>$adr1,
               'adr2'=>$adr2,
               'adr3'=>$adr3,
+              'id_club'=>$id_club
             ));
-            $nb = $PeriodeDAO->update($Periode);
+            $nb = $ClubDAO->update($club);
             if($nb == 1){ 
               echo "<br>$lib a bien été modifié(e)";
             }else{ 
               echo "<br>$lib n'a pas été modifié(e)";
-            }           
+            }          
         }
   ?>
 </form>

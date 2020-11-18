@@ -86,15 +86,15 @@ class clubDAO extends DAO {
     } // insert()
 
 
-/*public function update($club)
+public function update($club)
 {           
-    $sql = "UPDATE  club SET lib_club=:libc, adr1_club=:adr1, adr2_club=:adr2, adr3_club=:adr3 WHERE id_club=:idc";
+    $sql = "UPDATE  club SET lib_club=:libc, adr1_club=:adr1, adr2_club=:adr2, adr3_club=:adr3 WHERE id_club=:id";
     $params = array(
-        ":idc" => $club->get_idc(),
-        ":lib" => $club->get_lib_club(),
-        ":urll" => $club->get_urll(),
-        ":contact" => $club->get_contact(),
-        ":tel" => $club->get_tel(),
+        ":libc" => $club->get_lib_club(),
+        ":adr1" => $club->get_adr1(),
+        ":adr2" => $club->get_adr2(),
+        ":adr3" => $club->get_adr3(),
+        ":id"   => $club->get_id_club()
     );
     try {
         $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
@@ -103,7 +103,7 @@ class clubDAO extends DAO {
         die("Erreur lors de la requête SQL : " . $e->getMessage());
     }
     return $nb;  // Retourne le nombre de mise à jour
-} // update()*/
+} // update()
 
 public function delete($id)
     {
