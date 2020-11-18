@@ -24,6 +24,18 @@ class LigueDAO extends DAO {
         return $Ligue;
     } // function find()
 
+    public function findlib()
+    {
+        $sql = "select lib_ligue from ligue";
+        try {
+            $sth=$this->executer($sql);
+            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        return $rows;
+    } // function findligue()
+
     public function findperiode()
     {
         $sql = "select id_ligue from ligue";
@@ -68,7 +80,7 @@ class LigueDAO extends DAO {
         $params = array(
           ":lib" => $ligue->get_lib(),
           ":urll" => $ligue->get_urll(),
-          ":contact" => $ligue->get_contact()
+          ":contact" => $ligue->get_contact(),
           ":tel" => $ligue->get_tel()
         );
         try {
@@ -87,7 +99,7 @@ public function update($ligue)
     $params = array(
         ":lib" => $ligue->get_lib(),
         ":urll" => $ligue->get_urll(),
-        ":contact" => $ligue->get_contact()
+        ":contact" => $ligue->get_contact(),
         ":tel" => $ligue->get_tel()
     );
     try {
