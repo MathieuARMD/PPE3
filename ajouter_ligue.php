@@ -43,8 +43,6 @@
 <input type="text" id="contact" name="contact" ><br><br>
 <label for="tel">Telephone :</label><br>
 <input type="number" id="tel" name="tel" ><br><br>
-<label for="mail">Email :</label><br>
-<input type="text" id="mail" name="mail" ><br><br>
 <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
   if(isset($_POST['enregistrement'])){
@@ -53,8 +51,7 @@
           $url = $_POST['url'];
           $contact = $_POST['contact'];
           $tel = $_POST['tel'];
-          $mail = $_POST['mail'];
-          $count = $LigueDao->insert($lib);
+          $count = $LigueDAO->insert($lib);
           $rows = $LigueDAO->findDisabled();
           if(isset($_POST['enregistrement'])){    
             if($count == 1){

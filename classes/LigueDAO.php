@@ -96,15 +96,9 @@ class LigueDAO extends DAO {
         values (:lib, :url, :contact, :tel)";
         $params = array(
           ":lib" => $ligue->get_lib(),
-<<<<<<< HEAD
           ":url" => $ligue->get_url(),
           ":contact" => $ligue->get_contact(),
           ":tel" => $ligue->get_telephone()
-=======
-          ":urll" => $ligue->get_urll(),
-          ":contact" => $ligue->get_contact(),
-          ":tel" => $ligue->get_tel()
->>>>>>> 1fc7a5215f041cd04d2a286dff3634e94850ab74
         );
         try {
             $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
@@ -121,15 +115,9 @@ public function update($ligue)
     $sql = "UPDATE  ligue SET lib_ligue=:lib, URL_ligue=:url, contact_ligue=:contact, telephone_ligue=:tel WHERE annee_per=:annee";
     $params = array(
         ":lib" => $ligue->get_lib(),
-<<<<<<< HEAD
         ":url" => $ligue->get_url(),
         ":contact" => $ligue->get_contact(),
         ":tel" => $ligue->get_telephone()
-=======
-        ":urll" => $ligue->get_urll(),
-        ":contact" => $ligue->get_contact(),
-        ":tel" => $ligue->get_tel()
->>>>>>> 1fc7a5215f041cd04d2a286dff3634e94850ab74
     );
     try {
         $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
