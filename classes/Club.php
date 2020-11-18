@@ -7,6 +7,7 @@ class Club{
    private $adr1_club;
    private $adr2_club;
    private $adr3_club;
+   private $id_ligue;
 
     
    public function __construct(array $tableau = null)
@@ -17,11 +18,11 @@ class Club{
    }
 
 /////////////getter/////////////////
-   function get_idc() {
+   function get_id_club() {
      return $this->id_club;
    }
 
-   function get_libc() {
+   function get_lib_club() {
      return $this->lib_club;
    }
 
@@ -37,13 +38,14 @@ class Club{
      return $this->adr3_club;
    }
 
+   function get_ligue() {
+    return $this->id_ligue;
+  }
+
 
 /////////////////////setter///////////////
-   function set_id($id) {
-     $this->id_club = $id;
-   }
 
-   function set_lib($lib) {
+   function set_lib_club($lib) {
      $this->lib_club = $lib;
    }
 
@@ -55,9 +57,13 @@ class Club{
      $this->adr2_club = $adr2;
    }
 
-   function set_adr2($adr3) {
+   function set_adr3($adr3) {
      $this->adr3_club = $adr3;
    }
+
+   function set_ligue($id_l) {
+    $this->id_ligue = $id_l;
+  }
 
 ////////////////Hydrateur///////////////////////
    public function fill(array $tableau)

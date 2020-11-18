@@ -34,6 +34,9 @@
 </nav>
 <hr color="black">
 <br><br><br>
+<?php $LigueDao = new LigueDAO();
+      $raws = $LigueDao->findlib();
+?>
 <form action="ajouter_club.php" method="post">
 <label for="lib">Libellé :</label><br>
 <input type="text" id="lib" name="lib" required><br><br>
@@ -43,6 +46,15 @@
 <input type="text" id="adr2" name="adr2" ><br><br>
 <label for="adr3">Code Postal:</label><br>
 <input type="text" id="adr3" name="adr3" ><br><br>
+<select name="libligue" id="libligue" required>
+  <?php
+    foreach($raws as $raw){
+      foreach($raw as $value){
+        echo "<option value='" .$value. "'>" .$value. "</option>";
+      }
+    }    
+  ?>
+</select><br><br>
 <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
   $PeriodeDAO = new PeriodeDAO();
@@ -52,8 +64,20 @@
           $adr1 = $_POST['adr1'];
           $adr2 = $_POST['adr2'];
           $adr3 = $_POST['adr3'];
-          $count = $ClubDao->insert($lib);
-          $rows = $ClubDAO->findDisabled();
+          $ligue = $_POST['libligue'];
+
+          $liguedao = new LigueDAO();
+          $id_ligue = $liguedao->findid($ligue);
+
+          $club = new Club(array(
+            'lib_club'  => $lib,
+            'adr1'      => $adr1,
+            'adr2'      => $adr2,
+            'adr3'      => $adr3,
+            'ligue'     => $id_ligue
+          ));
+          
+          $count = $ClubDao->insert($club);
           if(isset($_POST['enregistrement'])){    
             if($count == 1){
               echo "<br><br>"; 
