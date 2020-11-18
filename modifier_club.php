@@ -56,9 +56,9 @@
   echo "<table>";  //liens qui envoie le mode de tri pour chaque th
   echo '<tr align="center" ><th>ID</th>';
   echo '<th align="center" >Libellé</th>';
-  echo '<th align="center" >Adresse 1</th>';
-  echo '<th align="center" >Adresse 2</th>';
-  echo '<th align="center" >Adresse 3</th>';
+  echo '<th align="center" >Rue</th>';
+  echo '<th align="center" >Ville</th>';
+  echo '<th align="center" >CP</th>';
   echo "</tr>";
   foreach ($rows as $row) //affichage en tableau
 { 
