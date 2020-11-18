@@ -64,12 +64,12 @@ class LigueDAO extends DAO {
     public function insert($ligue)
     {
         $sql = "INSERT INTO ligue(`lib_ligue`, `URL_ligue`, `contact_ligue`,`telephone_ligue`) 
-        values (:lib, :urll, :contact, :tel)";
+        values (:lib, :url, :contact, :tel)";
         $params = array(
           ":lib" => $ligue->get_lib(),
-          ":urll" => $ligue->get_urll(),
-          ":contact" => $ligue->get_contact()
-          ":tel" => $ligue->get_tel()
+          ":url" => $ligue->get_url(),
+          ":contact" => $ligue->get_contact(),
+          ":tel" => $ligue->get_telephone()
         );
         try {
             $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
@@ -83,12 +83,12 @@ class LigueDAO extends DAO {
 
 public function update($ligue)
 {           
-    $sql = "UPDATE  ligue SET lib_ligue=:lib, URL_ligue=:urll, contact_ligue=:contact, telephone_ligue=:tel WHERE annee_per=:annee";
+    $sql = "UPDATE  ligue SET lib_ligue=:lib, URL_ligue=:url, contact_ligue=:contact, telephone_ligue=:tel WHERE annee_per=:annee";
     $params = array(
         ":lib" => $ligue->get_lib(),
-        ":urll" => $ligue->get_urll(),
-        ":contact" => $ligue->get_contact()
-        ":tel" => $ligue->get_tel()
+        ":url" => $ligue->get_url(),
+        ":contact" => $ligue->get_contact(),
+        ":tel" => $ligue->get_telephone()
     );
     try {
         $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
