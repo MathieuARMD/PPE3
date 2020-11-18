@@ -59,7 +59,6 @@
   echo '<th align="center" >URL</th>';
   echo '<th align="center" >Contact</th>';
   echo '<th align="center" >Telephone</th>';
-  echo '<th align="center" >Email</th>';
   echo "</tr>";
   foreach ($rows as $row) //affichage en tableau
 { 
@@ -69,13 +68,12 @@
   echo "<td>".$row['URL_ligue']."</td>";
   echo "<td>".$row['contact_ligue']."</td>";
   echo "<td>".$row['telephone_ligue']."</td>";
-  echo "<td>".$row['email_util']."</td>";
   }
   echo "</tr>"; 
 echo "</table>";
 ?>
 <?php
-$raws = $LigueDAO->findligue();
+$raws = $LigueDAO->findperiode();
   ?>
 <br>
  <form action="modifier_ligue.php" method="post"> 
@@ -97,8 +95,6 @@ $raws = $LigueDAO->findligue();
 <input type="text" id="contact" name="contact" ><br><br>
 <label for="tel">Telephone :</label><br>
 <input type="number" id="tel" name="tel" ><br><br>
-<label for="mail">Email :</label><br>
-<input type="text" id="mail" name="mail" ><br><br>
 <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
         if(isset($_POST['enregistrement'])){
@@ -106,14 +102,12 @@ $raws = $LigueDAO->findligue();
             $url = $_POST['url'];
             $contact = $_POST['contact'];
             $tel = $_POST['tel'];
-            $mail = $_POST['mail'];
 
             $Ligue = new Ligue(array(
               'lib'=>$lib,
               'url'=>$url,
               'contact'=>$contact,
               'tel'=>$tel,
-              'mail'=>$mail,
             ));
             $nb = $LigueDAO->update($Ligue);
             if($nb == 1){ 

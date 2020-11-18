@@ -5,13 +5,14 @@
     font-family: Avenir, sans-serif;
 }
 
+
 IMG.displayed {
     display: block;
     margin-left: auto;
     margin-right: auto 
 }  
 img {
-    width:300px;
+    width:100%;
 }
 
 nav{
