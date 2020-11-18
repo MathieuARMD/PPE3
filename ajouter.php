@@ -54,8 +54,7 @@
      <option value="3">Administrateur</option>
 </select>
 
-<!-- INSERT INTO utilisateur (`email_util`, `password_util`, `nom_util`, `prenom_util`, `statut_util`, `matricule_cont`, `id_type_util`, `is_disabled`) VALUES (:email, :mdp, :nom, :prenom, :statut, :matricule, :typeutil, 0);  -->
-  <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
+<input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
   $UserDAO = new UserDAO();
   if(isset($_POST['enregistrement'])){
@@ -75,8 +74,6 @@
             'matricule'=>$matricule,
             'typeutil'=>$typeutil
           ));  
-          echo "<br>";print_r($_POST);
-          echo "<br>";print_r($user);echo "<br>";  
           // Ajoute l'enregistrement dans la BD
           $count = $UserDAO->insert($user);
           if($count == 1){

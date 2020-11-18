@@ -20,7 +20,7 @@
     echo'<center><h3 style="color:red"> Il semblerai qu&apos;il y ai une erreur, veuillez r&eacute;essayer.</h3></center>';
   }?>
 
-<?php if ($_SESSION['session_libtype']=="Administrateur") {// possibilité de réponse ou supression seulement si admin
+<?php if ($_SESSION['session_libtype']=="Administrateur"||"GOD") {// possibilité de réponse ou supression seulement si admin
 ?>
 <br><br><br>
 <center><button class="bouton" type="button" onclick="window.location.href = 'ajouter.php'">
