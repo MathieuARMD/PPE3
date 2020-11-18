@@ -26,7 +26,7 @@ class clubDAO extends DAO {
 
     public function findclub()
     {
-        $sql = "select id_club from club";
+        $sql = "select lib_club from club";
         try {
             $sth=$this->executer($sql);
             $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -35,6 +35,22 @@ class clubDAO extends DAO {
         }
         return $rows;
     } // function findclub()
+
+    public function findtheID($lib)
+    {
+        $sql = "SELECT id_club FROM club WHERE lib_club=:lib";
+        try {
+            $params = array(":lib" => $lib);
+            $sth=$this->executer($sql, $params);
+            $rows = $sth->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        foreach($rows as $row)
+            $res = $row;
+        return $res;
+    } // function findtheID()
+
 
     public function findDisabled()
     {
@@ -100,6 +116,18 @@ public function update($club)
     return $nb;  // Retourne le nombre de mise à jour
 } // update()
 
+public function delete($id)
+    {
+        $sql = "DELETE FROM club WHERE id_club=:id";
+        $params = array(":id" => $id);
+        try {
+            $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
+            $nb = $sth->rowcount();
+        } catch (PDOException $e) {
+            die("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        return $nb;  // Retourne le nombre de mise à jour
+    }
 
 
 }//class
