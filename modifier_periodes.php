@@ -92,7 +92,13 @@ $raws = $PeriodeDAO->findperiode();
 <?php
         if(isset($_POST['enregistrement'])){
             $date = $_POST['Année'];
-            $forfait = $_POST['forfait'];
+            if($_POST['forfait'] < 0){
+              echo "<p>Veuillez rentrer un nombre positif</p>";
+              exit;
+            }else{
+              $forfait = $_POST['forfait'];
+            }
+            
 
             $Periode = new Periode(array(
               'annee'=>$date,

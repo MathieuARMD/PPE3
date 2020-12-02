@@ -44,7 +44,13 @@
   $PeriodeDAO = new PeriodeDAO();
   if(isset($_POST['enregistrement'])){
           $date = $_POST['date'];
-          $forfait = $_POST['forfait'];
+          if($_POST['forfait'] < 0){
+            echo "<p>Veuillez rentrer un nombre positif</p>";
+            exit;
+          }else{
+            $forfait = $_POST['forfait'];
+          }
+          
           $statut = 1;
           $rows = $PeriodeDAO->findDisabled();
               foreach($rows as $row){
