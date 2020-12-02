@@ -51,7 +51,7 @@
           $url = $_POST['url'];
           $contact = $_POST['contact'];
           $tel = $_POST['tel'];
-          $count = $LigueDAO->insert($lib);
+          $count = $LigueDAO->insert($ligue);
           $rows = $LigueDAO->findDisabled();
           if(isset($_POST['enregistrement'])){    
             if($count == 1){
