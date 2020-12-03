@@ -42,7 +42,7 @@ class PeriodeDAO extends DAO
 
     public function findDisabled()
     {
-        $sql = "select * from periode where statut_per=0";
+        $sql = "select * from periode where statut_per=1";
         try {
             $sth=$this->executer($sql);
             $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
