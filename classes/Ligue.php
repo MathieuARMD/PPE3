@@ -7,6 +7,7 @@ class Ligue{
    private $URL_ligue;
    private $contact_ligue;
    private $telephone_ligue;
+   private $email_util;
 
     
    public function __construct(array $tableau = null)
@@ -16,7 +17,7 @@ class Ligue{
        }
    }
 
-/////////////getter/////////////////
+////////////////getter////////////////
    function get_id() {
      return $this->id_ligue;
    }
@@ -37,8 +38,11 @@ class Ligue{
      return $this->telephone_ligue;
    }
 
+   function get_email() {
+    return $this->email_util;
+  }
 
-/////////////////////setter///////////////
+////////////////setter////////////////
    function set_id($id) {
      $this->id_ligue = $id;
    }
@@ -55,11 +59,15 @@ class Ligue{
      $this->contact_ligue = $contact;
    }
 
-   function set_telephone($telephone) {
-     $this->telephone_ligue = $telephone;
+   function set_telephone($tel) {
+     $this->telephone_ligue = $tel;
    }
 
-////////////////Hydrateur///////////////////////
+   function set_email($mail) {
+    $this->email_util = $mail;
+  }
+
+////////////////Hydrateur////////////////
    public function fill(array $tableau)
    {
        foreach ($tableau as $cle => $valeur) {

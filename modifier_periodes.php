@@ -64,9 +64,9 @@
   echo "<td>".$row['annee_per']."</td>"; 
   echo "<td>".$row['forfait_km_per']."</td>";
   if($row['statut_per'] == 0) 
-    echo "<td>".$row['statut_per']." - Activer</td>";
+    echo "<td>".$row['statut_per']." - Activ&eacute</td>";
   if($row['statut_per'] == 1)
-    echo "<td>".$row['statut_per']." - Desactiver</td>";
+    echo "<td>".$row['statut_per']." - Desactiv&eacute</td>";
   }
   echo "</tr>"; 
 echo "</table>";

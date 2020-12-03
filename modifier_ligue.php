@@ -59,6 +59,7 @@
   echo '<th align="center" >URL</th>';
   echo '<th align="center" >Contact</th>';
   echo '<th align="center" >Telephone</th>';
+  echo '<th align="center" >Mail</th>';
   echo "</tr>";
   foreach ($rows as $row) //affichage en tableau
 { 
@@ -68,16 +69,19 @@
   echo "<td>".$row['URL_ligue']."</td>";
   echo "<td>".$row['contact_ligue']."</td>";
   echo "<td>".$row['telephone_ligue']."</td>";
+  echo "<td>".$row['email_util']."</td>";
   }
   echo "</tr>"; 
 echo "</table>";
 ?>
 <?php
 $raws = $LigueDAO->findperiode();
+$rawz = $LigueDAO->findmail();
   ?>
 <br>
  <form action="modifier_ligue.php" method="post"> 
-  <select name="ID" id="id" required>
+ <label for="id_ligue">ID :</label><br>
+  <select name="id_ligue" id="id_ligue" required>
   <?php
     foreach($raws as $raw){
       foreach($raw as $value){
@@ -95,20 +99,37 @@ $raws = $LigueDAO->findperiode();
 <input type="text" id="contact" name="contact" ><br><br>
 <label for="tel">Telephone :</label><br>
 <input type="number" id="tel" name="tel" ><br><br>
+<label for="mail">Email du controleur :</label><br>
+<select name="mail" id="mail" required>
+  <?php
+    foreach($rawz as $raw){
+      foreach($raw as $value){
+        echo "<option value='" .$value. "'>" .$value. "</option>";
+      }
+    }    
+  ?>
+  
+</select><br><br>
 <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
         if(isset($_POST['enregistrement'])){
-            $lib = $_POST['lib'];
-            $url = $_POST['url'];
-            $contact = $_POST['contact'];
-            $tel = $_POST['tel'];
-
+            $id_ligue = $_POST['id_ligue'];
+            $lib      = $_POST['lib'];
+            $url      = $_POST['url'];
+            $contact  = $_POST['contact'];
+            $tel      = $_POST['tel'];
+            $email    = $_POST['mail'];
             $Ligue = new Ligue(array(
-              'lib'=>$lib,
-              'url'=>$url,
-              'contact'=>$contact,
-              'tel'=>$tel,
+              'id_ligue'  => $id_ligue,
+              'lib'       => $lib,
+              'url'       => $url,
+              'contact'   => $contact,
+              'telephone' => $tel,
+              'email'     => $email
             ));
+            print_r($Ligue[id_ligue]); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
+            echo "<br>";
+            print_r($Ligue);
             $nb = $LigueDAO->update($Ligue);
             if($nb == 1){ 
               echo "<br>$lib a bien été modifié(e)";

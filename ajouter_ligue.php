@@ -32,6 +32,11 @@
       <li><a href="javascript:history.go(-1)">Retour</a></li>
   </ul>
 </nav>
+<?php
+$LigueDAO = new LigueDAO();
+$raws = $LigueDAO->findmail();
+
+?>
 <hr color="black">
 <br><br><br>
 <form action="ajouter_ligue.php" method="post">
@@ -40,19 +45,41 @@
 <label for="url">URL :</label><br>
 <input type="text" id="url" name="url" required><br><br>
 <label for="contact">Contact :</label><br>
-<input type="text" id="contact" name="contact" ><br><br>
+<input type="text" id="contact" name="contact" required><br><br>
 <label for="tel">Telephone :</label><br>
-<input type="number" id="tel" name="tel" ><br><br>
+<input type="number" id="tel" name="tel" required><br><br>
+<select name="mail" id="mail" required>
+  <?php
+    foreach($raws as $raw){
+      foreach($raw as $value){
+        echo "<option value='" .$value. "'>" .$value. "</option>";
+      }
+    }    
+  ?>
+  
+</select><br><br>
 <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
-  if(isset($_POST['enregistrement'])){
-          $LigueDAO = new LigueDAO();
+
+  if(isset($_POST['enregistrement'])){  
+
           $lib = $_POST['lib'];
           $url = $_POST['url'];
           $contact = $_POST['contact'];
           $tel = $_POST['tel'];
-          $count = $LigueDAO->insert($lib);
-          $rows = $LigueDAO->findDisabled();
+          $mail = $_POST['mail'];
+
+          $ligue = new Ligue(array(
+
+            'lib'       => $lib,
+            'url'       => $url,
+            'contact'   => $contact,
+            'telephone' => $tel,
+            'email'     => $mail
+          ));
+          
+          $count = $LigueDAO->insert($ligue);
+ 
           if(isset($_POST['enregistrement'])){    
             if($count == 1){
               echo "<br><br>"; 

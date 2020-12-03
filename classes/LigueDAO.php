@@ -63,9 +63,9 @@ class LigueDAO extends DAO {
         return $rows;
     } // function findperiode()
 
-    public function findDisabled()
+    public function findmail()
     {
-        $sql = "select * from ligue where id_ligue= :id_ligue";
+        $sql = "select email_util from utilisateur where id_type_util=2";
         try {
             $sth=$this->executer($sql);
             $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -73,7 +73,7 @@ class LigueDAO extends DAO {
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
         return $rows;
-    } // function findDisabled()
+    } // function findmail()
 
     public function findAll()
     {
@@ -90,13 +90,14 @@ class LigueDAO extends DAO {
     
     public function insert($ligue)
     {
-        $sql = "INSERT INTO ligue(`lib_ligue`, `URL_ligue`, `contact_ligue`,`telephone_ligue`) 
-        values (:lib, :url, :contact, :tel)";
+        $sql = "INSERT INTO ligue(`lib_ligue`, `URL_ligue`, `contact_ligue`,`telephone_ligue`,`email_util`) 
+        values (:lib, :url, :contact, :tel, :mail)";
         $params = array(
           ":lib" => $ligue->get_lib(),
           ":url" => $ligue->get_url(),
           ":contact" => $ligue->get_contact(),
-          ":tel" => $ligue->get_telephone()
+          ":telephone" => $ligue->get_telephone(),
+          ":email" => $ligue->get_email()
         );
         try {
             $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
@@ -110,12 +111,14 @@ class LigueDAO extends DAO {
 
 public function update($ligue)
 {           
-    $sql = "UPDATE  ligue SET lib_ligue=:lib, URL_ligue=:url, contact_ligue=:contact, telephone_ligue=:tel WHERE annee_per=:annee";
+    $sql = "UPDATE  ligue SET id_ligue=:id_ligue, lib_ligue=:lib, URL_ligue=:url, contact_ligue=:contact, telephone_ligue=:telephone, email_util=:email WHERE id_ligue=:id_ligue";
     $params = array(
+        ":id_ligue"=> $ligue->get_id(),
         ":lib" => $ligue->get_lib(),
         ":url" => $ligue->get_url(),
         ":contact" => $ligue->get_contact(),
-        ":tel" => $ligue->get_telephone()
+        ":telephone" => $ligue->get_telephone(),
+        ":email" => $ligue ->get_email()
     );
     try {
         $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
