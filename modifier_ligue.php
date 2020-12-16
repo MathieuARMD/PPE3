@@ -90,7 +90,6 @@ $rawz = $LigueDAO->findmail();
     }    
   ?>
   </select><br><br>
-<form action="ajouter_ligue.php" method="post">
 <label for="lib">Libellé :</label><br>
 <input type="text" id="lib" name="lib" required><br><br>
 <label for="url">URL :</label><br>
@@ -120,14 +119,13 @@ $rawz = $LigueDAO->findmail();
             $tel      = $_POST['tel'];
             $email    = $_POST['mail'];
             $Ligue = new Ligue(array(
-              'id_ligue'  => $id_ligue,
+              'id'  => $id_ligue,
               'lib'       => $lib,
               'url'       => $url,
               'contact'   => $contact,
               'telephone' => $tel,
               'mail'     => $email
             ));
-            print_r($Ligue);
             $nb = $LigueDAO->update($Ligue);
             if($nb == 1){ 
               echo "<br>$lib a bien été modifié(e)";
