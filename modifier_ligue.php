@@ -63,8 +63,9 @@
   echo "</tr>";
   foreach ($rows as $row) //affichage en tableau
 { 
+  $id = $row['id_ligue'];
   echo "<tr>"; 
-  echo "<td>".$row['id_ligue']."</td>"; 
+  echo "<td><a href='modifier_ligue.php?id_url_ligue=".$id."'>".$id."</a></td>"; 
   echo "<td>".$row['lib_ligue']."</td>";
   echo "<td>".$row['URL_ligue']."</td>";
   echo "<td>".$row['contact_ligue']."</td>";
@@ -77,7 +78,16 @@ echo "</table>";
 <?php
 $raws = $LigueDAO->findperiode();
 $rawz = $LigueDAO->findmail();
-  ?>
+
+$Liguerempl = new LigueDAO();
+$id_rempl = $_GET['id_url_ligue'];
+$rempl = $LigueDAO->find($id_rempl);
+$remid = $rempl['lib_ligue'];
+$remurl = $rempl['URL_ligue'];
+$remcont = $rempl['contact_ligue'];
+$remtel = $rempl['telephone_ligue'];
+
+?>
 <br>
  <form action="modifier_ligue.php" method="post"> 
  <label for="id_ligue">ID :</label><br>
@@ -91,13 +101,13 @@ $rawz = $LigueDAO->findmail();
   ?>
   </select><br><br>
 <label for="lib">Libellé :</label><br>
-<input type="text" id="lib" name="lib" required><br><br>
+<input type="text" id="lib" name="lib" value="<?php echo($remid)?>" required><br><br>
 <label for="url">URL :</label><br>
-<input type="text" id="url" name="url" required><br><br>
+<input type="text" id="url" name="url" value="<?php echo($remurl)?>" required><br><br>
 <label for="contact">Contact :</label><br>
-<input type="text" id="contact" name="contact" ><br><br>
+<input type="text" id="contact" name="contact" value="<?php echo($remcont)?>"><br><br>
 <label for="tel">Telephone :</label><br>
-<input type="number" id="tel" name="tel" ><br><br>
+<input type="number" id="tel" name="tel" value="<?php echo($remtel)?>"><br><br>
 <label for="mail">Email du controleur :</label><br>
 <select name="mail" id="mail" required>
   <?php
@@ -135,11 +145,11 @@ $rawz = $LigueDAO->findmail();
         }
   ?>
 </form>
-<!-- <button onclick="myFunction()">Reload page</button>
+<button onclick="myFunction()">Reload page</button>
 <script>
 function myFunction() {
-    location.reload();
+    document.location.reload();
 }
-</script> -->
+</script>
 </body>
 </html>
