@@ -11,8 +11,9 @@
 <!-- Code php de verification si l'utilisateur est connecté --> 
 <?php 
 session_start();
-?>
 
+?>
+<?php require_once "init.php";?>
 <!-- Menu --> 
 <hr color="black">
 <nav>
@@ -20,9 +21,15 @@ session_start();
     <li><a href="top.php">Accueil &ensp;</a></li>
     <li class="deroulant"><a href="#">Ligue &ensp;</a>
       <ul class="sous">
-      <?php  ?>
-        <li><a href="#">Ligue de football</a></li>
-        <li><a href="#">Ligue de IDK</a></li>
+      <?php 
+      $LigueDAO = new LigueDAO();
+      $raws = $LigueDAO->findlib();
+      foreach($raws as $raw) {
+        foreach($raw as $value){
+          echo "<li><a href='".$value.".php'>" .$value. "</a></li>";
+        }
+      }  
+      ?>
       </ul>
     </li>
     <?php if(isset($_SESSION['session_username'])) {?>

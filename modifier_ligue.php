@@ -125,10 +125,8 @@ $rawz = $LigueDAO->findmail();
               'url'       => $url,
               'contact'   => $contact,
               'telephone' => $tel,
-              'email'     => $email
+              'mail'     => $email
             ));
-            print_r($Ligue[id_ligue]); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
-            echo "<br>";
             print_r($Ligue);
             $nb = $LigueDAO->update($Ligue);
             if($nb == 1){ 
