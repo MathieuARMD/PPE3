@@ -23,20 +23,20 @@
 <?php if ($_SESSION['session_libtype']=="Contrôleur"||$_SESSION['session_libtype']=="GOD") {// possibilité de réponse ou supression seulement si admin
 ?>
 <br><br><br>
-<center><button class="boutonajouter" type="button" onclick="window.location.href = 'ajouter_ligue.php'">
-    Ajouter une ligne de frais
+<center><button class="boutonajouter" type="button" onclick="window.location.href = 'ajouter_ldf.php'">
+    Ajouter ligne(s) de frais
 </button></center>
 
 <br><br>
 
-<center><button class="boutonmodifier" type="button" onclick="window.location.href = 'modifier_ligue.php'">
-    Modifier une ligue
+<center><button class="boutonmodifier" type="button" onclick="window.location.href = 'modifier_ldf.php'">
+    Modifier ligne(s) de frais
 </button></center>
 
 <br><br>
 
-<center><button class="boutonsupprimer" type="button" onclick="window.location.href = 'supprimer_ligue.php'">
-    Supprimer une ligue
+<center><button class="boutonsupprimer" type="button" onclick="window.location.href = 'supprimer_ldf.php'">
+    Supprimer ligne(s) de frais
 
 </button></center>
 

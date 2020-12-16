@@ -24,19 +24,19 @@
 ?>
 <br><br><br>
 <center><button class="boutonajouter" type="button" onclick="window.location.href = 'ajouter_periodes.php'">
-    Ajouter periodes
+    Ajouter periode(s)
 </button></center>
 
 <br><br>
 
 <center><button class="boutonmodifier" type="button" onclick="window.location.href = 'modifier_periodes.php'">
-    Modifier periodes
+    Modifier periode(s)
 </button></center>
 
 <br><br>
 
 <center><button class="boutonsupprimer" type="button" onclick="window.location.href = 'desactiver_periodes.php'">
-    Desactiver periodes
+    Desactiver periode(s)
 
 </button></center>
 

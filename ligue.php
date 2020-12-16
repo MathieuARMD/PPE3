@@ -24,19 +24,19 @@
 ?>
 <br><br><br>
 <center><button class="boutonajouter" type="button" onclick="window.location.href = 'ajouter_ligue.php'">
-    Ajouter une ligue
+    Ajouter ligue(s)
 </button></center>
 
 <br><br>
 
 <center><button class="boutonmodifier" type="button" onclick="window.location.href = 'modifier_ligue.php'">
-    Modifier une ligue
+    Modifier ligue(s)
 </button></center>
 
 <br><br>
 
 <center><button class="boutonsupprimer" type="button" onclick="window.location.href = 'supprimer_ligue.php'">
-    Supprimer une ligue
+    Supprimer ligue(s)
 
 </button></center>
 

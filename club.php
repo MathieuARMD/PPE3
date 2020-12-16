@@ -24,19 +24,19 @@
 ?>
 <br><br><br>
 <center><button class="boutonajouter" type="button" onclick="window.location.href = 'ajouter_club.php'">
-    Ajouter un club
+    Ajouter club(s)
 </button></center>
 
 <br><br>
 
 <center><button class="boutonmodifier" type="button" onclick="window.location.href = 'modifier_club.php'">
-    Modifier un club
+    Modifier club(s)
 </button></center>
 
 <br><br>
 
 <center><button class="boutonsupprimer" type="button" onclick="window.location.href = 'supprimer_club.php'">
-    Supprimer un club
+    Supprimer club(s)
 
 </button></center>
 

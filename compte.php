@@ -24,25 +24,25 @@
 ?>
 <br><br><br>
 <center><button class="boutonajouter" type="button" onclick="window.location.href = 'ajouter.php'">
-    Ajouter
+    Ajouter compte(s)
 </button></center>
 
 <br><br>
 
 <center><button class="boutonmodifier" type="button" onclick="window.location.href = 'modifier.php'">
-    Modifier
+    Modifier compte(s)
 </button></center>
 
 <br><br>
 
 <center><button class="boutonsupprimer" type="button" onclick="window.location.href = 'supprimer.php'">
-    Supprimer
+    Supprimer compte(s)
 </button></center>
 
     <br><br>
 
 <center><button class="boutondesactiver" type="button" onclick="window.location.href = 'desactiver.php'">
-    Desactiver
+    Desactiver compte(s)
 
 </button></center>
 
