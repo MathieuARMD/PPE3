@@ -124,7 +124,7 @@ $rawz = $LigueDAO->findmail();
               'url'       => $url,
               'contact'   => $contact,
               'telephone' => $tel,
-              'email'     => $email
+              'mail'     => $email
             ));
             $nb = $LigueDAO->update($Ligue);
             if($nb == 1){ 
