@@ -23,26 +23,26 @@
 <?php if ($_SESSION['session_libtype']=="Administrateur"||$_SESSION['session_libtype']=="GOD") {// possibilité de réponse ou supression seulement si admin
 ?>
 <br><br><br>
-<center><button class="bouton" type="button" onclick="window.location.href = 'ajouter_motif.php'">
+<center><button class="boutonajouter" type="button" onclick="window.location.href = 'ajouter_motif.php'">
     Ajouter motif(s)
 </button></center>
 
 <br><br>
 
-<center><button class="bouton" type="button" onclick="window.location.href = 'modifier_motif.php'">
+<center><button class="boutonmodifier" type="button" onclick="window.location.href = 'modifier_motif.php'">
     Modifier motif(s)
 </button></center>
 
 <br><br>
 
-<center><button class="bouton" type="button" onclick="window.location.href = 'supprimer_motif.php'">
+<center><button class="boutonsupprimer" type="button" onclick="window.location.href = 'supprimer_motif.php'">
     Supprimer motif(s)
 
 </button></center>
 
 <br><br>
 
-<center><button class="bouton" type="button" onclick="history.back()">
+<center><button class="boutonretour" type="button" onclick="history.back()">
     Retour
 </button></center>
 <?php 
