@@ -130,6 +130,19 @@ public function update($ligue)
 } // update()
 
 
+public function delete($id)
+    {
+        $sql = "DELETE FROM ligue WHERE id_ligue=:id";
+        $params = array(":id" => $id);
+        try {
+            $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
+            $nb = $sth->rowcount();
+        } catch (PDOException $e) {
+            die("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        return $nb;  // Retourne le nombre de mise à jour
+    }
+
 
 }//class
 
