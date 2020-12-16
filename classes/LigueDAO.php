@@ -91,12 +91,12 @@ class LigueDAO extends DAO {
     public function insert($ligue)
     {
         $sql = "INSERT INTO ligue(`lib_ligue`, `URL_ligue`, `contact_ligue`,`telephone_ligue`,`email_util`) 
-        values (:lib, :url, :contact, :tel, :mail)";
+        values (:lib,:url_,:contact,:tel,:email)";
         $params = array(
           ":lib" => $ligue->get_lib(),
-          ":url" => $ligue->get_url(),
+          ":url_" => $ligue->get_url(),
           ":contact" => $ligue->get_contact(),
-          ":telephone" => $ligue->get_telephone(),
+          ":tel" => $ligue->get_telephone(),
           ":email" => $ligue->get_email()
         );
         try {
