@@ -11,17 +11,15 @@ class LigueDAO extends DAO {
     {
         $sql = "select * from ligue where id_ligue= :id_ligue";
         try {
-            $params = array(":id_ligue" => $id_ligue);
+            $params = array(":id_ligue" => $idl);
             $sth=$this->executer($sql, $params);
-            $row = $sth->fetch(PDO::FETCH_ASSOC);
+            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
-        $ligue=null;
-        if ($row) {
-            $ligue = new Ligue($row);
-        }
-        return $Ligue;
+        foreach($rows AS $row)
+            $ret = $row;
+        return $ret;
     } // function find()
 
     public function findid($lib)
