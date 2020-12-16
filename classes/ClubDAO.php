@@ -51,6 +51,19 @@ class clubDAO extends DAO {
         return $res;
     } // function findtheID()
 
+    public function findnb($id)
+    {
+        $sql = "select count(*) from club where id_ligue = :id";
+        try {
+            $params = array(":id" => $id);
+            $sth=$this->executer($sql, $params);
+            $row = $sth->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        return $row;
+    }
+
 
     public function findAll()
     {
