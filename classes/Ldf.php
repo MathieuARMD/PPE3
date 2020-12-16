@@ -24,24 +24,41 @@ class Ldf{  //ligne de frais
 
 /////////////getter/////////////////
    function get_id() {
-     return $this->id_ligue;
+     return $this->id_ldf;
    }
 
-   function get_lib() {
-     return $this->lib_ligue;
-   }
+   function get_date() {
+    return $this->date_ldf;
+  }
 
-   function get_url() {
-     return $this->URL_ligue;
-   }
+  function get_coutp() {
+    return $this->cout_peage_ldf;
+  }
+  function get_couth() {
+    return $this->cout_hebergement_ldf;
+  }
+  function get_nbkm() {
+    return $this->nb_km_ldf;
+  }
+  function get_tkm() {
+    return $this->total_km_ldf;
+  }
 
-   function get_contact() {
-     return $this->contact_ligue;
-   }
+  function get_tldf() {
+    return $this->total_ldf;
+  }
 
-   function get_telephone() {
-     return $this->telephone_ligue;
-   }
+  function get_idmdf() {
+    return $this->id_mdf;
+  }
+
+  function get_anneeper() {
+    return $this->annee_per;
+  }
+
+  function get_email() {
+    return $this->email_util;
+  }
 
 
 /////////////////////setter///////////////

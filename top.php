@@ -41,7 +41,7 @@ session_start();
         <li><a href="motif_frais.php">Gestion Motifs</a></li>
         <li><a href="club.php">Gestion des Clubs</a></li>
         <li><a href="ligue.php">Gestion des Ligues</a></li>
-        <li><a href="ligne_de_frais.php">Lignes de Frais</a></li>
+        <li><a href="ligne_de_frais.php">Gestion des Lignes de Frais</a></li>
         <li><a href="editing.php">Editing</a></li>
       </ul>
     </li>
