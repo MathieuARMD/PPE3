@@ -53,21 +53,21 @@
 <?php
         if(isset($_POST['Supprimer'])){
           $libmotif = $_POST['libmotif'];
-          $id = $ClubDao->findtheID($libmotif);
+          $id = $LigueDao->findID($libmotif);
           $adhdao = new AdherentDAO;
           $res = $adhdao->findnb($id);
           foreach($res as $re)
             $tot = $re;
 
           if($tot == 0){
-            $nb = $ClubDao->delete($id);
+            $nb = $LigueDao->delete($id);
             if($nb == 1){
-              echo "<br>Le club $libmotif a bien été Supprimer dans la base FREDI";
+              echo "<br>La ligue $libmotif a bien été Supprimer dans la base FREDI";
             }else{
-              echo "<br>Le club $libmotif n'a pas été Supprimer dans la base FREDI";
+              echo "<br>La ligue $libmotif n'a pas été Supprimer dans la base FREDI";
             }
           }else{
-            echo "<br>Le club $libmotif ne peut pas être supprimé car au moins un
+            echo "<br>Le ligue $libmotif ne peut pas être supprimé car au moins un
             adhérent y est affilié";
           }
         }        
