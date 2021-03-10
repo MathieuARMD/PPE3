@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Compte</title>
+    <title>Ligne de frais</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/compte.css">
 </head>
@@ -26,27 +26,29 @@
 <hr color="black">
 <nav>
   <ul>
-      <li><a href="ajouter_club.php">Ajouter</a></li>
-      <li><a href="modifier_club.php">Modifier</a></li>
-      <li><a href="supprimer_club.php">Supprimer</a></li>
+      <li><a href="ajouter_ldf.php">Ajouter</a></li>
+      <li><a href="modifier_ldf.php">Modifier</a></li>
+      <li><a href="supprimer_ldf.php">Supprimer</a></li>
       <li><a href="javascript:history.go(-1)">Retour</a></li>
   </ul>
 </nav>
 <hr color="black">
 <br><br><br>
-<?php $LigueDao = new LigueDAO();
-      $raws = $LigueDao->findlib();
+<?php $LdfDAO = new LdfDAO();
+      $raws = $LdfDAO->get_lib();
 ?>
-<form action="ajouter_club.php" method="post">
+<form action="ajouter_ldf.php" method="post">
 <label for="lib">Libellé :</label><br>
 <input type="text" id="lib" name="lib" required><br><br>
-<label for="adr1">Rue :</label><br>
-<input type="text" id="adr1" name="adr1" required><br><br>
-<label for="adr2">Ville :</label><br>
-<input type="text" id="adr2" name="adr2" ><br><br>
-<label for="adr3">Code Postal:</label><br>
-<input type="text" id="adr3" name="adr3" ><br><br>
-<select name="libligue" id="libligue" required>
+<label for="cpeage">Coût péage :</label><br>
+<input type="text" id="cpeage" name="cpeage" required><br><br>
+<label for="crepas">Coût repas :</label><br>
+<input type="text" id="crepas" name="crepas" ><br><br>
+<label for="cheberge">Coût Hébergement:</label><br>
+<input type="text" id="cheberge" name="cheberge" ><br><br>
+<label for="nbkm">Nombre de KM :</label><br>
+<input type="text" id="nbkm" name="nbkm" ><br><br>
+<select name="motiff" id="motiff" required>
   <?php
     foreach($raws as $raw){
       foreach($raw as $value){
@@ -57,27 +59,29 @@
 </select><br><br>
 <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
-  $PeriodeDAO = new PeriodeDAO();
+    $LdfDao = new LdfDAO();
   if(isset($_POST['enregistrement'])){
-          $ClubDao = new ClubDao();
+          $LdfDao = new LdfDao();
           $lib = $_POST['lib'];
-          $adr1 = $_POST['adr1'];
-          $adr2 = $_POST['adr2'];
-          $adr3 = $_POST['adr3'];
-          $ligue = $_POST['libligue'];
+          $cpeage = $_POST['cpeage'];
+          $crepas = $_POST['crepas'];
+          $cheberge = $_POST['cheberge'];
+          $nbkm = $_POST['nbkm'];
+          $motiff = $_POST['motiff'];
 
-          $liguedao = new LigueDAO();
-          $id_ligue = $liguedao->findid($ligue);
+          $Ldfdao = new LdfDAO();
+          $id_ldf = $Ldfdao->findid($lib);
 
-          $club = new Club(array(
-            'lib_club'  => $lib,
-            'adr1'      => $adr1,
-            'adr2'      => $adr2,
-            'adr3'      => $adr3,
-            'ligue'     => $id_ligue
+          $Ldf = new Ldf(array(
+            'lib'         => $lib,
+            'cpeage'      => $cpeage,
+            'crepas'      => $crepas,
+            'cheberge'    => $cheberge,
+            'nbkm'        => $nbkm,
+            'motiff'      => $motiff
           ));
           
-          $count = $ClubDao->insert($club);
+          $count = $LdfDao->insert($Ldf);
           if(isset($_POST['enregistrement'])){    
             if($count == 1){
               echo "<br><br>"; 

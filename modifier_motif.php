@@ -93,9 +93,9 @@ $raws = $MotifDao->findID();
           ));
           $nb = $MotifDao->update($Motif);
           if($nb == 1){ 
-            echo "<br>Le Motif $idmotif bien été modifiée";
+            echo "<br>Le Motif $idmotif bien été modifié";
           }else{ 
-            echo "<br>Le Motif $idmotif n'a pas été modifiée";
+            echo "<br>Le Motif $idmotif n'a pas été modifié";
           }
         }
 

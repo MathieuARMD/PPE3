@@ -24,7 +24,7 @@ class LdfDAO extends DAO {
         return $ldf;
     } // function find()
 
-    public function findid($lib)
+    public function get_id($lib)
     {
         $sql = "select id_ldf from ligne_de_frais where lib_trajet_ldf= :lib_ldf";
         try {
@@ -34,12 +34,13 @@ class LdfDAO extends DAO {
         } catch (PDOException $e) {
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
-        foreach($rows as $row)
+        foreach($rows as $row) {
             $Ldf = $row['id_ldf'];
+        }
         return $Ldf;
     } // function findid()
 
-    public function findlib()
+    public function get_lib()
     {
         $sql = "select lib_trajet_ldf from ligne_de_frais";
         try {

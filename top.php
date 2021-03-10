@@ -4,10 +4,10 @@
 <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fredi</title>
+    <title>FREDI</title>
 </head>
 <body>
-<img class="displayed" alt="FREDI" src="img\bg.png" title="FREDI">  
+<img class="displayed" alt="FREDI" src="img\bg.png" title="FREDI">
 <!-- Code php de verification si l'utilisateur est connecté --> 
 <?php 
 session_start();
@@ -37,12 +37,12 @@ session_start();
       <li class="deroulant"><a href="#">Mon compte &ensp;</a>
       <ul class="sous">
         <li><a href="compte.php">Gestion Utilisateur</a></li>
-        <li><a href="periodes.php">Gestion Periodes</a></li>
+        <li><a href="periodes.php">Gestion P&eacute;riodes</a></li>
         <li><a href="motif_frais.php">Gestion Motifs</a></li>
         <li><a href="club.php">Gestion des Clubs</a></li>
         <li><a href="ligue.php">Gestion des Ligues</a></li>
         <li><a href="ligne_de_frais.php">Gestion des Lignes de Frais</a></li>
-        <li><a href="editing.php">Editing</a></li>
+        <li><a href="editing.php">Editique</a></li>
       </ul>
     </li>
     <?php } else {?>

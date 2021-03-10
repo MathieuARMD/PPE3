@@ -1,6 +1,6 @@
 <?php 
 
-class Ldf{  //ligne de frais
+class Ldf {  //ligne de frais
 
    private $id_ldf;
    private $date_ldf;
