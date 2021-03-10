@@ -42,12 +42,12 @@
   <?php
     foreach($raws as $raw){
       foreach($raw as $value){
-        echo "<option value='" .$value. "'>" .$value. "</option>";
+        echo "<option value='" .$value. "'>" .$value. " </option>";
       }
     }    
   ?>
   </select><br><br>
-  <input type="submit" name="Supprimer" value="&nbsp;Supprimer&nbsp;">
+  <input type="submit" name="Supprimer" value="&nbsp;Supprimer&nbsp;" onclick="myFunction()">  
 </form>
 <br>
 <?php
@@ -77,3 +77,8 @@
 ?>
 </body>
 </html>
+<script>
+function myFunction() {
+    document.location.reload();
+}
+</script>
