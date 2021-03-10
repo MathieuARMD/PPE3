@@ -65,9 +65,9 @@
             $nb = $LigueDao->delete($id);
             $nb = 0;
             if($nb == 1){
-              echo "<br>La ligue $libmotif a bien été Supprimer dans la base FREDI";
+              echo "<br>La ligue $libmotif a bien été supprim&eacute; dans la base FREDI";
             }else{
-              echo "<br>La ligue $libmotif n'a pas été Supprimer dans la base FREDI";
+              echo "<br>La ligue $libmotif n'a pas été supprim&eacute; dans la base FREDI";
             }
           }else{
             echo "<br>Le ligue $libmotif ne peut pas être supprimé car au moins un

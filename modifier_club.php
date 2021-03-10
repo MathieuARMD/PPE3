@@ -88,11 +88,11 @@ $raws = $ClubDAO->findclub();
   </select><br><br>
   <label for="lib">Libellé :</label><br>
   <input type="text" id="lib" name="lib" required><br><br>
-  <label for="adr1">Adresse 1 :</label><br>
+  <label for="adr1">Rue :</label><br>
   <input type="text" id="adr1" name="adr1" required><br><br>
-  <label for="adr2">Adresse 2 :</label><br>
+  <label for="adr2">Ville :</label><br>
   <input type="text" id="adr2" name="adr2" required><br><br>
-  <label for="adr3">Adresse 3 :</label><br>
+  <label for="adr3">Code Postal :</label><br>
   <input type="text" id="adr3" name="adr3" required><br><br>
 
   <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">

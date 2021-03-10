@@ -57,9 +57,9 @@
           $id = $MotifDao->findtheID($libmotif);     
           $nb = $MotifDao->delete($id);
           if($nb == 1){
-            echo "<br>Le motif N°$id a bien été Supprimer dans la base FREDI";
+            echo "<br>Le motif N°$id a bien été supprim&eacute; dans la base FREDI";
           }else{
-            echo "<br>Le motif N°$id n'a pas été Supprimer dans la base FREDI";
+            echo "<br>Le motif N°$id n'a pas été supprim&eacute; dans la base FREDI";
           }
         }        
 ?>

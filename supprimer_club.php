@@ -22,7 +22,7 @@
   
 <br><br><br>
 
-<hr color="orange">
+<hr>
 <nav>
   <ul>
       <li><a href="ajouter_club.php">Ajouter</a></li>
@@ -31,7 +31,7 @@
       <li><a href="javascript:history.go(-1)">Retour</a></li>
   </ul>
 </nav>
-<hr color="orange">
+<hr>
 
 <br><br>
 <?php $ClubDao = new ClubDao();
@@ -62,9 +62,9 @@
           if($tot == 0){
             $nb = $ClubDao->delete($id);
             if($nb == 1){
-              echo "<br>Le club $libmotif a bien été Supprimer dans la base FREDI";
+              echo "<br>Le club $libmotif a bien été supprim&eacute; dans la base FREDI";
             }else{
-              echo "<br>Le club $libmotif n'a pas été Supprimer dans la base FREDI";
+              echo "<br>Le club $libmotif n'a pas été supprim&eacute; dans la base FREDI";
             }
           }else{
             echo "<br>Le club $libmotif ne peut pas être supprimé car au moins un

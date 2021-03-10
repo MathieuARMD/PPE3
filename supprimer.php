@@ -56,9 +56,9 @@
           $email = $_POST['email'];       
           $nb = $UserDAO->delete($email);
           if($nb == 1){
-            echo "<br>L’utilisateur a bien été Supprimer dans la base FREDI";
+            echo "<br>L’utilisateur a bien été supprim&eacute; dans la base FREDI";
           }else{
-            echo "<br>L’utilisateur n'a pas été Supprimer dans la base FREDI";
+            echo "<br>L’utilisateur n'a pas été supprim&eacute; dans la base FREDI";
           }
         }
 ?>
