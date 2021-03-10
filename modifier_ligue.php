@@ -78,14 +78,23 @@ echo "</table>";
 <?php
 $raws = $LigueDAO->findperiode();
 $rawz = $LigueDAO->findmail();
+if (isset($_GET['id_url_ligue'])){ // si $post[id_url_ligue] existe
+  $Liguerempl = new LigueDAO();
+  $id_rempl = $_GET['id_url_ligue'];
+  $rempl = $LigueDAO->find($id_rempl);
+  $remid = $rempl['lib_ligue'];
+  $remurl = $rempl['URL_ligue'];
+  $remcont = $rempl['contact_ligue'];
+  $remtel = $rempl['telephone_ligue'];
+}else{
+  $Liguerempl = new LigueDAO();
+  $id_rempl = 0;
+  $remid = "&nbsp";
+  $remurl = "&nbsp";
+  $remcont = "&nbsp";
+  $remtel = "&nbsp";
+}
 
-$Liguerempl = new LigueDAO();
-$id_rempl = $_GET['id_url_ligue'];
-$rempl = $LigueDAO->find($id_rempl);
-$remid = $rempl['lib_ligue'];
-$remurl = $rempl['URL_ligue'];
-$remcont = $rempl['contact_ligue'];
-$remtel = $rempl['telephone_ligue'];
 
 ?>
 <br>
