@@ -10,7 +10,7 @@
 <body>
 <?php include 'top.php';?>
 <?php include 'menu.php'; ?>
-<?php require_once "init.php";?>  
+<?php require_once "init.php";?>
 <br>
 <div class="outer-div">
         <div class="inner-div">
@@ -47,13 +47,13 @@
     }    
   ?>
   </select><br><br>
-  <input type="submit" name="Supprimer" value="&nbsp;Supprimer&nbsp;" onclick="myFunction()">  
+  <input type="submit" name="Supprimer" value="&nbsp;Supprimer&nbsp;">  
 </form>
 <br>
 <?php
         if(isset($_POST['Supprimer'])){
           $libmotif = $_POST['libmotif'];
-
+          
           $id = $LigueDao->findID($libmotif);
           $clubdao = new clubDAO;
 
@@ -62,8 +62,8 @@
             $tot = $re;
 
           if($tot == 0){
-            $nb = $LigueDao->delete($id);
             $nb = 0;
+            $nb = $LigueDao->delete($id);
             if($nb == 1){
               echo "<br>La ligue $libmotif a bien été supprim&eacute; dans la base FREDI";
             }else{
@@ -73,12 +73,9 @@
             echo "<br>Le ligue $libmotif ne peut pas être supprimé car au moins un
             club y est affilié";
           }
-        }        
+          header('Refresh: 2; URL=supprimer_ligue.php');
+        } 
+        
 ?>
 </body>
 </html>
-<script>
-function myFunction() {
-    document.location.reload();
-}
-</script>

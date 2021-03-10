@@ -70,6 +70,7 @@
             echo "<br>Le club $libmotif ne peut pas être supprimé car au moins un
             adhérent y est affilié";
           }
+          header('Refresh: 2; URL=supprimer_club.php');
         }        
 ?>
 </body>
