@@ -1,6 +1,7 @@
 <?php 
 
-class LigueDAO extends DAO {
+class LigueDAO extends DAO 
+{
     
     public function __construct()
     {
@@ -107,31 +108,17 @@ class LigueDAO extends DAO {
     } // insert()
 
 
-public function update($ligue)
-{           
-    $sql = "UPDATE  ligue SET id_ligue=:id_ligue, lib_ligue=:lib, URL_ligue=:url, contact_ligue=:contact, telephone_ligue=:telephone, email_util=:email WHERE id_ligue=:id_ligue";
-    $params = array(
-        ":id_ligue"=> $ligue->get_id(),
-        ":lib" => $ligue->get_lib(),
-        ":url" => $ligue->get_url(),
-        ":contact" => $ligue->get_contact(),
-        ":telephone" => $ligue->get_telephone(),
-        ":email" => $ligue ->get_email()
-    );
-    try {
-        $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
-        $nb = $sth->rowcount();
-    } catch (PDOException $e) {
-        die("Erreur lors de la requête SQL : " . $e->getMessage());
-    }
-    return $nb;  // Retourne le nombre de mise à jour
-} // update()
-
-
-public function delete($id)
-    {
-        $sql = "DELETE FROM ligue WHERE id_ligue=:id";
-        $params = array(":id" => $id);
+    public function update($ligue)
+    {           
+        $sql = "UPDATE  ligue SET id_ligue=:id_ligue, lib_ligue=:lib, URL_ligue=:url, contact_ligue=:contact, telephone_ligue=:telephone, email_util=:email WHERE id_ligue=:id_ligue";
+        $params = array(
+            ":id_ligue"=> $ligue->get_id(),
+            ":lib" => $ligue->get_lib(),
+            ":url" => $ligue->get_url(),
+            ":contact" => $ligue->get_contact(),
+            ":telephone" => $ligue->get_telephone(),
+            ":email" => $ligue ->get_email()
+        );
         try {
             $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
             $nb = $sth->rowcount();
@@ -139,9 +126,60 @@ public function delete($id)
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
         return $nb;  // Retourne le nombre de mise à jour
+    } // update()
+
+
+    public function delete($id)
+    {
+        {
+            $sql = "DELETE FROM ligue WHERE id_ligue=:id";
+            $params = array(":id" => $id);
+            try {
+                $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
+                $nb = $sth->rowcount();
+            } catch (PDOException $e) {
+                die("Erreur lors de la requête SQL : " . $e->getMessage());
+            }
+            return $nb;  // Retourne le nombre de mise à jour
+        }
+
+
     }
 
+    public function getPeriodesByLigue($idligue)
+    {
+         $sql = "SELECT DISTINCT annee_per
+        FROM ligne_de_frais L, adherent A, club C
+        WHERE L.email_util=A.email_util
+        AND A.id_club=C.id_club
+        AND C.id_ligue = :idligue";
+        try {
+            $sth = $this->pdo->prepare($sql);
+            $sth->execute(array(
+            ":idligue" => $idligue
+        ));
+        $rows=$sth->fetchALL(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        return $rows;
+    }
 
-}//class
-
+    public function getLigueActive()
+    {
+        $sql = "SELECT DISTINCT L.id_ligue, lib_ligue
+        FROM ligne_de_frais Ldf, adherent A, club C, ligue L
+        WHERE Ldf.email_util=A.email_util
+        AND A.id_club=C.id_club
+        AND C.id_ligue=L.id_ligue";
+        try {
+            $sth = $this->pdo->prepare($sql);
+            $sth->execute();
+        $rows=$sth->fetchALL(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        return $rows;
+    }
+}
 ?>
