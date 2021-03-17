@@ -151,4 +151,26 @@ class UserDAO extends DAO
         }
         return $nb;  // Retourne le nombre de mise à jour
     }
+
+
+    public function findUsersAvecLdfActive()
+    { //retourne les utilisateurs avec au moins une ldf sur la période active
+        $sql = "SELECT * from utilisateur 
+        WHERE email_util IN (SELECT DISTINCT 
+                            email_util 
+                            from ligne_de_frais 
+                            WHERE annee_per = (SELECT annee_per from periode WHERE statut_per = 0))";
+        try {
+            $sth = $this->pdo->prepare($sql);
+            $sth->execute();
+            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        $utilisateurs = array();
+        foreach ($rows as $row) { //hydrateur
+            $utilisateurs[] = $row;
+        }
+         return $utilisateurs;
+        }
 } // Class UserDAO

@@ -132,6 +132,52 @@ public function delete($id)
         }
         return $nb;  // Retourne le nombre de mise à jour
     }
+    public function findMail($mail)
+    { //retourne les ligne de frais d'un seul utilisateur en parametres
+        $sql = "select * from ligne_de_frais where email_util='".$mail."'";
+        try {
+            $sth = $this->pdo->prepare($sql);
+            $sth->execute();
+            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        $ldfs = array();
+        foreach ($rows as $row) { //hydrateur
+            $ldfs[] = new Ldf($row);
+        }
+        return $ldfs;
+    }
+
+    public function findMailPeriode($mail,$annee)
+    { //retourne les ligne de frais d'un seul utilisateur en parametres
+        $sql = "select * from ligne_de_frais where email_util='".$mail."' AND annee_per=".$annee.";";
+        try {
+            $sth = $this->pdo->prepare($sql);
+            $sth->execute();
+            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        $ldfs = array();
+        foreach ($rows as $row) { //hydrateur
+            $ldfs[] = new Ldf($row);
+        }
+        return $ldfs;
+    }
+
+    public function totalAdhPerActive($mail)
+    { //retourne le total des lignes de frais sur la période active
+        $sql = "select SUM(total_ldf) from ligne_de_frais where email_util='".$mail."' and annee_per = (select annee_per from periode where statut_per = 0)";
+        try {
+            $sth = $this->pdo->prepare($sql);
+            $sth->execute();
+            $row = $sth->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        return $row['SUM(total_ldf)'];
+    }
 
 }//class
 

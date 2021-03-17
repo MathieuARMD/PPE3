@@ -7,7 +7,7 @@ class clubDAO extends DAO {
         parent::__construct();
     }
   
-    public function find($idc)
+    public function find($id_club)
     {
         $sql = "select * from club where id_club =:id_club";
         try {
@@ -19,7 +19,7 @@ class clubDAO extends DAO {
         }
         $club=null;
         if ($row) {
-            $club = new club($row);
+            $club = new Club($row);
         }
         return $club;
     } // function find()
