@@ -19,7 +19,7 @@ class clubDAO extends DAO {
         }
         $club=null;
         if ($row) {
-            $club = new club($row);
+            $club = new Club($row);
         }
         return $club;
     } // function find()

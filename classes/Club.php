@@ -53,20 +53,20 @@ class Club{
     $this->id_club = $cld;
   }
 
-   function set_adr1($adr1) {
+   function set_adr1_club($adr1) {
      $this->adr1_club = $adr1;
    }
 
-   function set_adr2($adr2) {
+   function set_adr2_club($adr2) {
      $this->adr2_club = $adr2;
    }
 
-   function set_adr3($adr3) {
+   function set_adr3_club($adr3) {
      $this->adr3_club = $adr3;
    }
 
-   function set_ligue($id_l) {
-    $this->id_ligue = $id_l;
+   function set_id_ligue($id_ligue) {
+    $this->id_ligue = $id_ligue;
   }
 
 ////////////////Hydrateur///////////////////////
