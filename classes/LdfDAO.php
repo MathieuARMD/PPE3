@@ -142,7 +142,7 @@ public function delete($id)
         }
         $ldfs = array();
         foreach ($rows as $row) { //hydrateur
-            $ldfs[] = new LigneDeFrais($row);
+            $ldfs[] = new Ldf($row);
         }
         return $ldfs;
     }
@@ -159,7 +159,7 @@ public function delete($id)
         }
         $ldfs = array();
         foreach ($rows as $row) { //hydrateur
-            $ldfs[] = new LigneDeFrais($row);
+            $ldfs[] = new Ldf($row);
         }
         return $ldfs;
     }
