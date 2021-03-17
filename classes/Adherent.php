@@ -55,8 +55,8 @@ class Adherent{
 
 /////////////////////setter///////////////
 
-   function set_lib_club($lib) {
-     $this->lib_club = $lib;
+   function set_email_util($mail) {
+     $this->email_util = $mail;
    }
 
    function set_lic_adh($lic) {
@@ -67,20 +67,20 @@ class Adherent{
     $this->sexe_adh = $sx;
   }
 
-  function set_date($date) {
+  function set_date_naissance_adh($date) {
     $this->date_naissance_adh = $date;
   }
 
-   function set_adr1($adr1) {
-     $this->adr1_club = $adr1;
+   function set_adr1_adh($adr1) {
+     $this->adr1_adh = $adr1;
    }
 
-   function set_adr2($adr2) {
-     $this->adr2_club = $adr2;
+   function set_adr2_adh($adr2) {
+     $this->adr2_adh = $adr2;
    }
 
-   function set_adr3($adr3) {
-     $this->adr3_club = $adr3;
+   function set_adr3_adh($adr3) {
+     $this->adr3_adh = $adr3;
    }
 
    function set_id_club($id_l) {
