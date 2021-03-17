@@ -26,6 +26,10 @@ class Ligue{
      return $this->lib_ligue;
    }
 
+   function get_lib_ligue() {
+    return $this->lib_ligue;
+  }
+
    function get_url() {
      return $this->URL_ligue;
    }

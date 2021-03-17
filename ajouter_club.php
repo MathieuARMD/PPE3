@@ -59,7 +59,7 @@
 <?php
   $PeriodeDAO = new PeriodeDAO();
   if(isset($_POST['enregistrement'])){
-          $ClubDao = new ClubDao();
+          $ClubDao = new ClubDAO();
           $lib = $_POST['lib'];
           $adr1 = $_POST['adr1'];
           $adr2 = $_POST['adr2'];
@@ -71,10 +71,10 @@
 
           $club = new Club(array(
             'lib_club'  => $lib,
-            'adr1'      => $adr1,
-            'adr2'      => $adr2,
-            'adr3'      => $adr3,
-            'ligue'     => $id_ligue
+            'adr1_club' => $adr1,
+            'adr2_club' => $adr2,
+            'adr3_club' => $adr3,
+            'id_ligue'  => $id_ligue
           ));
           
           $count = $ClubDao->insert($club);
