@@ -166,7 +166,7 @@ public function delete($id)
 
     public function totalAdhPerActive($mail)
     { //retourne le total des lignes de frais sur la période active
-        $sql = "select SUM(total_ldf) from ligne_de_frais where email_util='".$mail."' and annee_per = (select annee_per from periode where statut_per = 1)";
+        $sql = "select SUM(total_ldf) from ligne_de_frais where email_util='".$mail."' and annee_per = (select annee_per from periode where statut_per = 0)";
         try {
             $sth = $this->pdo->prepare($sql);
             $sth->execute();
