@@ -40,6 +40,18 @@ class PeriodeDAO extends DAO
         return $rows;
     } // function findperiode()
 
+    public function findforfait()
+    {
+        $sql = "select forfait_km_per from periode";
+        try {
+            $sth=$this->executer($sql);
+            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        return $rows;
+    } // function findforfait()
+
     public function findDisabled()
     {
         $sql = "select * from periode where statut_per=1";

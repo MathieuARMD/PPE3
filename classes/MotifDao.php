@@ -50,9 +50,9 @@ class MotifDao extends DAO
         } catch (PDOException $e) {
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
-        foreach($rows as $row)
-            $res = $row;
-        return $res;
+
+        return $rows;
+
     } // function findtheID()
 
     public function findlib()
