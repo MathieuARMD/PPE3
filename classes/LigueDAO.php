@@ -18,10 +18,11 @@ class LigueDAO extends DAO
         } catch (PDOException $e) {
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
-        $ra = "";
+        /*$ra = "";
         foreach($rows AS $row)
             $ra = $row;
-        return $ra;
+        return $ra;*/
+        return $rows;
     } // function find()
 
     public function findid($lib)
