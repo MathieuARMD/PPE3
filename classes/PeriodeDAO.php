@@ -152,5 +152,43 @@ class PeriodeDAO extends DAO
         }
         return $rows;
     }
+
+    public function findPeriodeActive()
+    { //retourne ka periode active
+        $sql = "select * from periode where statut_per = 1";
+        try {
+            $sth = $this->pdo->prepare($sql);
+            $sth->execute();
+            $row = $sth->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        $periode = null;
+        if ($row) { 
+            $periode = new Periode($row);
+        }
+        return $periode;
+    }
+
+    public function updatePeriodeActive($periode)
+    { //change la periode active
+        $annee = $periode->get_annee_per();
+        $sql1 = "UPDATE periode set statut_per = 0";
+        $sql2 = "UPDATE periode set statut_per = 1 WHERE annee_per = :annee";
+        try {
+            $sth = $this->pdo->prepare($sql1);
+            $sth->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        try {
+            $sth = $this->pdo->prepare($sql2);
+            $sth->execute(array(
+                ":annee" => $annee
+            ));
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+    }
     
 } // Class PeriodeDAO

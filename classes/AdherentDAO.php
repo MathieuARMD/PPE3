@@ -7,11 +7,11 @@ class AdherentDAO extends DAO {
         parent::__construct();
     }
   
-    public function find($idc)
+    public function find($mail)
     {
         $sql = "select * from adherent where email_util =:email_util";
         try {
-            $params = array(":email_util" => $id_club);
+            $params = array(":email_util" => $mail);
             $sth=$this->executer($sql, $params);
             $row = $sth->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
