@@ -36,13 +36,17 @@ session_start();
       <li><a href="logout.php">Déconnexion</a></li>
       <li class="deroulant"><a href="#">Mon compte &ensp;</a>
       <ul class="sous">
-        <li><a href="compte.php">Gestion Utilisateur</a></li>
-        <li><a href="periodes.php">Gestion P&eacute;riodes</a></li>
-        <li><a href="motif_frais.php">Gestion Motifs</a></li>
-        <li><a href="club.php">Gestion des Clubs</a></li>
-        <li><a href="ligue.php">Gestion des Ligues</a></li>
-        <li><a href="ligne_de_frais.php">Gestion des Lignes de Frais</a></li>
-        <li><a href="editing.php">Editique</a></li>
+     <?php if ($_SESSION['session_libtype']=="Administrateur"||$_SESSION['session_libtype']=="GOD"){
+     echo'<li><a href="compte.php">Gestion Utilisateur</a></li>';
+     echo'<li><a href="periodes.php">Gestion P&eacute;riodes</a></li>';
+     echo'<li><a href="motif_frais.php">Gestion Motifs</a></li>';
+    } elseif ($_SESSION['session_libtype']=="Contrôleur"||$_SESSION['session_libtype']=="GOD"){
+     echo'<li><a href="club.php">Gestion des Clubs</a></li>';
+     echo'<li><a href="ligue.php">Gestion des Ligues</a></li>';
+    } elseif ($_SESSION['session_libtype']=="adhérent"||$_SESSION['session_libtype']=="GOD"){
+     echo'<li><a href="ligne_de_frais.php">Gestion des Lignes de Frais</a></li>';
+     echo'<li><a href="editing.php">Editique</a></li>';
+    }?>
       </ul>
     </li>
     <?php } else {?>
