@@ -7,7 +7,9 @@
     <title>FREDI</title>
 </head>
 <body>
+<br><br>
 <img class="displayed" alt="FREDI" src="img\bg.png" title="FREDI">
+<br><br>
 <!-- Code php de verification si l'utilisateur est connecté --> 
 <?php 
 session_start();
