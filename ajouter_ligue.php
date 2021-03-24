@@ -71,11 +71,11 @@ $raws = $LigueDAO->findmail();
 
           $ligue = new Ligue(array(
 
-            'lib'       => $lib,
-            'url'       => $url,
-            'contact'   => $contact,
-            'telephone' => $tel,
-            'email'     => $mail
+            'lib_ligue'       => $lib,
+            'URL_ligue'       => $url,
+            'contact_ligue'   => $contact,
+            'telephone_ligue' => $tel,
+            'email_util'      => $mail
           ));
           
           $count = $LigueDAO->insert($ligue);
