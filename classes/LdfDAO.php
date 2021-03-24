@@ -132,9 +132,9 @@ public function delete($id)
         }
         return $nb;  // Retourne le nombre de mise à jour
     }
-    public function findMail($mail)
+    public function findMail($lib_trajet_ldf)
     { //retourne les ligne de frais d'un seul utilisateur en parametres
-        $sql = "select * from ligne_de_frais where email_util='".$mail."'";
+        $sql = "select * from ligne_de_frais where id_ldf='".$lib_trajet_ldf."'";
         try {
             $sth = $this->pdo->prepare($sql);
             $sth->execute();

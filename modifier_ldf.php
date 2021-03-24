@@ -72,7 +72,7 @@
   $id = $row['id_ldf'];
   echo "<tr>";
   echo "<td><a href='modifier_ldf.php?id_ldf=".$id."'>".$id."</a></td>";
-  echo "<td>".$row['id_ldf']."</td>";
+  echo "<td>".$row['date_ldf']."</td>";
   echo "<td>".$row['lib_trajet_ldf']."</td>";
   echo "<td>".$row['cout_peage_ldf']."</td>";
   echo "<td>".$row['cout_repas_ldf']."</td>";
@@ -88,38 +88,40 @@
 echo "</table>";
 ?>
 <?php
+
 $Ldf = new Ldf();
 $raws = $Ldf->get_id();
-$rawz = $LdfDAO->findmail();
-if (isset($_GET['id_url_ligue'])){ // si $post[id_url_ligue] existe
+if (isset($_GET['id_ldf'])){ // si $post[id_url_ligue] existe
   $Liguerempl = new LigueDAO();
-  $id_rempl = $_GET['id_url_ligue'];
+  $id_rempl = $_GET['id_ldf'];
   $rempl = $LdfDAO->find($id_rempl);
-  $remid = $rempl['lib_ligue'];
-  $remurl = $rempl['URL_ligue'];
-  $remcont = $rempl['contact_ligue'];
-  $remtel = $rempl['telephone_ligue'];
+  $remdat = $rempl['date_ldf'];
+  $remlib = $rempl['lib_trajet_ldf'];
+  $remcpl = $rempl['cout_peage_ldf'];
+  $remcrl = $rempl['cout_repas_ldf'];
+  $remchl = $rempl['cout_hebergement_ldf'];
+  $remnbkm = $rempl['nb_km_ldf'];
+  $remtnbkm = $rempl['total_km_ldf'];
+  $remldf = $rempl['total_ldf'];
+  $remidmdf = $rempl['id_mdf'];
+  $remap = $rempl['annee_per'];
+  $remmail = $rempl['email_util'];
 
-    $ldf = $LdfDAO->find($id_ldf);
-    $date = date('y.m.d');
-    $lib = $_POST['lib'];
-    $cpeage = $_POST['cpeage'];
-    $crepas = $_POST['crepas'];
-    $cheberge = $_POST['cheberge'];
-    $nbkm = $_POST['nbkm'];
-    $tnbkm = ($nbkm * $forfaitkm);
-    $tldf = ($cheberge + $crepas + $cpeage);
-    $motiff = $MotifDao->findtheID($_POST['motiff']);
-    $periode = $_POST['anneeperr'];
-    $util = $_POST['emailutil'];
 
 }else{
   $Liguerempl = new LigueDAO();
   $id_rempl = 0;
-  $remid = "&nbsp";
-  $remurl = "&nbsp";
-  $remcont = "&nbsp";
-  $remtel = "&nbsp";
+    $remdat = "&nbsp";
+    $remlib = "&nbsp";
+    $remcpl = "&nbsp";
+    $remcrl = "&nbsp";
+    $remchl = "&nbsp";
+    $remnbkm = "&nbsp";
+    $remtnbkm = "&nbsp";
+    $remldf = "&nbsp";
+    $remidmdf = "&nbsp";
+    $remap = "&nbsp";
+    $remmail = "&nbsp";
 }
 
 
@@ -129,7 +131,7 @@ if (isset($_GET['id_url_ligue'])){ // si $post[id_url_ligue] existe
  <label for="id_ldf">ID :</label><br>
   <select name="id_ldf" id="id_ldf" required>
   <?php
-    foreach($raws as $raw){
+  foreach($rows as $raw){
       foreach($raw as $value){
         echo "<option value='" .$value. "'>" .$value. "</option>";
       }
@@ -138,21 +140,23 @@ if (isset($_GET['id_url_ligue'])){ // si $post[id_url_ligue] existe
   </select><br><br>
      <form action="ajouter_ldf.php" method="post">
          <label for="datee">Date :</label><br>
-         <input type="date" id="datee" name="datee" ><br><br>
+         <input type="date" id="datee" name="datee" required><br><br>
          <label for="lib">Libellé :</label><br>
-         <input type="text" id="lib" name="lib" required><br><br>
+         <input type="text" id="lib" name="lib" ><br><br>
          <label for="cpeage">Coût péage :</label><br>
          <input type="number" id="cpeage" name="cpeage" required><br><br>
          <label for="crepas">Coût repas :</label><br>
-         <input type="number" id="crepas" name="crepas" ><br><br>
+         <input type="number" id="crepas" name="crepas" required><br><br>
          <label for="cheberge">Coût Hébergement:</label><br>
-         <input type="number" id="cheberge" name="cheberge" ><br><br>
+         <input type="number" id="cheberge" name="cheberge" required><br><br>
          <label for="nbkm">Nombre de KM :</label><br>
-         <input type="number" id="nbkm" name="nbkm" ><br><br>
+         <input type="number" id="nbkm" name="nbkm" required><br><br>
          <label for="motiff">Motif de frais :</label><br>
          <select name="motiff" id="motiff" required>
              <?php
-             foreach($raws as $raw){
+             $MotifDao = new MotifDao();
+             $rawsss = $MotifDao->findlib();
+             foreach($rawsss as $raw){
                  foreach($raw as $value){
                      echo "<option value='" .$value. "'>" .$value. "</option>";
                  }
@@ -190,21 +194,33 @@ if (isset($_GET['id_url_ligue'])){ // si $post[id_url_ligue] existe
 <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
         if(isset($_POST['enregistrement'])){
-            $id_ligue = $_POST['id_ligue'];
-            $lib      = $_POST['lib'];
-            $url      = $_POST['url'];
-            $contact  = $_POST['contact'];
-            $tel      = $_POST['tel'];
-            $email    = $_POST['mail'];
-            $Ligue = new Ligue(array(
-              'id'  => $id_ligue,
-              'lib'       => $lib,
-              'url'       => $url,
-              'contact'   => $contact,
-              'telephone' => $tel,
-              'mail'     => $email
-            ));
-            $nb = $LigueDAO->update($Ligue);
+            $LdfDao = new LdfDao();
+            $lib = $_POST['lib_trajet_ldf'];
+            $date = $_POST['date_ldf'];
+            $cpeage = $_POST['cout_peage_ldf'];
+            $crepas = $_POST['cout_repas_ldf'];
+            $cheberge = $_POST['cout_hebergement_ldf'];
+            $nbkm = $_POST['nb_km_ldf'];
+            $tnbkm = $_POST['total_km_ldf'];
+            $tldf = $_POST['total_ldf'];
+            $motiff = $_POST['id_mdf'];
+            $periode = $_POST['annee_per'];
+            $util = $_POST['email_util'];
+
+            $Ldf = new Ldf();
+            $Ldf -> set_date($date);
+            $Ldf -> set_lib($lib);
+            $Ldf -> set_coutp($cpeage);
+            $Ldf -> set_coutr($crepas);
+            $Ldf -> set_couth($cheberge);
+            $Ldf -> set_nbkm($nbkm);
+            $Ldf -> set_tkm($tnbkm);
+            $Ldf -> set_tldf($tldf);
+            $Ldf -> set_idmdf($motiff);
+            $Ldf -> set_anneeper($periode);
+            $Ldf -> set_email($util);
+
+            $nb = $LdfDAO->update($Ldf);
             if($nb == 1){
               echo "<br>$lib a bien été modifié(e)";
             }else{
