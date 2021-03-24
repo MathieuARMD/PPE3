@@ -18,31 +18,27 @@ class Ligue{
    }
 
 ////////////////getter////////////////
-   function get_id() {
+   function get_id_ligue() {
      return $this->id_ligue;
-   }
-
-   function get_lib() {
-     return $this->lib_ligue;
    }
 
    function get_lib_ligue() {
     return $this->lib_ligue;
   }
 
-   function get_url() {
+   function get_URL_ligue() {
      return $this->URL_ligue;
    }
 
-   function get_contact() {
+   function get_contact_ligue() {
      return $this->contact_ligue;
    }
 
-   function get_telephone() {
+   function get_telephone_ligue() {
      return $this->telephone_ligue;
    }
 
-   function get_email() {
+   function get_email_util() {
     return $this->email_util;
   }
 
