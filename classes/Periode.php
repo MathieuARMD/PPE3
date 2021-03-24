@@ -30,6 +30,11 @@ class Periode
       return $this->statut_per;
     }
 
+    public function get_forfait_km_per()
+  {
+    return $this->forfait_km_per;
+  }
+
 
 /////////////////////setter///////////////
     function set_annee($year) {
@@ -43,6 +48,13 @@ class Periode
     function set_statut($stat) {
       $this->statut_per = $stat;
     }
+
+    public function set_forfait_km_per($forfait_km_per)
+  {
+    $this->forfait_km_per = $forfait_km_per;
+
+    return $this;
+  }
 
 ////////////////Hydrateur///////////////////////
     public function fill(array $tableau)

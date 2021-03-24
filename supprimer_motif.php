@@ -54,8 +54,9 @@
 <?php
         if(isset($_POST['Supprimer'])){
           $libmotif = $_POST['libmotif'];
-          $id = $MotifDao->findtheID($libmotif);     
-          $nb = $MotifDao->delete($id);
+          $id2 = $MotifDao->findtheID($libmotif);     
+          $nb = $MotifDao->delete($id2['id_mdf']);
+          $id = $id2['id_mdf'];
           if($nb == 1){
             echo "<br>Le motif N°$id a bien été supprim&eacute; dans la base FREDI";
           }else{

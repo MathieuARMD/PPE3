@@ -93,11 +93,11 @@ class LigueDAO extends DAO
         $sql = "INSERT INTO ligue(`lib_ligue`, `URL_ligue`, `contact_ligue`,`telephone_ligue`,`email_util`) 
         values (:lib,:url_,:contact,:tel,:email)";
         $params = array(
-          ":lib" => $ligue->get_lib(),
-          ":url_" => $ligue->get_url(),
-          ":contact" => $ligue->get_contact(),
-          ":tel" => $ligue->get_telephone(),
-          ":email" => $ligue->get_email()
+          ":lib" => $ligue->get_lib_ligue(),
+          ":url_" => $ligue->get_URL_ligue(),
+          ":contact" => $ligue->get_contact_ligue(),
+          ":tel" => $ligue->get_telephone_ligue(),
+          ":email" => $ligue->get_email_util()
         );
         try {
             $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
@@ -113,12 +113,12 @@ class LigueDAO extends DAO
     {           
         $sql = "UPDATE  ligue SET id_ligue=:id_ligue, lib_ligue=:lib, URL_ligue=:url, contact_ligue=:contact, telephone_ligue=:telephone, email_util=:email WHERE id_ligue=:id_ligue";
         $params = array(
-            ":id_ligue"=> $ligue->get_id(),
-            ":lib" => $ligue->get_lib(),
-            ":url" => $ligue->get_url(),
-            ":contact" => $ligue->get_contact(),
-            ":telephone" => $ligue->get_telephone(),
-            ":email" => $ligue ->get_email()
+            ":id_ligue"=> $ligue->get_id_ligue(),
+            ":lib" => $ligue->get_lib_ligue(),
+            ":url" => $ligue->get_URL_ligue(),
+            ":contact" => $ligue->get_contact_ligue(),
+            ":telephone" => $ligue->get_telephone_ligue(),
+            ":email" => $ligue ->get_email_util()
         );
         try {
             $sth = $this->executer($sql, $params); // On passe par la méthode de la classe mère
@@ -146,7 +146,7 @@ class LigueDAO extends DAO
 
 
     }
-
+    /*@author Luc Dehez */
     public function getPeriodesByLigue($idligue)
     {
          $sql = "SELECT DISTINCT annee_per
