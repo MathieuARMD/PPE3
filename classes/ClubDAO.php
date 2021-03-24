@@ -42,12 +42,10 @@ class clubDAO extends DAO {
         try {
             $params = array(":lib" => $lib);
             $sth=$this->executer($sql, $params);
-            $rows = $sth->fetch(PDO::FETCH_ASSOC);
+            $res = $sth->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
-        foreach($rows as $row)
-            $res = $row;
         return $res;
     } // function findtheID()
 
