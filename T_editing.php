@@ -10,7 +10,6 @@
 <body>
 <?php include 'top.php';?>
 <?php include 'menu.php'; ?>
-<? /*@author Luc Dehez*/ ?>
 
 </div>
 <?php include 'menu.php';
