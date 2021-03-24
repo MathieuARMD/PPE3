@@ -152,7 +152,7 @@ class UserDAO extends DAO
         return $nb;  // Retourne le nombre de mise à jour
     }
 
-
+    /* @author Luc Dehez*/
     public function findUsersAvecLdfActive()
     { //retourne les utilisateurs avec au moins une ldf sur la période active
         $sql = "SELECT * from utilisateur 

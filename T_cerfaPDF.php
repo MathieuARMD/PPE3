@@ -2,7 +2,6 @@
 
 /***************************
   Sample using a PHP array
-  @author Luc Dehez
 ****************************/
 require_once "init.php";
 require_once('fpdf/fpdm/fpdm.php');
