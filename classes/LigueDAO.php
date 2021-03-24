@@ -146,7 +146,7 @@ class LigueDAO extends DAO
 
 
     }
-
+    /*@author Luc Dehez */
     public function getPeriodesByLigue($idligue)
     {
          $sql = "SELECT DISTINCT annee_per
