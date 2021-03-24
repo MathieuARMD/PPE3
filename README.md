@@ -45,5 +45,5 @@ La documentation est contenu dans le dossier [/doc](./doc)
 * Il peut donc créer/modifier/supprimer des périodes comptables, des motifs de frais et des utilisateurs.
 
 
-/!\ Du code appartenant a Luc Dehez a été utiliser/!\
+! Du code appartenant a Luc Dehez a été utiliser !
 ce code est en train d'être remplacé
