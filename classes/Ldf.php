@@ -91,7 +91,7 @@ class Ldf {  //ligne de frais
     }
 
     function set_coutr($crepas) {
-        return $this->cout_peage_ldf= $crepas ;
+        return $this->cout_repas_ldf= $crepas ;
     }
 
     function set_couth($cheberge) {

@@ -73,7 +73,6 @@
   echo "<tr>";
   echo "<td><a href='modifier_ldf.php?id_ldf=".$id."'>".$id."</a></td>";
   echo "<td>".$row['id_ldf']."</td>";
-  echo "<td>".$row['date_ldf']."</td>";
   echo "<td>".$row['lib_trajet_ldf']."</td>";
   echo "<td>".$row['cout_peage_ldf']."</td>";
   echo "<td>".$row['cout_repas_ldf']."</td>";
@@ -89,7 +88,8 @@
 echo "</table>";
 ?>
 <?php
-$raws = $LdfDAO->get_anneeper();
+$Ldf = new Ldf();
+$raws = $Ldf->get_id();
 $rawz = $LdfDAO->findmail();
 if (isset($_GET['id_url_ligue'])){ // si $post[id_url_ligue] existe
   $Liguerempl = new LigueDAO();
@@ -125,9 +125,9 @@ if (isset($_GET['id_url_ligue'])){ // si $post[id_url_ligue] existe
 
 ?>
 <br>
- <form action="modifier_ligue.php" method="post">
- <label for="id_ligue">ID :</label><br>
-  <select name="id_ligue" id="id_ligue" required>
+ <form action="modifier_ldf.php" method="post">
+ <label for="id_ldf">ID :</label><br>
+  <select name="id_ldf" id="id_ldf" required>
   <?php
     foreach($raws as $raw){
       foreach($raw as $value){
@@ -136,25 +136,57 @@ if (isset($_GET['id_url_ligue'])){ // si $post[id_url_ligue] existe
     }
   ?>
   </select><br><br>
-<label for="lib">Libellé :</label><br>
-<input type="text" id="lib" name="lib" value="<?php echo($remid)?>" required><br><br>
-<label for="url">URL :</label><br>
-<input type="text" id="url" name="url" value="<?php echo($remurl)?>" required><br><br>
-<label for="contact">Contact :</label><br>
-<input type="text" id="contact" name="contact" value="<?php echo($remcont)?>"><br><br>
-<label for="tel">Telephone :</label><br>
-<input type="number" id="tel" name="tel" value="<?php echo($remtel)?>"><br><br>
-<label for="mail">Email du controleur :</label><br>
-<select name="mail" id="mail" required>
-  <?php
-    foreach($rawz as $raw){
-      foreach($raw as $value){
-        echo "<option value='" .$value. "'>" .$value. "</option>";
-      }
-    }
-  ?>
-
-</select><br><br>
+     <form action="ajouter_ldf.php" method="post">
+         <label for="datee">Date :</label><br>
+         <input type="date" id="datee" name="datee" ><br><br>
+         <label for="lib">Libellé :</label><br>
+         <input type="text" id="lib" name="lib" required><br><br>
+         <label for="cpeage">Coût péage :</label><br>
+         <input type="number" id="cpeage" name="cpeage" required><br><br>
+         <label for="crepas">Coût repas :</label><br>
+         <input type="number" id="crepas" name="crepas" ><br><br>
+         <label for="cheberge">Coût Hébergement:</label><br>
+         <input type="number" id="cheberge" name="cheberge" ><br><br>
+         <label for="nbkm">Nombre de KM :</label><br>
+         <input type="number" id="nbkm" name="nbkm" ><br><br>
+         <label for="motiff">Motif de frais :</label><br>
+         <select name="motiff" id="motiff" required>
+             <?php
+             foreach($raws as $raw){
+                 foreach($raw as $value){
+                     echo "<option value='" .$value. "'>" .$value. "</option>";
+                 }
+             }
+             ?>
+         </select><br>
+         <br>
+         <label for="anneeperr">Année :</label><br>
+         <?php $PeriodeDAO = new PeriodeDAO();
+         $rawss = $PeriodeDAO->findperiode();
+         ?>
+         <select name="anneeperr" id="anneeperr" required>
+             <?php
+             foreach($rawss as $raw){
+                 foreach($raw as $value){
+                     echo "<option value='" .$value. "'>" .$value. "</option>";
+                 }
+             }
+             ?>
+         </select><br>
+         <br>
+         <label for="emailutil">Email de l'utilisateur :</label><br>
+         <?php $UserDAO = new UserDAO();
+         $rawz = $UserDAO->finduser();
+         ?>
+         <select name="emailutil" id="emailutil" required>
+             <?php
+             foreach($rawz as $raw){
+                 foreach($raw as $value){
+                     echo "<option value='" .$value. "'>" .$value. "</option>";
+                 }
+             }
+             ?>
+         </select><br><br>
 <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
         if(isset($_POST['enregistrement'])){

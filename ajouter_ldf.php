@@ -38,6 +38,8 @@
       $raws = $MotifDao->findlib();
 ?>
 <form action="ajouter_ldf.php" method="post">
+<label for="datee">Date :</label><br>
+<input type="date" id="datee" name="datee" ><br><br>
 <label for="lib">Libellé :</label><br>
 <input type="text" id="lib" name="lib" required><br><br>
 <label for="cpeage">Coût péage :</label><br>
@@ -97,7 +99,7 @@ $forfaitkm = $Periode->get_forfait(); //objet
     $LdfDao = new LdfDAO();
   if(isset($_POST['enregistrement'])){
           $LdfDao = new LdfDao();
-          $date = date('y.m.d');
+          $date = $_POST['datee'];
           $lib = $_POST['lib'];
           $cpeage = $_POST['cpeage'];
           $crepas = $_POST['crepas'];
@@ -108,23 +110,20 @@ $forfaitkm = $Periode->get_forfait(); //objet
           $motiff = $MotifDao->findtheID($_POST['motiff']);
           $periode = $_POST['anneeperr'];
           $util = $_POST['emailutil'];
-          $Ldfdao = new LdfDAO();
 
+          $Ldf = new Ldf();
+          $Ldf -> set_date($date);
+          $Ldf -> set_lib($lib);
+          $Ldf -> set_coutp($cpeage);
+          $Ldf -> set_coutr($crepas);
+          $Ldf -> set_couth($cheberge);
+          $Ldf -> set_nbkm($nbkm);
+          $Ldf -> set_tkm($tnbkm);
+          $Ldf -> set_tldf($tldf);
+          $Ldf -> set_idmdf($motiff);
+          $Ldf -> set_anneeper($periode);
+          $Ldf -> set_email($util);
 
-          $Ldf = new Ldf(array(
-                date("y.m.d")    => $date,
-                         'lib'         => $lib,
-                         'cpeage'      => $cpeage,
-                         'crepas'      => $crepas,
-                         'cheberge'    => $cheberge,
-                         'nbkm'        => $nbkm,
-                   'nbkm' * $forfaitkm => $tnbkm,
-      'cheberge' + 'crepas' + 'cpeage' => $tldf,
-                         'motiff'      => $motiff,
-                         'anneeperr'   => $periode,
-                         'emailutil'   => $util
-
-          ));
 
           $count = $LdfDao->insert($Ldf);
           if(isset($_POST['enregistrement'])){
@@ -137,6 +136,7 @@ $forfaitkm = $Periode->get_forfait(); //objet
             }
           }
         }
+
 ?>
 </form>
 </body>

@@ -70,15 +70,15 @@ class LdfDAO extends DAO {
     public function insert($Ldf)
     {
         $sql = "INSERT INTO `ligne_de_frais`(`date_ldf`, `lib_trajet_ldf`,`cout_peage_ldf`, `cout_repas_ldf`, `cout_hebergement_ldf`, `nb_km_ldf`, `total_km_ldf`, `total_ldf`, `id_mdf`, `annee_per`, `email_util`) 
-        values (:date, :lib,:cpeage,:crepas,:cheberge,:nbkm,:tnbkm,:tldf,:motiff,:anneeperr,:emailutil)";
+        values (:datee,:lib,:cpeage,:crepas,:cheberge,:nbkm,:tnbkm,:tldf,:motiff,:anneeperr,:emailutil)";
         $params = array(
-          ":date" => $Ldf->get_date(),
+          ":datee" => $Ldf->get_date(),
           ":lib" => $Ldf->get_lib(),
           ":cpeage" => $Ldf->get_coutp(),
           ":crepas" => $Ldf->get_coutr(),
           ":cheberge" => $Ldf->get_couth(),
           ":nbkm" => $Ldf->get_nbkm(),
-          ":tnbkm " => $Ldf->get_tkm(),
+          ":tnbkm" => $Ldf->get_tkm(),
           ":tldf" => $Ldf->get_tldf(),
           ":motiff" => $Ldf->get_idmdf(),
           ":anneeperr" => $Ldf->get_anneeper(),
