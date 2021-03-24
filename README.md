@@ -43,3 +43,7 @@ La documentation est contenu dans le dossier [/doc](./doc)
 * ID :admin   mdp :adminweb2020
 * L'administrateur s'occupe de gérer les frais et les périodes.
 * Il peut donc créer/modifier/supprimer des périodes comptables, des motifs de frais et des utilisateurs.
+
+
+/!\ Du code appartenant a Luc Dehez a été utiliser/!\
+ce code est en train d'être remplacé
