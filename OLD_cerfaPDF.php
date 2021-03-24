@@ -67,6 +67,6 @@ $pdf->mon_fichier="CERFA.pdf";
 $pdf->useCheckboxParser = true; //gestion des checkbox
 $pdf->Load($fields, true); // second parameter: false if field values are in ISO-8859-1, true if UTF-8
 $pdf->Merge();
-$pdf->Output('D', $user->get_nom()."-".$per->get_annee()."-".$pdf->mon_fichier);
+$pdf->Output('F', $user->get_nom()."-".$per->get_annee()."-".$pdf->mon_fichier);
 
 ?>

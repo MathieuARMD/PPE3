@@ -33,18 +33,27 @@
 * 	V1.0 (03.11.2010) First working release                                    *
 *******************************************************************************/
 
+global $FPDM_FILTERS, $FPDM_REGEXPS; //needs explicit global scope, otherwise autoloading will be incomplete.
 $FPDM_FILTERS=array(); //holds all supported filters
 $FPDM_REGEXPS= array(
+	//FIX: parse checkbox definition
+	"/AS"=>"/\/AS\s+\/(\w+)$/",
+	"name"=>"/\/(\w+)/",
+	// "/AP_D_SingleLine"=>"/\/D\s+\/(\w+)\s+\d+\s+\d+\s+R\s+\/(\w+)$/",
+	//ENDFIX
 	"/Type"=>"/\/Type\s+\/(\w+)$/",
 	"/Subtype" =>"/^\/Subtype\s+\/(\w+)$/"
 );
 
 //Major stream filters come from FPDI's stuff but I've added some :)
-require_once("filters/FilterASCIIHex.php");
-require_once("filters/FilterASCII85.php");
-require_once("filters/FilterFlate.php");
-require_once("filters/FilterLZW.php");
-require_once("filters/FilterStandard.php");
+if (!defined('FPDM_DIRECT')) {
+	$FPDM_FILTERS = array("LZWDecode", "ASCIIHexDecode", "ASCII85Decode", "FlateDecode", "Standard"	);
+}
+// require_once("filters/FilterASCIIHex.php");
+// require_once("filters/FilterASCII85.php");
+// require_once("filters/FilterFlate.php");
+// require_once("filters/FilterLZW.php");
+// require_once("filters/FilterStandard.php");
 
 
 $__tmp = version_compare(phpversion(), "5") == -1 ? array('FPDM') : array('FPDM', false);
@@ -62,47 +71,47 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 	
     class FPDM {
     //@@@@@@@@@
-	
+		var $useCheckboxParser = false;      //boolean: allows activation of custom checkbox parser (not available in original FPDM source)
 
-        var $pdf_source;      //string: full pathname to the input pdf , a form file
-        var $fdf_source;	  //string: full pathname to the input fdf , a form data file
-		var $pdf_output;      //string: full pathname to the resulting filled pdf 
+		var $pdf_source = '';      //string: full pathname to the input pdf , a form file
+		var $fdf_source = '';	  //string: full pathname to the input fdf , a form data file
+		var $pdf_output = '';      //string: full pathname to the resulting filled pdf 
 		
-        var $pdf_entries;     //array: Holds the content of the pdf file as array
-		var $fdf_content;     //string: holds the content of the fdf file
-		var $fdf_parse_needed;//boolean: false will use $fields data else extract data from fdf content 
-		var $value_entries;   //array: a map of values to faliclitate access and changes 
-        
-		var $positions; 	  //array, stores what object id is at a given position n ($positions[n]=<obj_id>)
+		var $pdf_entries = array();     //array: Holds the content of the pdf file as array
+		var $fdf_content = '';     //string: holds the content of the fdf file
+		var $fdf_parse_needed = false;//boolean: false will use $fields data else extract data from fdf content 
+		var $value_entries = array();   //array: a map of values to faliclitate access and changes 
 		
-		var $offsets;   	  //array of offsets for objects, index is the object's id, starting at 1
-		var $pointer;   	  //integer, Current line position in the pdf file during the parsing 
+		var $positions = array(); 	  //array, stores what object id is at a given position n ($positions[n]=<obj_id>)
 		
-		var $shifts;    	  //array, Shifts of objects in the order positions they appear in the pdf, starting at 0.
-		var $shift;     	  //integer, Global shift file size due to object values size changes
+		var $offsets = array();   	  //array of offsets for objects, index is the object's id, starting at 1
+		var $pointer = 0;   	  //integer, Current line position in the pdf file during the parsing 
 		
-		var $streams;         //Holds streams configuration found during parsing
-		var $streams_filter;  //Regexp to decode filter streams
+		var $shifts = array();    	  //array, Shifts of objects in the order positions they appear in the pdf, starting at 0.
+		var $shift = 0;     	  //integer, Global shift file size due to object values size changes
 		
-		var $safe_mode;       //boolean, if set, ignore previous offsets do no calculations for the new xref table, seek pos directly in file
-		var $check_mode;      //boolean, Use this to track offset calculations errors in corrupteds pdfs files for sample
-		var $halt_mode; 	  //if true, stops when offset error is encountered
+		var $streams = '';         //Holds streams configuration found during parsing
+		var $streams_filter = '';  //Regexp to decode filter streams
 		
-		var $info; 			  //array, holds the info properties
-        var $fields; 		  //array that holds fields-Data parsed from FDF
+		var $safe_mode = false;       //boolean, if set, ignore previous offsets do no calculations for the new xref table, seek pos directly in file
+		var $check_mode = false;      //boolean, Use this to track offset calculations errors in corrupteds pdfs files for sample
+		var $halt_mode = false; 	  //if true, stops when offset error is encountered
 		
-		var $verbose;         //boolean ,  a debug flag to decide whether or not to show internal process 
-		var $verbose_level;   //integer default is 1 and if greater than 3, shows internal parsing as well
+		var $info = array(); 			  //array, holds the info properties
+		var $fields = array(); 		  //array that holds fields-Data parsed from FDF
 		
-		var $support; 		  //string set to 'native' for fpdm or 'pdftk' for pdf toolkit
-		var $flatten_mode;	  //if true, flatten field data as text and remove form fields (NOT YET SUPPORTED BY FPDM)
-		var $compress_mode;   //boolean , pdftk feature only to compress streams
-		var $uncompress_mode; //boolean pdftk feature only to uncompress streams
-		var $security;        //Array holding securtity settings  
+		var $verbose = false;         //boolean ,  a debug flag to decide whether or not to show internal process 
+		var $verbose_level = 1;   //integer default is 1 and if greater than 3, shows internal parsing as well
+		
+		var $support = ''; 		  //string set to 'native' for fpdm or 'pdftk' for pdf toolkit
+		var $flatten_mode = false;	  //if true, flatten field data as text and remove form fields (NOT YET SUPPORTED BY FPDM)
+		var $compress_mode = false;   //boolean , pdftk feature only to compress streams
+		var $uncompress_mode = false; //boolean pdftk feature only to uncompress streams
+		var $security = array();        //Array holding securtity settings  
 							  //(password owner nad user,  encrypt (set to 40 or 128 or 0), allow <permissions>] see pdfk help
 
-		var $needAppearancesTrue;	//boolean, indicates if /NeedAppearances is already set to true
-		var $isUTF8;				//boolean (true for UTF-8, false for ISO-8859-1)
+		var $needAppearancesTrue = false;	//boolean, indicates if /NeedAppearances is already set to true
+		var $isUTF8 = false;				//boolean (true for UTF-8, false for ISO-8859-1)
 		
         /**
          * Constructor
@@ -112,7 +121,7 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 		 *@param string $fdf_source Source-Filename
 		 *@param boolean $verbose , optional false per default
          */
-    	function FPDM() { 
+    	function __construct() { 
 		//==============
 		
 			$args=func_get_args();
@@ -617,7 +626,7 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 					$this->Error($ret["return"]);
 			}
 			
-			$this->buffer=$this->get_buffer($pdf_file);
+			//$this->buffer=$this->get_buffer($pdf_file);
 			
 			
 			$dest=strtoupper($dest);
@@ -649,13 +658,13 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 						header('Content-Type: application/pdf');
 						if(headers_sent())
 							$this->Error('Some data has already been output, can\'t send PDF file');
-						header('Content-Length: '.strlen($this->buffer));
+						header('Content-Length: '.strlen($this->get_buffer()));
 						header('Content-Disposition: inline; filename="'.$name.'"');
 						header('Cache-Control: private, max-age=0, must-revalidate');
 						header('Pragma: public');
 						ini_set('zlib.output_compression','0');
 					}
-					echo $this->buffer;
+					echo $this->get_buffer();
 					break;
 				case 'D':
 					//Download file
@@ -664,7 +673,7 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 					header('Content-Type: application/x-download');
 					if(headers_sent())
 						$this->Error('Some data has already been output, can\'t send PDF file');
-					header('Content-Length: '.strlen($this->buffer));
+					header('Content-Length: '.strlen($this->get_buffer()));
 					header('Content-Disposition: attachment; filename="'.$name.'"');
 					
 					header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); // Date in the past
@@ -676,7 +685,7 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 					header('Cache-Control: private, max-age=0, must-revalidate');
 					header('Pragma: public,no-cache');
 					ini_set('zlib.output_compression','0');
-					echo $this->buffer;
+					echo $this->get_buffer();
 					break;
 				case 'F':
 					//Save to local file
@@ -685,12 +694,12 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 					if(!$f)
 						$this->Error('Unable to create output file: '.$name.' (currently opened under Acrobat Reader?)');
 						
-					fwrite($f,$this->buffer,strlen($this->buffer));
+					fwrite($f,$this->get_buffer(),strlen($this->get_buffer()));
 					fclose($f);
 					break;
 				case 'S':
 					//Return as a string
-					return $this->buffer;
+					return $this->get_buffer();
 				default:
 					$this->Error('Incorrect output destination: '.$dest);
 			}
@@ -863,7 +872,10 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 			 
 					$offset_shift=$this->set_field_tooltip($name,$value);
 			 
-				} else {//if(isset($this->value_entries["$name"]["values"]["$type"])) {
+				} elseif ($this->useCheckboxParser && isset($this->value_entries["$name"]['infos']['checkbox_state'])) { //FIX: set checkbox value
+                    $offset_shift=$this->set_field_checkbox($name, $value);
+                //ENDFIX
+                } else {//if(isset($this->value_entries["$name"]["values"]["$type"])) {
 //				echo $this->value_entries["$name"]["values"]["$type"];
 /*					$field_value_line=$this->value_entries["$name"]["values"]["$type"];
 					$field_value_maxlen=$this->value_entries["$name"]["constraints"]["maxlen"];
@@ -916,6 +928,60 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 				$this->Error("set_field_tooltip failed as the field $name does not exist");
 			return $offset_shift;
 		}
+		
+        //FIX: parse checkbox definition
+        /**
+        *Changes the checkbox state.
+        *
+        *@param string $name name of the field to change the state
+        *@param string $value the new state to set
+        *@return int offset_shift the size variation
+        **/
+        public function set_field_checkbox($name, $value)
+        {
+            //------------------------------------
+            $offset_shift=0;
+            $verbose_set=($this->verbose&&($this->verbose_level>1));
+            //Get the line(s) of the misc field values
+            if (isset($this->value_entries["$name"])) {
+                if (isset($this->value_entries["$name"]["infos"]["checkbox_state_line"])
+                && isset($this->value_entries["$name"]["infos"]["checkbox_no"])
+                && isset($this->value_entries["$name"]["infos"]["checkbox_yes"])) {
+                    $field_checkbox_line=$this->value_entries["$name"]["infos"]["checkbox_state_line"];
+                    if ($field_checkbox_line) {
+                        if ($verbose_set) {
+                            echo "<br>Change checkbox of the field $name at line $field_checkbox_line to value [$value]";
+                        }
+                        $state = $this->value_entries["$name"]["infos"]["checkbox_no"];
+                        if ($value) {
+                            $state = $this->value_entries["$name"]["infos"]["checkbox_yes"];
+                        }
+                        $CurLine =$this->pdf_entries[$field_checkbox_line];
+                        $OldLen=strlen($CurLine);
+                        $CurLine = '/AS /'.$state;
+                        $NewLen=strlen($CurLine);
+                        $Shift=$NewLen-$OldLen;
+                        $this->shift=$this->shift+$Shift;
+                        //Saves
+                        $this->pdf_entries[$field_checkbox_line]=$CurLine;
+                        return $Shift;
+                    // $offset_shift=$this->_set_field_value($field_checkbox_line, $state);
+                    } else {
+                        if ($verbose_set) {
+                            echo "<br>Change checkbox value aborted, parsed checkbox definition incomplete.";
+                        }
+                    }
+                } else {
+                    if ($verbose_set) {
+                        echo "<br>Change checkbox value aborted, the field $name has no checkbox definition.";
+                    }
+                }
+            } else {
+                $this->Error("set_field_checkbox failed as the field $name does not exist");
+            }
+            return $offset_shift;
+        }
+        //ENDFIX
 		
 		/**
 		*Dumps the line entries 
@@ -1020,7 +1086,7 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 		*
 		*@access private
 		*@note Function was written because PHP has a bin2hex, but not a hex2bin!
-		*@internal note pack(“C”,hexdec(substr($data,$i,2))) DOES NOT WORK
+		*@internal note pack(â€œCâ€,hexdec(substr($data,$i,2))) DOES NOT WORK
 		*@param string $hexString the hexified string
 		*@return string $bin a binary string
 		**/
@@ -1111,7 +1177,7 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 		/**
          * Read the offset of the xref table directly from file content
 		 *
-         * @note content has been previously been defined in $this->buffer
+         * @note content has been previously been defined in $this->get_buffer()
 		 * @param int $object_id an object id, a integer value starting from 1
 		 * @return int the wished xrefstart offset value
          */
@@ -1138,7 +1204,7 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 			static $positions=null;
 			static $shifts=null;
 			
-			if(is_null($offsets)) { //...variables content set once. This is the beauty of php :)
+			//if(is_null($offsets)) { //...variables content set once. This is the beauty of php :)
 			
 				//!NOTE: xref table is ordered by object id (position's object is not defined linearly in the pdf !)
 				$positions=$this->_get_positions_ordered();
@@ -1146,7 +1212,7 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 				$offsets=$this->_get_offsets_starting_from_zero();
 				//Shifts are already 0 indexed, don't change.
 				$shifts=$this->shifts;
-			}
+			//}
 			
 			$p=$positions[$object_id];
 			$offset=$offsets[$p];
@@ -1158,13 +1224,13 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 		/**
          * Reads the offset of the xref table directly from file content
 		 *
-         * @note content has been previously been defined in $this->buffer
+         * @note content has been previously been defined in $this->get_buffer()
 		 * @param int $object_id an object id, a integer value starting from 1
 		 * @return int the wished offset
          */
 		function read_offset_object_value($object_id) {
 		//------------------------------
-			$buffer=$this->buffer;
+			$buffer=$this->get_buffer();
 			$previous_object_footer='';//'endobj' or comment;
 			$object_header=$previous_object_footer.'\n'.$object_id.' 0 obj';
 			$chars = preg_split('/'.$object_header.'/', $buffer, -1, PREG_SPLIT_OFFSET_CAPTURE);
@@ -1266,7 +1332,7 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 				$extract_offset_value_from_file=($this->safe_mode||$this->check_mode);
 				
 				//Get new file content (ie with values changed)
-				$this->buffer=$this->get_buffer();
+				//$this->get_buffer()=$this->get_buffer();
 				
 				for($i=0;$i<$xLen;$i++) {
 				
@@ -1385,9 +1451,9 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 		*	JPXDecode : (PDF 1.5) Decompresses data encoded using the wavelet-based JPEG2000 standard, reproducing the original image data.
 		*With parameter(s):
 		*+  LZWDecode      : Decompresses data encoded using the LZW (Lempel-Ziv-Welch) adaptive compression method, reproducing the original text or binary data.
-		*+	FlateDecode (PDF 1.2): Decompresses data encoded using the zlib/deflate compression method, reproducing the original text or binary data.
+		*+	FlateDecode (PDFÂ 1.2): Decompresses data encoded using the zlib/deflate compression method, reproducing the original text or binary data.
 		*   CCITTFaxDecode : Decompresses data encoded using the CCITT facsimile standard, reproducing the original data (typically monochrome image data at 1 bit per pixel).
-		*   JBIG2Decode (PDF 1.4) :Decompresses data encoded using the JBIG2 standard, reproducing the original monochrome (1 bit per pixel) image data (or an approximation of that data).
+		*   JBIG2Decode (PDFÂ 1.4) :Decompresses data encoded using the JBIG2 standard, reproducing the original monochrome (1 bit per pixel) image data (or an approximation of that data).
 		*   DCTDecode : Decompresses data encoded using a DCT (discrete cosine transform) technique based on the JPEG standard, reproducing image sample data that approximates the original data.
 		*	Crypt (PDF 1.5) :Decrypts data encrypted by a security handler, reproducing the data as it was before encryption.
 		*@return the wished filter class to access the stream
@@ -1562,7 +1628,14 @@ if (!call_user_func_array('class_exists', $__tmp)) {
            
             $Counter=0;
             $obj=0; //this is an invalid object id, we use it to know if we are into an object
-			$type='';
+            //FIX: parse checkbox definition
+            $ap_d_yes='';
+            $ap_d_no='';
+            $ap_line=0;
+            $ap_d_line=0;
+            $as='';
+            //ENDFIX
+            $type='';
 			$subtype='';
 			$name='';
 			$value='';
@@ -1638,6 +1711,13 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 								
 								$object=null;
 								$obj=0;
+								//FIX: parse checkbox definition
+								$ap_d_yes='';
+								$ap_d_no='';
+								$ap_line=0;
+								$ap_d_line=0;
+								$as='';
+								//ENDFIX
 								$type='';
 								$subtype='';
 								$name='';
@@ -1764,6 +1844,40 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 									//=== DEFINITION ====
 									//preg_match("/^\/Type\s+\/(\w+)$/",$CurLine,$match)
 									$match=array();
+									//FIX: parse checkbox definition
+									if($this->useCheckboxParser && ('' == $ap_d_yes || '' == $ap_d_no || '' == $as)) {
+                                        if (!$ap_line && '/AP' == substr($CurLine, 0, 3)) {
+                                            if ($verbose_parsing) {
+                                                echo("<br>Found AP Line '<i>$Counter</i>'");
+                                            }
+                                            $ap_line = $Counter;
+                                        } elseif (!$ap_d_line && '/D' == substr($CurLine, 0, 2)) {
+                                            if ($verbose_parsing) {
+                                                echo("<br>Found D Line '<i>$Counter</i>'");
+                                            }
+                                            $ap_d_line = $Counter;
+                                        } elseif (($ap_line==$Counter-4)&&($ap_d_line==$Counter-2)&&($ap_d_yes=='')&&$this->extract_pdf_definition_value("name", $CurLine, $match)) {
+                                            $ap_d_yes=$match[1];
+                                            if ($verbose_parsing) {
+                                                echo("<br>Object's checkbox_yes is '<i>$ap_d_yes</i>'");
+                                            }
+                                            $object["infos"]["checkbox_yes"]=$ap_d_yes;
+                                        } elseif (($ap_line==$Counter-5)&&($ap_d_line==$Counter-3)&&($ap_d_no=='')&&$this->extract_pdf_definition_value("name", $CurLine, $match)) {
+                                            $ap_d_no=$match[1];
+                                            if ($verbose_parsing) {
+                                                echo("<br>Object's checkbox_no is '<i>$ap_d_no</i>'");
+                                            }
+                                            $object["infos"]["checkbox_no"]=$ap_d_no;
+                                        } elseif (($as=='')&&$this->extract_pdf_definition_value("/AS", $CurLine, $match)) {
+                                            $as=$match[1];
+                                            if ($verbose_parsing) {
+                                                echo("<br>Object's AS is '<i>$as</i>'");
+                                            }
+                                            $object["infos"]["checkbox_state"]=$as;
+                                            $object["infos"]["checkbox_state_line"]=$Counter;
+                                        }
+									}
+									//ENDFIX
 									if(($type=='')||($subtype=='')||($name=="")) {
 									
 										if(($type=='')&&$this->extract_pdf_definition_value("/Type",$CurLine,$match)) {
@@ -1783,6 +1897,10 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 										if(($name=="")&&preg_match("/^\/T\s?\((.+)\)\s*$/",$this->_protectContentValues($CurLine),$match)) {
 								
 											$name=$this->_unprotectContentValues($match[1]);
+											//FIX: convert ASCII object names to utf-8
+											// don't use utf8_encode($name) yet, it's core function since php 7.2
+											$name = mb_convert_encoding($name, 'UTF-8', 'ASCII');
+											//ENDFIX
 											if($verbose_parsing) echo ("Object's name is '<i>$name</i>'");
 											
 											$object["infos"]["name"]=$name; //Keep a track
@@ -2113,4 +2231,3 @@ if (!call_user_func_array('class_exists', $__tmp)) {
 }
 
 unset($__tmp);
-?>
