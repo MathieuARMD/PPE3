@@ -151,9 +151,11 @@ public function delete($id)
 
     public function findMailPeriode($mail,$annee)
     { //retourne les ligne de frais d'un seul utilisateur en parametres
-        $sql = "select * from ligne_de_frais where email_util='".$mail."' AND annee_per=".$annee.";";
+        $sql = "select * from ligne_de_frais where email_util=':mail' AND annee_per=:annee;";
+        $params = array(":mail" => $mail,
+                        ":annee" => $annee);
         try {
-            $sth = $this->pdo->prepare($sql);
+            $sth = $this->pdo->prepare($sql,$params);
             $sth->execute();
             $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
