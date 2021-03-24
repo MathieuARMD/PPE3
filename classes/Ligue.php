@@ -47,27 +47,27 @@ class Ligue{
   }
 
 ////////////////setter////////////////
-   function set_id($id) {
+   function set_id_ligue($id) {
      $this->id_ligue = $id;
    }
 
-   function set_lib($lib) {
+   function set_lib_ligue($lib) {
      $this->lib_ligue = $lib;
    }
 
-   function set_url($URL) {
+   function set_URL_ligue($URL) {
      $this->URL_ligue = $URL;
    }
 
-   function set_contact($contact) {
+   function set_contact_ligue($contact) {
      $this->contact_ligue = $contact;
    }
 
-   function set_telephone($tel) {
+   function set_telephone_ligue($tel) {
      $this->telephone_ligue = $tel;
    }
 
-   function set_email($mail) {
+   function set_email_util($mail) {
     $this->email_util = $mail;
   }
 

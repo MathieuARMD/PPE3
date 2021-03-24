@@ -8,21 +8,20 @@ class LigueDAO extends DAO
         parent::__construct();
     }
   
-    public function find($idl)
+    public function find($id)
     {
         $sql = "select * from ligue where id_ligue= :id_ligue";
         try {
-            $params = array(":id_ligue" => $idl);
+            $params = array(":id_ligue" => $id);
             $sth=$this->executer($sql, $params);
             $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
-        /*$ra = "";
+        $ra = "";
         foreach($rows AS $row)
-            $ra = $row;
-        return $ra;*/
-        return $rows;
+            $ra = new Ligue($row);
+        return $ra;
     } // function find()
 
     public function findid($lib)
