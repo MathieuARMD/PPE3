@@ -6,7 +6,9 @@
 require_once "init.php";
 require('fpdf/fpdm/fpdm.php');
 require_once "fpdf/fpdf.php";
+
 $id = isset($_GET['id']) ? $_GET['id']: 0;
+
 $userDAO = new UserDAO;
 $user = $userDAO->find($id); //renvoie l'utilisateur concerné
 $adhDAO = new AdherentDAO;
@@ -45,7 +47,6 @@ $fields = array(
     'z4'    => $rue,
     'z5'    => $club->get_adr2(),
     'z5b'    => $club->get_adr3(),
-    //'z6'    => "Club de ".$ligue->get_lib_ligue(),
     'z6'    => "Club de ".$ligue->get_lib_ligue(),
     'z29'    => $user->get_nom(),
     'z30'    => $user->get_prenom(),
