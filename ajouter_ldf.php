@@ -35,21 +35,21 @@
 <hr color="black">
 <br><br><br>
 <?php $MotifDao = new MotifDao();
-      $raws = $MotifDao->findlib();
+      $raws = $MotifDao->findID();
 ?>
 <form action="ajouter_ldf.php" method="post">
 <label for="datee">Date :</label><br>
-<input type="date" id="datee" name="datee" ><br><br>
+<input type="date" id="datee" name="datee" required><br><br>
 <label for="lib">Libellé :</label><br>
 <input type="text" id="lib" name="lib" required><br><br>
 <label for="cpeage">Coût péage :</label><br>
 <input type="number" id="cpeage" name="cpeage" required><br><br>
 <label for="crepas">Coût repas :</label><br>
-<input type="number" id="crepas" name="crepas" ><br><br>
+<input type="number" id="crepas" name="crepas" required><br><br>
 <label for="cheberge">Coût Hébergement:</label><br>
-<input type="number" id="cheberge" name="cheberge" ><br><br>
+<input type="number" id="cheberge" name="cheberge"required><br><br>
 <label for="nbkm">Nombre de KM :</label><br>
-<input type="number" id="nbkm" name="nbkm" ><br><br>
+<input type="number" id="nbkm" name="nbkm" required><br><br>
 <label for="motiff">Motif de frais :</label><br>
 <select name="motiff" id="motiff" required>
   <?php
@@ -90,14 +90,15 @@ $rawz = $UserDAO->finduser();
 </select><br>
     <br>
     <br>
-<?php $Periode = new Periode();
-$forfaitkm = $Periode->get_forfait(); //objet
-?>
-<?php $MotifDao = new MotifDao(); ?>
+
 <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
     $LdfDao = new LdfDAO();
-  if(isset($_POST['enregistrement'])){
+    $MotifDao = new MotifDao();
+    $PeriodeDAO = new PeriodeDAO();
+   /* $forfaitkm = $PeriodeDAO->findforfait();*/
+   /* var_dump($forfaitkm);*/
+if(isset($_POST['enregistrement'])){
           $LdfDao = new LdfDao();
           $date = $_POST['datee'];
           $lib = $_POST['lib'];
@@ -105,11 +106,21 @@ $forfaitkm = $Periode->get_forfait(); //objet
           $crepas = $_POST['crepas'];
           $cheberge = $_POST['cheberge'];
           $nbkm = $_POST['nbkm'];
-          $tnbkm = ($nbkm * $forfaitkm);
-          $tldf = ($cheberge + $crepas + $cpeage);
-          $motiff = $MotifDao->findtheID($_POST['motiff']);
+          $tnbkm = $nbkm * 50; /* forfaitkm est un array donc la multi marche pas */
+          $tldf = $cheberge + $crepas + $cpeage;
+          $motiff = $_POST['motiff'];;
           $periode = $_POST['anneeperr'];
           $util = $_POST['emailutil'];
+
+            if($cpeage<0) {
+                die("La ligne de frais ne peut être créée : des informations sont invalides");
+            } elseif ($crepas<0) {
+                die("La ligne de frais ne peut être créée : des informations sont invalides");
+            } elseif ($cheberge<0) {
+                die("La ligne de frais ne peut être créée : des informations sont invalides");
+            } elseif ($nbkm<0) {
+                die("La ligne de frais ne peut être créée : des informations sont invalides");
+            }
 
           $Ldf = new Ldf();
           $Ldf -> set_date($date);

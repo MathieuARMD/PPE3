@@ -45,7 +45,7 @@ class PeriodeDAO extends DAO
         $sql = "select forfait_km_per from periode";
         try {
             $sth=$this->executer($sql);
-            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+            $rows = $sth->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
@@ -73,8 +73,9 @@ class PeriodeDAO extends DAO
         } catch (PDOException $e) {
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
-        return $rows;        
+        return $rows;
     } // function findAll()
+
 
     public function insert($periode)
     {
@@ -177,6 +178,23 @@ class PeriodeDAO extends DAO
         }
         $periode = null;
         if ($row) { 
+            $periode = new Periode($row);
+        }
+        return $periode;
+    }
+
+    public function countPeriodeActivewithid($annee_per)
+    { //retourne ka periode active
+        $sql = "select COUNT(annee_per) from periode where statut_per = 0, annee_per='.$annee_per.' ";
+        try {
+            $sth = $this->pdo->prepare($sql);
+            $sth->execute();
+            $row = $sth->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        $periode = null;
+        if ($row) {
             $periode = new Periode($row);
         }
         return $periode;
