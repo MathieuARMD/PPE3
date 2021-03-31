@@ -167,7 +167,7 @@ class PeriodeDAO extends DAO
 
     public function findPeriodeActive()
     { //retourne ka periode active
-        $sql = "select * from periode where statut_per = 1";
+        $sql = "select * from periode where statut_per = 0";
         try {
             $sth = $this->pdo->prepare($sql);
             $sth->execute();
@@ -185,8 +185,8 @@ class PeriodeDAO extends DAO
     public function updatePeriodeActive($periode)
     { //change la periode active
         $annee = $periode->get_annee_per();
-        $sql1 = "UPDATE periode set statut_per = 0";
-        $sql2 = "UPDATE periode set statut_per = 1 WHERE annee_per = :annee";
+        $sql1 = "UPDATE periode set statut_per = 1";
+        $sql2 = "UPDATE periode set statut_per = 0 WHERE annee_per = :annee";
         try {
             $sth = $this->pdo->prepare($sql1);
             $sth->execute();
