@@ -9,11 +9,11 @@ class LdfDAO extends DAO {
 
 
 
-    public function find($Ldf)
-    {
-        $sql = "select * from ligne_de_frais where id_ldf= :id_ldf";
-        try {
-            $params = array(":id_ldf" => $id_ldf);
+    public function find($id_ldf)
+      {
+          $sql = "select * from ligne_de_frais where id_ldf= :id_ldf";
+          try {
+               $params = array(":id_ldf" => $id_ldf);
             $sth=$this->executer($sql, $params);
             $row = $sth->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -31,15 +31,42 @@ class LdfDAO extends DAO {
         $sql = "select id_ldf from ligne_de_frais where lib_trajet_ldf= :lib_ldf";
         try {
             $params = array(":lib_ldf" => $lib);
-            $sth=$this->executer($sql, $params);
+            $sth = $this->executer($sql, $params);
             $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die("Erreur lors de la requête SQL : " . $e->getMessage());
         }
-        foreach($rows as $row) {
+        foreach ($rows as $row) {
             $Ldf = $row['id_ldf'];
             return $Ldf;
         }
+    }
+
+        public function get_id_from_id($idldf)
+        {
+            $sql = "select id_ldf from ligne_de_frais where id_ldf= :idldf";
+            try {
+                $params = array(":idldf" => $idldf);
+                $sth = $this->executer($sql, $params);
+                $rows = $sth->fetch(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                die("Erreur lors de la requête SQL : " . $e->getMessage());
+            }
+
+            return $rows;
+        }
+    // function getidfromid()
+
+    public function find_id()
+    {
+        $sql = "select id_ldf from ligne_de_frais";
+        try {
+            $sth=$this->executer($sql);
+            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        return $rows;
 
     } // function findid()
 

@@ -71,7 +71,7 @@
 {
   $id = $row['id_ldf'];
   echo "<tr>";
-  echo "<td><a href='modifier_ldf.php?id_ldf=".$id."'>".$id."</a></td>";
+  echo "<td>".$id."</td>";
   echo "<td>".$row['date_ldf']."</td>";
   echo "<td>".$row['lib_trajet_ldf']."</td>";
   echo "<td>".$row['cout_peage_ldf']."</td>";
@@ -88,10 +88,11 @@
 echo "</table>";
 ?>
 <?php
+/*
+$LdfDAO = new LdfDAO();
 
-$Ldf = new Ldf();
-$raws = $Ldf->get_id();
-if (isset($_GET['id_ldf'])){ // si $post[id_url_ligue] existe
+
+if (isset($_GET['id_ldf'])){
   $Liguerempl = new LigueDAO();
   $id_rempl = $_GET['id_ldf'];
   $rempl = $LdfDAO->find($id_rempl);
@@ -123,7 +124,7 @@ if (isset($_GET['id_ldf'])){ // si $post[id_url_ligue] existe
     $remap = "&nbsp";
     $remmail = "&nbsp";
 }
-
+*/
 
 ?>
 <br>
@@ -131,8 +132,9 @@ if (isset($_GET['id_ldf'])){ // si $post[id_url_ligue] existe
  <label for="id_ldf">ID :</label><br>
   <select name="id_ldf" id="id_ldf" required>
   <?php
-  foreach($rows as $raw){
-      foreach($raw as $value){
+  $raws = $LdfDAO->find_id();
+  foreach($raws as $raww){
+      foreach($raww as $value){
         echo "<option value='" .$value. "'>" .$value. "</option>";
       }
     }
@@ -142,7 +144,7 @@ if (isset($_GET['id_ldf'])){ // si $post[id_url_ligue] existe
          <label for="datee">Date :</label><br>
          <input type="date" id="datee" name="datee" required><br><br>
          <label for="lib">Libellé :</label><br>
-         <input type="text" id="lib" name="lib" ><br><br>
+         <input type="text" id="lib" name="lib" required><br><br>
          <label for="cpeage">Coût péage :</label><br>
          <input type="number" id="cpeage" name="cpeage" required><br><br>
          <label for="crepas">Coût repas :</label><br>
@@ -155,7 +157,7 @@ if (isset($_GET['id_ldf'])){ // si $post[id_url_ligue] existe
          <select name="motiff" id="motiff" required>
              <?php
              $MotifDao = new MotifDao();
-             $rawsss = $MotifDao->findlib();
+             $rawsss = $MotifDao->findID();
              foreach($rawsss as $raw){
                  foreach($raw as $value){
                      echo "<option value='" .$value. "'>" .$value. "</option>";
@@ -194,31 +196,50 @@ if (isset($_GET['id_ldf'])){ // si $post[id_url_ligue] existe
 <input type="submit" name='enregistrement' value=" &nbsp;Envoyer ">
 <?php
         if(isset($_POST['enregistrement'])){
-            $LdfDao = new LdfDao();
-            $lib = $_POST['lib_trajet_ldf'];
-            $date = $_POST['date_ldf'];
-            $cpeage = $_POST['cout_peage_ldf'];
-            $crepas = $_POST['cout_repas_ldf'];
-            $cheberge = $_POST['cout_hebergement_ldf'];
-            $nbkm = $_POST['nb_km_ldf'];
-            $tnbkm = $_POST['total_km_ldf'];
-            $tldf = $_POST['total_ldf'];
-            $motiff = $_POST['id_mdf'];
-            $periode = $_POST['annee_per'];
-            $util = $_POST['email_util'];
+            $idldf = $_POST['id_ldf'];
+            $lib = $_POST['lib'];
+            $date = $_POST['datee'];
+            $cpeage = $_POST['cpeage'];
+            $crepas = $_POST['crepas'];
+            $cheberge = $_POST['cheberge'];
+            $nbkm = $_POST['nbkm'];
+            $tnbkm = $nbkm * 50;
+            $tldf = $cheberge + $crepas + $cpeage;
+            $motiff = $_POST['motiff'];
+            $periode = $_POST['anneeperr'];
+            $util = $_POST['emailutil'];
 
-            $Ldf = new Ldf();
-            $Ldf -> set_date($date);
-            $Ldf -> set_lib($lib);
-            $Ldf -> set_coutp($cpeage);
-            $Ldf -> set_coutr($crepas);
-            $Ldf -> set_couth($cheberge);
-            $Ldf -> set_nbkm($nbkm);
-            $Ldf -> set_tkm($tnbkm);
-            $Ldf -> set_tldf($tldf);
-            $Ldf -> set_idmdf($motiff);
-            $Ldf -> set_anneeper($periode);
-            $Ldf -> set_email($util);
+            if($cpeage<0) {
+                die("La ligne de frais ne peut être modifiée : des informations sont invalides");
+            } elseif ($crepas<0) {
+                die("La ligne de frais ne peut être modifiée : des informations sont invalides");
+            } elseif ($cheberge<0) {
+                die("La ligne de frais ne peut être modifiée : des informations sont invalides");
+            } elseif ($nbkm<0) {
+                die("La ligne de frais ne peut être modifiée : des informations sont invalides");
+            } elseif ($date <= date('Y-m-d', strtotime("01/01/".$periode.""))) {
+                die("La ligne de frais ne peut être modifiée : la date n'est pas valide");
+            }
+
+            $LdfDao = new LdfDao();
+            $idldfb=$LdfDAO->get_id_from_id($idldf);
+            if($idldf=$idldfb){
+                $Ldf = new Ldf();
+                $Ldf -> set_date($date);
+                $Ldf -> set_lib($lib);
+                $Ldf -> set_coutp($cpeage);
+                $Ldf -> set_coutr($crepas);
+                $Ldf -> set_couth($cheberge);
+                $Ldf -> set_nbkm($nbkm);
+                $Ldf -> set_tkm($tnbkm);
+                $Ldf -> set_tldf($tldf);
+                $Ldf -> set_idmdf($motiff);
+                $Ldf -> set_anneeper($periode);
+                $Ldf -> set_email($util);
+            } else {
+                die("Une erreur est survenue");
+            }
+            var_dump($idldfb);
 
             $nb = $LdfDAO->update($Ldf);
             if($nb == 1){

@@ -53,19 +53,28 @@
 <?php
         if(isset($_POST['Supprimer'])){
           $lib = $_POST['lib_trajet_ldf'];
-
-          $id = $LdfDao->get_id($lib);
-            $motifdao = new motifDAO;
-
-            $nb = 0;
-            $nb = $LdfDao->delete($id);
-            if($nb == 1){
-              echo "<br>La ligne $lib a bien été supprim&eacute; dans la base FREDI";
-            }else{
-              echo "<br>La ligne $lib n'a pas été supprim&eacute; dans la base FREDI";
-            }
+          echo"<hr color='black'>";
+          echo"<br><center><bold><a> Voulez-vous vraiment supprimer la ligne de frais ? </a></bold></center> ";
+          echo"<br><center><input type='submit' name='Oui' value='&nbsp;Oui&nbsp;'></center>";
+          echo"<br><center><input type='submit' name='Non' value='&nbsp;Non&nbsp;'></center>";
+          if(isset($_POST['Oui'])){
+              $id = $LdfDao->get_id($lib);
+              $motifdao = new motifDAO;
+              $nb = 0;
+              $nb = $LdfDao->delete($id);
+              if($nb == 1){
+                  echo "<br>La ligne $lib a bien &eacute;t&eacute; supprim&eacute; dans la base FREDI";
+              }else{
+                  echo "<br>La ligne $lib n'a pas &eacute;t&eacute; supprim&eacute; dans la base FREDI";
+              }
+              header('Refresh: 5; URL=supprimer_ldf.php');
+          } elseif(isset($_POST['Non'])) {
+              echo"<br> La ligne n'a pas &eacute;t&eacute; supprim&eacute;e ";
           }
-          header('Refresh: 2; URL=supprimer_ldf.php');
+
+
+          }
+
 
 
 ?>
