@@ -37,7 +37,7 @@ class Periode
 
 
 /////////////////////setter///////////////
-    function set_annee($year) {
+    function set_annee_per($year) {
       $this->annee_per = $year;
     }
 

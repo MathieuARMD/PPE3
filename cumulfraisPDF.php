@@ -20,10 +20,7 @@ $motifDAO = new MotifDAO;
 define('EURO'," ".utf8_encode(chr(128))); // créé la constante pour le symbole ascii euro (sinon probleme d'affichage)
 
 // Crée le tableau d'objets métier 
-
-
-
-
+/*
 // Instanciation de l'objet dérivé
 $pdf = new Mon_pdf();   // Paysage
 
@@ -147,3 +144,5 @@ $pdf->Cell(100, 10, utf8_decode("Signature du trésorier :"), 0,1,"L", true);
 $pdf->Output('F', $user->get_nom()."-".$per->get_annee()."-".$pdf->mon_fichier);
 header('Location: outfiles/'.$user->get_nom()."-".$per->get_annee()."-".$pdf->mon_fichier);
 //header('Location: index.php');
+*/
+?

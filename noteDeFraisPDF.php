@@ -17,7 +17,8 @@ $ldfDAO = new LdfDAO;
 $periodeDAO = new PeriodeDAO;
 $per = $periodeDAO->findPeriodeActive();
 $ldfs=array();
-$ldfs = $ldfDAO->findMailPeriode($id, $per->get_annee()); // renvoi les lignes de frais de l'utilisateur sur la périuode active
+$date_annee =  $per->get_annee();
+$ldfs = $ldfDAO->findMailPeriode($id,$date_annee); // renvoi les lignes de frais de l'utilisateur sur la périuode active
 $motifDAO = new MotifDAO;
 
 define('EURO'," ".utf8_encode(chr(128))); // créé la constante pour le symbole ascii euro (sinon probleme d'affichage)
@@ -25,10 +26,8 @@ define('EURO'," ".utf8_encode(chr(128))); // créé la constante pour le symbole
 // Crée le tableau d'objets métier 
 
 
-
-
 // Instanciation de l'objet dérivé
-$pdf = new Mon_pdf();   // Paysage
+$pdf = new fpdf();   // Paysage
 
 // Metadonnées
 $pdf->SetTitle('noteDeDrais', true);
@@ -42,7 +41,7 @@ $pdf->AddPage();
 
 // Titre de page
 $pdf->SetFont('Times', 'B', 16);
-$pdf->SetTextColor(0, 0, 0); // Bleu  #0033FF
+$pdf->SetTextColor(0, 0, 0);
 $pdf->SetX(40);
 $pdf->SetFillColor(144,238,144);
 $pdf->Cell(50, 10, utf8_decode("Note de frais des bénévoles"), 0, 0, 'C');
@@ -51,7 +50,7 @@ $pdf->Cell(50, 10, utf8_decode("Année civile ".$per->get_annee()), 0,1,"C", tru
 $pdf->Ln(2);
 
 $pdf->SetFont('Times', '', 10);
-$pdf->SetTextColor(0, 0, 0); // Noir
+$pdf->SetTextColor(0, 0, 0);
 $pdf->SetX(20);
 $pdf->Cell(20, 10, utf8_decode("Je soussigné(e)"), 0,1,"C", false);
 $pdf->Cell(195, 8, utf8_decode($user->get_nom()." ".$user->get_nom()), 0,1,"C",true);
@@ -90,7 +89,7 @@ $pdf->Cell(18, 10, utf8_decode("Hébergement"), 1,0,"C",true);
 $pdf->Cell(20, 10, utf8_decode("Total"), 1,1,"C",true);
 // Contenu
 $fill=false;  // panachage pour la couleur du fond
-$pdf->SetFillColor(224,235,255);  // bleu clair
+$pdf->SetFillColor(0,204,204); 
 $total = 0;
 foreach ($ldfs as $ldf) {
     $pdf->SetX(5);
@@ -138,15 +137,17 @@ $pdf->Cell(50, 20, utf8_decode("Signature du bénévole :"), 0,0,"C", false);
 $pdf->Cell(80, 20, utf8_decode(""), 0,1,"C", true);
 $pdf->Ln(2);
 
-$pdf->SetFillColor(205,92,92);
+$pdf->SetFillColor(81,156,179);
 $pdf->Cell(100, 10, utf8_decode("Partie réservée à l'association"), 0,1,"C", true);
-$pdf->Cell(50, 10, utf8_decode("N° d'ordre du reçu : "), 0,0,"L", true); // A compléter
-$pdf->Cell(50, 10, utf8_decode($per->get_annee()."-3"), 0,1,"L", true); // A compléter
+$pdf->Cell(50, 10, utf8_decode("N° d'ordre du reçu : "), 0,0,"L", true); 
+$pdf->Cell(50, 10, utf8_decode($per->get_annee()."-3"), 0,1,"L", true); 
 $pdf->Cell(100, 10, utf8_decode("Remis le : "), 0,1,"L", true);
 $pdf->Cell(100, 10, utf8_decode("Signature du trésorier :"), 0,1,"L", true);
 
 
 // Génération du document PDF
-$pdf->Output('F', $user->get_nom()."-".$per->get_annee()."-".$pdf->mon_fichier);
+$pdf->Output('F', 'outfiles/'.$user->get_nom()."-".$per->get_annee()."-".$pdf->mon_fichier);
 header('Location: outfiles/'.$user->get_nom()."-".$per->get_annee()."-".$pdf->mon_fichier);
 //header('Location: index.php');
+
+?>

@@ -150,19 +150,17 @@ public function delete($id)
     }
 
     public function findMailPeriode($mail,$annee)
-    { //retourne les ligne de frais d'un seul utilisateur en parametres
-        $sql = "select * from ligne_de_frais where email_util=':mail' AND annee_per=:annee;";
-        $params = array(":mail" => $mail,
-                        ":annee" => $annee);
+    { 
+        $sql = "select * from ligne_de_frais where email_util='".$mail."' AND annee_per=".$annee."";
         try {
-            $sth = $this->pdo->prepare($sql,$params);
-            $sth->execute();
+            $sth = $this->executer($sql);
+            $nb = $sth->rowcount();
             $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw new Exception("Erreur lors de la requête SQL : " . $e->getMessage());
         }
         $ldfs = array();
-        foreach ($rows as $row) { //hydrateur
+        foreach ($rows as $row) {
             $ldfs[] = new Ldf($row);
         }
         return $ldfs;

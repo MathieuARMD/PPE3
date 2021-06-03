@@ -122,4 +122,18 @@ class MotifDao extends DAO
         }
         return $nb;  // Retourne le nombre de mise à jour
     }
+
+    public function get_lib($id)
+    {
+        $sql = "SELECT mdf.lib_mdf FROM motif_de_frais mdf, ligne_de_frais ldf 
+        WHERE mdf.id_mdf=ldf.id_mdf AND ldf.id_ldf=:id";
+        try {
+            $params = array(":id" => $id);
+            $sth = $this->executer($sql,$params);
+            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Erreur lors de la requête SQL : " . $e->getMessage());
+        }
+        return $rows;
+    }
 } // Class MotifDao
